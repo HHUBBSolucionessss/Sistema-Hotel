@@ -59,7 +59,7 @@ $this->title = 'Sistema Hotel';
                         'headerOptions'=>['class'=>'kv-sticky-column'],
                         'contentOptions'=>['class'=>'kv-sticky-column'],
                     ],
-                    
+
                     [
                         'attribute' => 'total',
                         'vAlign'=>'middle',
@@ -68,20 +68,20 @@ $this->title = 'Sistema Hotel';
                     ],
                     [
                         'class' => 'kartik\grid\EditableColumn',
-                        'attribute' => 'status', 
+                        'attribute' => 'status',
                         'vAlign' => 'middle',
                         'width' => '180px',
-                        'value' => function ($model, $key, $index, $widget) { 
+                        'value' => function ($model, $key, $index, $widget) {
                         },
                         'filterType' => GridView::FILTER_SELECT2,
-                        'filter' => ['0'=>'Pendiente','1'=>'Activa','3'=>'No Show'], 
+                        'filter' => ['0'=>'Pendiente','1'=>'Activa','3'=>'No Show'],
                         'filterWidgetOptions' => [
                             'pluginOptions' => ['allowClear' => true],
                         ],
                         'filterInputOptions' => ['placeholder' => 'Estado'],
                         'format' => 'raw'
                     ],
-                    
+
                     [
                         'class' => 'kartik\grid\ActionColumn',
                         'template'=>'{view}',
@@ -101,7 +101,7 @@ $this->title = 'Sistema Hotel';
                         ]
                     ],
                     'toolbar' =>  [
-                        
+
                     ],
                     'pjax' => true,
                     'bordered' => true,
@@ -115,7 +115,7 @@ $this->title = 'Sistema Hotel';
                         'type' => GridView::TYPE_PRIMARY
                     ],
                 ]);
-            ?>  
+            ?>
         <?php Pjax::end(); ?>
 
 
@@ -135,19 +135,19 @@ $this->title = 'Sistema Hotel';
                         'contentOptions'=>['class'=>'kv-sticky-column'],
                     ],
                     [
-                        'attribute'=>'id_habitacion', 
+                        'attribute'=>'id_habitacion',
                         'vAlign'=>'middle',
                         'value'=>function ($model, $key, $index, $widget) {
-                            $habitacion= new Habitacion(); 
+                            $habitacion= new Habitacion();
                             return $habitacion->obtenerDescripcion($model->id_habitacion);
                         },
                         'format'=>'raw'
                     ],
                     [
-                        'attribute'=>'id_huesped', 
+                        'attribute'=>'id_huesped',
                         'vAlign'=>'middle',
                         'value'=>function ($model, $key, $index, $widget) {
-                            $huesped= new Huesped(); 
+                            $huesped= new Huesped();
                             return $huesped->obtenerNombre($model->id_huesped);
                         },
                         'format'=>'raw'
@@ -159,14 +159,14 @@ $this->title = 'Sistema Hotel';
                         'contentOptions'=>['class'=>'kv-sticky-column'],
                     ],
                     [
-                        'attribute'=>'id_origen', 
+                        'attribute'=>'id_origen',
                         'vAlign'=>'middle',
                         'value'=>function ($model, $key, $index, $widget) {
-                            $origen=new Origen(); 
+                            $origen=new Origen();
                             return $origen->obtenerOrigen($model->id_origen);
                         },
                         'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'), 
+                        'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'),
                         'filterWidgetOptions'=>[
                             'pluginOptions'=>['allowClear'=>true],
                         ],
@@ -175,11 +175,11 @@ $this->title = 'Sistema Hotel';
                     ],
                     [
                         'class' => 'kartik\grid\EditableColumn',
-                        'attribute' => 'status', 
+                        'attribute' => 'status',
                         'vAlign' => 'middle',
                         'width' => '180px',
-                        'value' => function ($model, $key, $index, $widget) { 
-                            $reservacion=new Reservacion(); 
+                        'value' => function ($model, $key, $index, $widget) {
+                            $reservacion=new Reservacion();
                             return $reservacion->obtenerEstado($model->status);
                         },
                         'format' => 'raw'
@@ -206,7 +206,7 @@ $this->title = 'Sistema Hotel';
                         ]
                     ],
                     'toolbar' =>  [
-                        
+
                     ],
                     'pjax' => true,
                     'bordered' => true,
@@ -220,15 +220,15 @@ $this->title = 'Sistema Hotel';
                         //'type' => GridView::TYPE_PRIMARY
                     ],
                 ]);
-            ?>  
+            ?>
         <?php Pjax::end(); ?>
             </div>
         </div>
         <div class="col-md-8">
             <div class="panel panel-warning">
             <div class="panel-heading">Buscar Disponibilidad</div>
-            <div class="panel-body">  
-            <?php $form = ActiveForm::begin(); ?>             
+            <div class="panel-body">
+            <?php $form = ActiveForm::begin(); ?>
                     <?php
                         echo DatePicker::widget([
                             'name' => 'fecha_entrada',
@@ -259,7 +259,7 @@ $this->title = 'Sistema Hotel';
                 ]);
                 AjaxSubmitButton::end();
             ?>
-                        
+
            <?php ActiveForm::end(); ?>
 
             <div id="output"></div>

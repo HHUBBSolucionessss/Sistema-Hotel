@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\HuespedSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Huespeds';
+$this->title = 'Huéspedes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="huesped-index">
@@ -21,9 +21,6 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php
-
-
-
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],
                 [
@@ -50,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-                
+
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'template'=>'{view}{delete}',
@@ -73,6 +70,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     '{export}',
                     '{toggleData}'
                 ],
+                'exportConfig' => [
+                   GridView::EXCEL => [
+                       'label' => 'Exportar a Excel',
+                       'iconOptions' => ['class' => 'text-success'],
+                       'showHeader' => true,
+                       'showPageSummary' => true,
+                       'showFooter' => true,
+                       'showCaption' => true,
+                       'filename' => 'exportacion-huespedes',
+                       'alertMsg' => 'The EXCEL export file will be generated for download.',
+                       'options' => ['title' => 'Microsoft Excel 95+'],
+                       'mime' => 'application/vnd.ms-excel',
+                       'config' => [
+                       'worksheet' => 'ExportWorksheet',
+                           'cssFile' => ''
+                       ]
+                   ],
+               ],
                 'pjax' => true,
                 'bordered' => true,
                 'striped' => false,
@@ -86,7 +101,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
 
-        ?> 
+        ?>
 
 
     <?php Pjax::end(); ?>

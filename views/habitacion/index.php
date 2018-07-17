@@ -4,6 +4,9 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\HabitacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -16,8 +19,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php Pjax::begin(); ?>
     <p>
-        <?= Html::a('Create Habitacion', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Create Habitacion', ['value' => Url::to('index.php?r=habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
+
+    <?php
+    Modal::begin([
+      'header' => '<h4>Crear Habitación</h4>',
+      'id' => 'modal',
+      'size' => 'modal-lg',
+    ]);
+
+    echo "<div id='modalContent'></div>";
+
+    Modal::end();
+
+    ?>
+
     <p>
         <?= Html::a('Tipo Habitación', ['/tipo-habitacion/index'], ['class'=>'btn']) ?>
     </p>
@@ -39,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'status',
-                    'value'=>function ($model, $key, $index, $widget) { 
+                    'value'=>function ($model, $key, $index, $widget) {
                         return $model->obtenerEstado($model->status);
                     },
                     'vAlign'=>'middle',
@@ -49,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'tipo_habitacion',
-                    'value'=>function ($model, $key, $index, $widget) { 
+                    'value'=>function ($model, $key, $index, $widget) {
                         return $model->obtenerTipoHabitacion($model->tipo_habitacion);
                     },
                     'vAlign'=>'middle',
@@ -86,6 +103,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     '{export}',
                     '{toggleData}'
                 ],
+                'exportConfig' => [
+                   GridView::EXCEL => [
+                       'label' => 'Exportar a Excel',
+                       'iconOptions' => ['class' => 'text-success'],
+                       'showHeader' => true,
+                       'showPageSummary' => true,
+                       'showFooter' => true,
+                       'showCaption' => true,
+                       'filename' => 'exportacion-habitacion',
+                       'alertMsg' => 'The EXCEL export file will be generated for download.',
+                       'options' => ['title' => 'Microsoft Excel 95+'],
+                       'mime' => 'application/vnd.ms-excel',
+                       'config' => [
+                       'worksheet' => 'ExportWorksheet',
+                           'cssFile' => ''
+                       ]
+                   ],
+               ],
                 'pjax' => true,
                 'bordered' => true,
                 'striped' => false,
@@ -99,6 +134,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
 
-        ?> 
+        ?>
     <?php Pjax::end(); ?>
 </div>

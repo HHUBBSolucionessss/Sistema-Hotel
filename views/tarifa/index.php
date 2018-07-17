@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'detail' => function ($model, $key, $index, $column) {
                         return Yii::$app->controller->renderPartial('view',['model' => $model]);
                     },
-                    'headerOptions' => ['class' => 'kartik-sheet-style'], 
+                    'headerOptions' => ['class' => 'kartik-sheet-style'],
                     'expandOneOnly' => true
                 ],
                 [
@@ -58,14 +58,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
                 [
-                    'attribute'=>'id_tipo_habitacion', 
+                    'attribute'=>'id_tipo_habitacion',
                     'vAlign'=>'middle',
-                    'value'=>function ($model, $key, $index, $widget) { 
+                    'value'=>function ($model, $key, $index, $widget) {
                         $habitacion = new Habitacion();
                         return $habitacion->obtenerTipoHabitacion($model->id_tipo_habitacion);
                     },
                     'filterType'=>GridView::FILTER_SELECT2,
-                    'filter'=>ArrayHelper::map(TipoHabitacion::find()->all(), 'id', 'descripcion'), 
+                    'filter'=>ArrayHelper::map(TipoHabitacion::find()->all(), 'id', 'descripcion'),
                     'filterWidgetOptions'=>[
                         'pluginOptions'=>['allowClear'=>true],
                     ],
@@ -73,14 +73,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format'=>'raw'
                 ],
                 [
-                    'attribute'=>'id_origen', 
+                    'attribute'=>'id_origen',
                     'vAlign'=>'middle',
-                    'value'=>function ($model, $key, $index, $widget) { 
-                        $origen=new Origen(); 
+                    'value'=>function ($model, $key, $index, $widget) {
+                        $origen=new Origen();
                         return $origen->obtenerOrigen($model->id_origen);
                     },
                     'filterType'=>GridView::FILTER_SELECT2,
-                    'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'), 
+                    'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'),
                     'filterWidgetOptions'=>[
                         'pluginOptions'=>['allowClear'=>true],
                     ],
@@ -110,6 +110,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     '{export}',
                     '{toggleData}'
                 ],
+                'exportConfig' => [
+                   GridView::EXCEL => [
+                       'label' => 'Exportar a Excel',
+                       'iconOptions' => ['class' => 'text-success'],
+                       'showHeader' => true,
+                       'showPageSummary' => true,
+                       'showFooter' => true,
+                       'showCaption' => true,
+                       'filename' => 'exportacion-tarifa',
+                       'alertMsg' => 'The EXCEL export file will be generated for download.',
+                       'options' => ['title' => 'Microsoft Excel 95+'],
+                       'mime' => 'application/vnd.ms-excel',
+                       'config' => [
+                       'worksheet' => 'ExportWorksheet',
+                           'cssFile' => ''
+                       ]
+                   ],
+               ],
                 'pjax' => true,
                 'bordered' => true,
                 'striped' => false,
@@ -123,7 +141,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
 
-        ?>  
+        ?>
 
 
     <?php Pjax::end(); ?>

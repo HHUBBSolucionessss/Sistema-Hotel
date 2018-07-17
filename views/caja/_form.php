@@ -2,6 +2,11 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+
+use app\models\Caja;
+
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Caja */
@@ -14,7 +19,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'efectivo')->textInput(['maxlength' => true]) ?>
-    <?= $form->field($model, 'tipo_movimiento')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'tipo_movimiento')->widget(Select2::classname(), [
+            'data' => ArrayHelper::map(Caja::find()->all(), 'id', 'descripcion'),
+            'value'=>1,
+            'options' => ['placeholder' => 'Selecciona un tipo de movimiento ...', 'select'=>'0'],
+            'pluginOptions' => [
+                'allowClear' => true
+            ],
+        ]);
+        ?>
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>

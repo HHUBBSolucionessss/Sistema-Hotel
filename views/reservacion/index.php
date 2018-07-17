@@ -14,7 +14,7 @@ use app\models\Origen;
 /* @var $searchModel app\models\ReservacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Reservacions';
+$this->title = 'Reservaciones';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reservacion-index">
@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'detail' => function ($model, $key, $index, $column) {
                         return Yii::$app->controller->renderPartial('ver_reservacion', ['model' => $model]);
                     },
-                    'headerOptions' => ['class' => 'kartik-sheet-style'], 
+                    'headerOptions' => ['class' => 'kartik-sheet-style'],
                     'expandOneOnly' => true
                 ],
                 [
@@ -50,19 +50,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
                 [
-                    'attribute'=>'id_habitacion', 
+                    'attribute'=>'id_habitacion',
                     'vAlign'=>'middle',
                     'value'=>function ($model, $key, $index, $widget) {
-                        $habitacion= new Habitacion(); 
+                        $habitacion= new Habitacion();
                         return $habitacion->obtenerDescripcion($model->id_habitacion);
                     },
                     'format'=>'raw'
                 ],
                 [
-                    'attribute'=>'id_huesped', 
+                    'attribute'=>'id_huesped',
                     'vAlign'=>'middle',
                     'value'=>function ($model, $key, $index, $widget) {
-                        $huesped= new Huesped(); 
+                        $huesped= new Huesped();
                         return $huesped->obtenerNombre($model->id_huesped);
                     },
                     'format'=>'raw'
@@ -86,9 +86,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
                 [
-                    'attribute'=>'status', 
+                    'attribute'=>'status',
                     'vAlign'=>'middle',
-                    'value'=>function ($model, $key, $index, $widget) { 
+                    'value'=>function ($model, $key, $index, $widget) {
                         return $model->obtenerEstado($model->status);
                     },
                     'format'=>'raw'
@@ -106,14 +106,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
                 [
-                    'attribute'=>'id_origen', 
+                    'attribute'=>'id_origen',
                     'vAlign'=>'middle',
                     'value'=>function ($model, $key, $index, $widget) {
-                        $origen=new Origen(); 
+                        $origen=new Origen();
                         return $origen->obtenerOrigen($model->id_origen);
                     },
                     'filterType'=>GridView::FILTER_SELECT2,
-                    'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'), 
+                    'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'),
                     'filterWidgetOptions'=>[
                         'pluginOptions'=>['allowClear'=>true],
                     ],
@@ -143,6 +143,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     '{export}',
                     '{toggleData}'
                 ],
+                'exportConfig' => [
+                   GridView::EXCEL => [
+                       'label' => 'Exportar a Excel',
+                       'iconOptions' => ['class' => 'text-success'],
+                       'showHeader' => true,
+                       'showPageSummary' => true,
+                       'showFooter' => true,
+                       'showCaption' => true,
+                       'filename' => 'exportacion-reservaciones',
+                       'alertMsg' => 'The EXCEL export file will be generated for download.',
+                       'options' => ['title' => 'Microsoft Excel 95+'],
+                       'mime' => 'application/vnd.ms-excel',
+                       'config' => [
+                       'worksheet' => 'ExportWorksheet',
+                           'cssFile' => ''
+                       ]
+                   ],
+               ],
                 'pjax' => true,
                 'bordered' => true,
                 'striped' => false,
@@ -155,6 +173,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type' => GridView::TYPE_PRIMARY
                 ],
             ]);
-        ?>  
+        ?>
     <?php Pjax::end(); ?>
 </div>

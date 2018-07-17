@@ -10,7 +10,7 @@ use app\models\Habitacion;
 /* @var $searchModel app\models\ReservacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Reservacions';
+$this->title = 'Reservaciones';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reservacion-index">
@@ -39,7 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'attribute' => 'tipo_habitacion',
                     'vAlign'=>'middle',
-                    'value'=>function ($model, $key, $index, $widget) { 
+                    'value'=>function ($model, $key, $index, $widget) {
                         $habitacion= new Habitacion();
                         return $habitacion->obtenerTipoHabitacion($model['tipo_habitacion']);
                     },
@@ -51,8 +51,8 @@ $this->params['breadcrumbs'][] = $this->title;
                     'vAlign' => 'middle',
                     'width' => '180px',
                     'value' => function($model, $key, $index, $widget) use ($fecha_entrada, $fecha_salida)
-                    { 
-                        return Html::a('<span class="glyphicon glyphicon-plus"></span> Crear Reservación', Url::to(['reservacion/nueva']), 
+                    {
+                        return Html::a('<span class="glyphicon glyphicon-plus"></span> Crear Reservación', Url::to(['reservacion/nueva']),
                         [
                             'data' => [
                                 'confirm' => "¿Deseas crear una reservacion en esta habitacion?",
@@ -82,6 +82,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ]);
 
-        ?>  
+        ?>
     <?php Pjax::end(); ?>
 </div>

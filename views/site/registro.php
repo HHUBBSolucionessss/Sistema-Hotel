@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use kartik\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\RegistroSistemaSearch */
@@ -16,18 +16,82 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <?php
+            $gridColumns = [
+                ['class' => 'kartik\grid\SerialColumn'],
+                [
+                    'attribute' => 'id',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
+                [
+                    'attribute' => 'descripcion',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
 
-            'id',
-            'descripcion',
-            'create_time',
+                [
+                    'attribute' => 'create_time',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                [
+                    'class' => 'kartik\grid\ActionColumn',
+                    'template'=>'{view}{delete}',
+                    'vAlign'=>'middle',
+
+                ],
+            ];
+
+            echo GridView::widget([
+                'dataProvider' => $dataProvider,
+                'filterModel' => $searchModel,
+                'columns' => $gridColumns,
+                'containerOptions' => ['style'=>'overflow: false'], // only set when $responsive = false
+                'beforeHeader'=>[
+                    [
+                        'options'=>['class'=>'skip-export'] // remove this row from export
+                    ]
+                ],
+                'toolbar' =>  [
+                    '{export}',
+                    '{toggleData}'
+                ],
+                'exportConfig' => [
+                   GridView::EXCEL => [
+                       'label' => 'Exportar a Excel',
+                       'iconOptions' => ['class' => 'text-success'],
+                       'showHeader' => true,
+                       'showPageSummary' => true,
+                       'showFooter' => true,
+                       'showCaption' => true,
+                       'filename' => 'exportacion-registro-sistema',
+                       'alertMsg' => 'The EXCEL export file will be generated for download.',
+                       'options' => ['title' => 'Microsoft Excel 95+'],
+                       'mime' => 'application/vnd.ms-excel',
+                       'config' => [
+                       'worksheet' => 'ExportWorksheet',
+                           'cssFile' => ''
+                       ]
+                   ],
+               ],
+                'pjax' => true,
+                'bordered' => true,
+                'striped' => false,
+                'condensed' => false,
+                'responsive' => true,
+                'hover' => true,
+                'floatHeader' => false,
+                'showPageSummary' => true,
+                'panel' => [
+                    'type' => GridView::TYPE_PRIMARY
+                ],
+            ]);
+
+        ?>
     <?php Pjax::end(); ?>
 </div>

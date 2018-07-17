@@ -21,12 +21,12 @@ use kartik\select2\Select2;
         <?= $form->field($model, 'tipo_habitacion')->widget(Select2::classname(), [
                 'data' => ArrayHelper::map(TipoHabitacion::find()->all(), 'id', 'descripcion'),
                 'value'=>1,
-                'options' => ['placeholder' => 'Selecciona un tipo de habitacion ...', 'select'=>'0'],
+                'options' => ['placeholder' => 'Selecciona un tipo de habitación ...', 'select'=>'0'],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
             ]);
-            ?>              
+            ?>
         <?= $form->field($model, 'capacidad')->textInput() ?>
         <div class="form-group">
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

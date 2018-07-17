@@ -56,6 +56,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     '{export}',
                     '{toggleData}'
                 ],
+                'exportConfig' => [
+                   GridView::EXCEL => [
+                       'label' => 'Exportar a Excel',
+                       'iconOptions' => ['class' => 'text-success'],
+                       'showHeader' => true,
+                       'showPageSummary' => true,
+                       'showFooter' => true,
+                       'showCaption' => true,
+                       'filename' => 'exportacion-tipo-habitacion',
+                       'alertMsg' => 'The EXCEL export file will be generated for download.',
+                       'options' => ['title' => 'Microsoft Excel 95+'],
+                       'mime' => 'application/vnd.ms-excel',
+                       'config' => [
+                       'worksheet' => 'ExportWorksheet',
+                           'cssFile' => ''
+                       ]
+                   ],
+               ],
                 'pjax' => true,
                 'bordered' => true,
                 'striped' => false,
@@ -68,6 +86,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'type' => GridView::TYPE_PRIMARY
                 ],
             ]);
-        ?> 
-    <?php Pjax::end(); ?>    
+        ?>
+    <?php Pjax::end(); ?>
 </div>

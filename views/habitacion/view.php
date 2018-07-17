@@ -12,7 +12,7 @@ use app\models\TipoHabitacion;
 /* @var $model app\models\Habitacion */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Habitacions', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Habitaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="habitacion-view">
@@ -36,25 +36,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'descripcion',
                     [
-                        'attribute'=>'tipo_habitacion', 
+                        'attribute'=>'tipo_habitacion',
                         'format'=>'raw',
                         'value'=>  $model->obtenerTipoHabitacion($model->tipo_habitacion),
-                        'type'=>DetailView::INPUT_SELECT2, 
+                        'type'=>DetailView::INPUT_SELECT2,
                         'widgetOptions'=>[
-                            'data'=>ArrayHelper::map(TipoHabitacion::find()->all(), 'id', 'descripcion'),                            
+                            'data'=>ArrayHelper::map(TipoHabitacion::find()->all(), 'id', 'descripcion'),
                             'options' => ['placeholder' => 'Selecciona una opción'],
                             'pluginOptions' => ['allowClear'=>true, 'width'=>'100%'],
                         ],
                     ],
                     [
-                        'attribute'=>'status', 
+                        'attribute'=>'status',
                         'label'=>'Activa?',
                         'format'=>'raw',
                         'value'=>$model->status ? '<span class="label label-success">Activa </span>' : '<span class="label label-danger">Inactiva</span>',
                         'type'=>DetailView::INPUT_SWITCH,
-                        'widgetOptions' => 
+                        'widgetOptions' =>
                         [
-                            'pluginOptions' => 
+                            'pluginOptions' =>
                             [
                                 'onText' => 'SI',
                                 'offText' => 'NO',

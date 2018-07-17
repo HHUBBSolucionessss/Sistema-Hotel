@@ -40,7 +40,7 @@ class HabitacionController extends Controller
      * @return mixed
      */
     public function actionIndex()
-    { 
+    {
         $searchModel = new HabitacionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
@@ -48,7 +48,7 @@ class HabitacionController extends Controller
             'dataProvider' => $dataProvider,
         ]);
 
- 
+
     }
 
     /**
@@ -60,25 +60,25 @@ class HabitacionController extends Controller
     {
         $model = $this->findModel($id);
         $registroSistema= new RegistroSistema();
-        if ($model->load(Yii::$app->request->post())) 
+        if ($model->load(Yii::$app->request->post()))
         {
             $registroSistema->descripcion="EL USUARIO ".'1'." HA REGISTRADO UNA NUEVA HABITACION CON LA DESCRIPCION".$model->descripcion;
             if ($model->save() && $registroSistema->save())
             {
                 Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
-                return $this->redirect(['view', 'id'=>$model->id]);  
+                return $this->redirect(['view', 'id'=>$model->id]);
             }
             else
             {
                 Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
-                return $this->redirect(['view', 'id'=>$model->id]);  
+                return $this->redirect(['view', 'id'=>$model->id]);
             }
         }
-        else 
+        else
         {
             return $this->render('view', ['model'=>$model]);
-            
-        }        
+
+        }
     }
 
     /**
@@ -90,20 +90,20 @@ class HabitacionController extends Controller
     {
         $model = new Habitacion();
         $registroSistema = new RegistroSistema();
-        if ($model->load(Yii::$app->request->post())) 
+        if ($model->load(Yii::$app->request->post()))
         {
 
             $model->create_user=1;
             $model->create_time=date('Y-m-d H:i:s');
             $model->status=1;
             $registroSistema->descripcion="EL USUARIO ".'1'." HA REGISTRADO UNA NUEVA HABITACION CON LA DESCRIPCION".$model->descripcion;
-            
+
             if ($model->save()&&$registroSistema->save())
                 return $this->redirect(['view', 'id' => $model->id]);
-                
+
         }
 
-        return $this->render('create', [
+        return $this->renderAjax('create', [
             'model' => $model,
         ]);
     }
