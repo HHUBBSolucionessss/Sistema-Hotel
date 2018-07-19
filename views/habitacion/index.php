@@ -17,21 +17,21 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="habitacion-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php Pjax::begin(); ?>
+
     <p>
-        <?= Html::button('Create Habitacion', ['value' => Url::to('index.php?r=habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::button('Crear Habitación', ['value'=>Url::to('../habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php
-    Modal::begin([
-      'header' => '<h4>Crear Habitación</h4>',
-      'id' => 'modal',
-      'size' => 'modal-lg',
-    ]);
+      Modal::begin([
+        'header' => '<h4>Crear Habitación</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+      ]);
 
-    echo "<div id='modalContent'></div>";
+      echo "<div id='modalContent'></div>";
 
-    Modal::end();
+      Modal::end();
 
     ?>
 
@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a('Tipo Habitación', ['/tipo-habitacion/index'], ['class'=>'btn']) ?>
     </p>
 
+    <?php Pjax::begin(); ?>
     <?php
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],

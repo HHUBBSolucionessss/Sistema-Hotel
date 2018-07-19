@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
 
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CajaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -18,13 +20,23 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Entrada/Salida de Caja', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Entrada/Salida de Caja', ['value'=>Url::to('../caja/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
+    <?php
+      Modal::begin([
+        'header' => '<h4>Crear Habitación</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+      ]);
+
+      echo "<div id='modalContent'></div>";
+
+      Modal::end();
+
+    ?>
+
         <?php
-
-
-
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],
                 [

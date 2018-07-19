@@ -28,7 +28,7 @@ use kartik\select2\Select2;
             ]);
             ?>
         <?= $form->field($model, 'capacidad')->textInput() ?>
-        <div class="form-group">
+        <div   class="form-group">
             <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
         </div>
         <?php ActiveForm::end(); ?>

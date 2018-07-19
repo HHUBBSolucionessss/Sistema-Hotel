@@ -20,7 +20,7 @@ use kartik\select2\Select2;
     <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'efectivo')->textInput(['maxlength' => true]) ?>
     <?= $form->field($model, 'tipo_movimiento')->widget(Select2::classname(), [
-            'data' => ArrayHelper::map(Caja::find()->all(), 'id', 'descripcion'),
+            'data' => ['0'=>'Entrada','1'=>'Salida'],
             'value'=>1,
             'options' => ['placeholder' => 'Selecciona un tipo de movimiento ...', 'select'=>'0'],
             'pluginOptions' => [
