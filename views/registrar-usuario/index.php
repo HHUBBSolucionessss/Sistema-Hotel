@@ -46,12 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-                /*[
+                [
                     'attribute' => 'username',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],*/
+                ],
                 [
                     'attribute' => 'nombre',
                     'vAlign'=>'middle',
@@ -119,7 +119,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
 
         ?>
-
-
     <?php Pjax::end(); ?>
 </div>

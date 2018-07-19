@@ -5,12 +5,13 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\RegistrarUsuario;
+use app\models\User;
+
 
 /**
- * RegistrarUsuarioSearch represents the model behind the search form of `app\models\RegistrarUsuario`.
+ * UsuarioSearch represents the model behind the search form of `app\models\RegistrarUsuario`.
  */
-class RegistrarUsuarioSearch extends RegistrarUsuario
+class UsuarioSearch extends User
 {
     /**
      * @inheritdoc
@@ -19,7 +20,7 @@ class RegistrarUsuarioSearch extends RegistrarUsuario
     {
         return [
             [['id'], 'integer'],
-            [['username', 'nombre', 'password', 'email'], 'safe'],
+            [['username', 'nombre', 'email'], 'safe'],
         ];
     }
 
@@ -41,7 +42,7 @@ class RegistrarUsuarioSearch extends RegistrarUsuario
      */
     public function search($params)
     {
-        $query = RegistrarUsuario::find();
+        $query = User::find();
 
         // add conditions that should always apply here
 
@@ -65,11 +66,6 @@ class RegistrarUsuarioSearch extends RegistrarUsuario
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'nombre', $this->nombre])
-            ->andFilterWhere(['like', 'password', $this->password])
-            
-            ->andFilterWhere(['like', 'authKey', $this->authKey])
-            ->andFilterWhere(['like', 'accessToken', $this->accessToken])
-            ->andFilterWhere(['like', 'activate', $this->activate])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'status', $this->status])
             ->andFilterWhere(['like', 'create_time', $this->create_time]);
