@@ -7,25 +7,25 @@ use yii\widgets\Pjax;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\HuespedSearch */
+/* @var $searchModel app\models\RegistrarUsuarioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Huéspedes';
+$this->title = 'Usuarios';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="huesped-index">
+<div class="registrar-usuario-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::button('Crear huésped', ['value'=>Url::to('../huesped/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::button('Crear usuario', ['value'=>Url::to('../registrar-usuario/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php
       Modal::begin([
-        'header' => '<h4 style="color:#337AB7";>Crear Huésped</h4>',
+        'header' => '<h4 style="color:#337AB7";>Crear Usuario</h4>',
         'id' => 'modal',
         'size' => 'modal-lg',
       ]);
@@ -46,6 +46,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
+                /*[
+                    'attribute' => 'username',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],*/
                 [
                     'attribute' => 'nombre',
                     'vAlign'=>'middle',
@@ -54,12 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'email',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
-                    'attribute' => 'telefono',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
@@ -95,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                        'showPageSummary' => true,
                        'showFooter' => true,
                        'showCaption' => true,
-                       'filename' => 'exportacion-huespedes',
+                       'filename' => 'exportacion-usuarios',
                        'alertMsg' => 'The EXCEL export file will be generated for download.',
                        'options' => ['title' => 'Microsoft Excel 95+'],
                        'mime' => 'application/vnd.ms-excel',

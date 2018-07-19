@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 [
                     'class' => 'kartik\grid\ActionColumn',
-                    'template'=>'{view}{delete}',
+                    'template'=>'{delete}',
                     'vAlign'=>'middle',
 
                 ],
@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                        'showFooter' => true,
                        'showCaption' => true,
                        'filename' => 'exportacion-registro-sistema',
-                       'alertMsg' => 'The EXCEL export file will be generated for download.',
+                       'alertMsg' => 'El archivo EXCEL será generado para descargar.',
                        'options' => ['title' => 'Microsoft Excel 95+'],
                        'mime' => 'application/vnd.ms-excel',
                        'config' => [

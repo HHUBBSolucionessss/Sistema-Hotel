@@ -46,7 +46,7 @@ class Origen extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'create_time' => 'Creó',
+            'create_time' => 'Fecha Creación',
             'create_user' => 'Creado',
             'update_time' => 'Actualizado',
             'update_user' => 'Actualizó',

@@ -10,7 +10,7 @@ use yii\helpers\Url;
 /* @var $searchModel app\models\CajaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Movimientos Caja';
+$this->title = 'Caja';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="caja-index">
@@ -19,12 +19,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::button('Entrada/Salida de Caja', ['value'=>Url::to('../caja/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::button('Movimientos de caja', ['value'=>Url::to('../caja/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php
       Modal::begin([
-        'header' => '<h4>Crear Caja</h4>',
+        'header' => '<h4 style="color:#337AB7";>Movimientos de Caja</h4>',
         'id' => 'modal',
         'size' => 'modal-lg',
       ]);

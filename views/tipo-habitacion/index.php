@@ -4,11 +4,13 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TipoHabitacionSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tipo Habitacions';
+$this->title = 'Tipo de Habitaciones';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tipo-habitacion-index">
@@ -16,8 +18,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <p>
-        <?= Html::a('Create Tipo Habitacion', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Crear tipo de habitación', ['value'=>Url::to('../tipo-habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
+
+    <?php
+      Modal::begin([
+        'header' => '<h4 style="color:#337AB7";>Crear Tipo de Habitación</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+      ]);
+
+      echo "<div id='modalContent'></div>";
+
+      Modal::end();
+    ?>
 
     <?php
             $gridColumns = [

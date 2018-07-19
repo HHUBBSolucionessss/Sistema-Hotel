@@ -13,7 +13,7 @@ use app\models\Origen;
 /* @var $model app\models\Reservacion */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Reservacions', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Reservaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -29,12 +29,12 @@ $this->params['breadcrumbs'][] = $this->title;
 </p>
 <p>
     <?php
-        echo Html::a('Modificar Reservacion', ['update','id'=>$model->id], ['class' => 'btn btn-success', 'id'=>'_Pago']) ?>
+        echo Html::a('Modificar reservación', ['update','id'=>$model->id], ['class' => 'btn btn-success', 'id'=>'_Pago']) ?>
 </p>
 
 <div class="reservacion-view">
     <div class="col-md-6">
-                <?php 
+                <?php
             $habitacion= new Habitacion();
             $origen= new Origen();
             $huesped= new Huesped();
@@ -82,14 +82,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'noches',
                         'status',
                         [
-                            'attribute'=>'estado_pago', 
-                            'label'=>'Pagada?',
+                            'attribute'=>'estado_pago',
+                            'label'=>'Estado Pago',
                             'format'=>'raw',
                             'value'=>$model->estado_pago ? '<span class="label label-success">Pagada</span>' : '<span class="label label-danger">No Pagada</span>',
                             'type'=>DetailView::INPUT_SWITCH,
-                            'widgetOptions' => 
+                            'widgetOptions' =>
                             [
-                                'pluginOptions' => 
+                                'pluginOptions' =>
                                 [
                                     'onText' => 'SI',
                                     'offText' => 'NO',
@@ -97,11 +97,11 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                         [
-                            'attribute'=>'tipo', 
+                            'attribute'=>'tipo',
                             'label'=>'Tipo Comprobante',
                             'format'=>'raw',
                             'value'=>  $model->obtenerComprobante($model->tipo),
-                            'type'=>DetailView::INPUT_SELECT2, 
+                            'type'=>DetailView::INPUT_SELECT2,
                             'widgetOptions'=>[
                                 'data'=>[0=> 'REMISION',1=> 'FACTURACION'],
                                 'options' => ['placeholder' => 'Selecciona una opción'],
@@ -139,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]);
 
-            ?>  
+            ?>
     </div>
     <div class="col-md-6">
 
@@ -185,7 +185,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ];
 
                 echo GridView::widget([
-                    
+
                     'dataProvider' => $dataProvider,
                     'columns' => $gridColumns,
                     'containerOptions' => ['style'=>'overflow: false'], // only set when $responsive = false
@@ -210,7 +210,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'type' => GridView::TYPE_PRIMARY
                     ],
                 ]);
-            ?>  
+            ?>
     </div>
 
 

@@ -40,7 +40,7 @@ class RegistroSistema extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'descripcion' => 'Descripción de movimiento',
-            'create_time' => 'Creado',
+            'create_time' => 'Fecha Creación',
         ];
     }
 }

@@ -3,16 +3,16 @@
 namespace app\controllers;
 
 use Yii;
-use app\models\Origen;
-use app\models\OrigenSearch;
+use app\models\RegistrarUsuario;
+use app\models\RegistrarUsuarioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * OrigenController implements the CRUD actions for Origen model.
+ * RegistrarUsuarioController implements the CRUD actions for RegistrarUsuario model.
  */
-class OrigenController extends Controller
+class RegistrarUsuarioController extends Controller
 {
     /**
      * @inheritdoc
@@ -30,12 +30,12 @@ class OrigenController extends Controller
     }
 
     /**
-     * Lists all Origen models.
+     * Lists all RegistrarUsuario models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new OrigenSearch();
+        $searchModel = new RegistrarUsuarioSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class OrigenController extends Controller
     }
 
     /**
-     * Displays a single Origen model.
+     * Displays a single RegistrarUsuario model.
      * @param integer $id
      * @return mixed
      */
@@ -74,13 +74,13 @@ class OrigenController extends Controller
     }
 
     /**
-     * Creates a new Origen model.
+     * Creates a new RegistrarUsuario model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Origen();
+        $model = new RegistrarUsuario();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -91,10 +91,27 @@ class OrigenController extends Controller
         ]);
     }
 
+    /**
+     * Updates an existing RegistrarUsuario model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
 
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
 
     /**
-     * Deletes an existing Origen model.
+     * Deletes an existing RegistrarUsuario model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -107,15 +124,15 @@ class OrigenController extends Controller
     }
 
     /**
-     * Finds the Origen model based on its primary key value.
+     * Finds the RegistrarUsuario model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Origen the loaded model
+     * @return RegistrarUsuario the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Origen::findOne($id)) !== null) {
+        if (($model = RegistrarUsuario::findOne($id)) !== null) {
             return $model;
         }
 

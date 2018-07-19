@@ -9,7 +9,7 @@ use yii\helpers\Url;
 /* @var $model app\models\Huesped */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Huespeds', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Huéspedes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="huesped-view">

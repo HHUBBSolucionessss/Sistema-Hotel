@@ -6,8 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Origen */
 
-$this->title = 'Create Origen';
-$this->params['breadcrumbs'][] = ['label' => 'Origens', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Orígenes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="origen-create">

@@ -18,12 +18,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::button('Crear Habitación', ['value'=>Url::to('../habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::button('Crear habitación', ['value'=>Url::to('../habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::a('Tipo de habitaciones', ['../web/tipo-habitacion/index'], ['class'=>'btn']) ?>
     </p>
+
+
+
 
     <?php
       Modal::begin([
-        'header' => '<h4>Crear Caja</h4>',
+        'header' => '<h4 style="color:#337AB7";>Crear Habitación</h4>',
         'id' => 'modal',
         'size' => 'modal-lg',
       ]);
@@ -34,10 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
 
     <?php Pjax::begin(); ?>
-
-    <p>
-        <?= Html::a('Tipo Habitación', ['/tipo-habitacion/index'], ['class'=>'btn']) ?>
-    </p>
 
     <?php
             $gridColumns = [

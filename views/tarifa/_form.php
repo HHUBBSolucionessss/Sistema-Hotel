@@ -14,7 +14,7 @@ use kartik\select2\Select2;
 use kartik\widgets\DatePicker;
 
 
-$this->title = 'Create Tarifa';
+$this->title = 'Crear Tarifa';
 $this->params['breadcrumbs'][] = ['label' => 'Tarifas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -57,7 +57,7 @@ $this->registerJs($js);
             <?= $form->field($modelTarifa, 'id_tipo_habitacion')->widget(Select2::classname(), [
                 'data' => ArrayHelper::map(TipoHabitacion::find()->all(), 'id', 'descripcion'),
                 'value'=>1,
-                'options' => ['placeholder' => 'Selecciona un tipo de habitacion ...', 'select'=>'0'],
+                'options' => ['placeholder' => 'Selecciona un tipo de habitación ...', 'select'=>'0'],
                 'pluginOptions' => [
                     'allowClear' => true
                 ],
@@ -88,7 +88,7 @@ $this->registerJs($js);
         <div class="line line-dashed"></div>
     </div>
 
-    <div class="row">            
+    <div class="row">
             <?php DynamicFormWidget::begin([
                 'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                 'widgetBody' => '.container-items', // required: css class selector
@@ -145,7 +145,7 @@ $this->registerJs($js);
 
 
     <div class="form-group">
-        <?= Html::submitButton($modeldetallada->isNewRecord ? 'Create' : 'Update', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton($modeldetallada->isNewRecord ? 'Guardar' : 'Update', ['class' => 'btn btn-success']) ?>
     </div>
     <?php ActiveForm::end(); ?>
 </div>

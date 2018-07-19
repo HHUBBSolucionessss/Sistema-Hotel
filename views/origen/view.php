@@ -9,7 +9,7 @@ use yii\helpers\Url;
 /* @var $model app\models\Origen */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Origens', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Orígenes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="origen-view">

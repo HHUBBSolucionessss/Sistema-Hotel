@@ -68,23 +68,23 @@ class Reservacion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_habitacion' => 'Id Habitacion',
-            'id_origen' => 'Id Origen',
-            'id_huesped' => 'Id Huesped',
+            'id_habitacion' => 'ID Habitación',
+            'id_origen' => 'ID Origen',
+            'id_huesped' => 'ID Huésped',
             'fecha_entrada' => 'Fecha Entrada',
             'fecha_salida' => 'Fecha Salida',
             'notas' => 'Notas',
             'adultos' => 'Adultos',
-            'ninos' => 'Ninos',
+            'ninos' => 'Niños',
             'noches' => 'Noches',
-            'status' => 'Status',
+            'status' => 'Estado',
             'estado_pago' => 'Estado Pago',
             'tipo' => 'Tipo',
             'saldo' => 'Saldo',
             'subtotal' => 'Subtotal',
             'descuento' => 'Descuento',
             'total' => 'Total',
-            'create_time' => 'Create Time',
+            'create_time' => 'Fecha Creación',
             'create_user' => 'Create User',
             'update_time' => 'Update Time',
             'update_user' => 'Update User',
@@ -127,11 +127,11 @@ class Reservacion extends \yii\db\ActiveRecord
 	{
 		return [
 			'0' => 'Sin Descuento',
-			'1' => '5%', 
+			'1' => '5%',
 			'2' => '10%',
-			'3' => '15%', 
+			'3' => '15%',
 			'4' => '20%',
-			'5' => '50%', 
+			'5' => '50%',
 			'6' => '100%',
 		];
 	}
@@ -160,7 +160,7 @@ class Reservacion extends \yii\db\ActiveRecord
 	public function obtenerEstado($key)
     {
 
-        switch ($key) 
+        switch ($key)
         {
             case 0:
                 return 'Ocupada';
@@ -179,7 +179,7 @@ class Reservacion extends \yii\db\ActiveRecord
                 break;
         }
 	}
-	
+
 
 	public function estadosReservacion()
     {
@@ -190,12 +190,12 @@ class Reservacion extends \yii\db\ActiveRecord
 			3 => 'No Show',
 
 		];
-		   
+
     }
-    
+
     public function obtenerDisponibles($fecha_entrada,$fecha_Salida)
     {
-        
+
         $habitaciones=Yii::$app->db->createCommand('SELECT id, descripcion, tipo_habitacion FROM habitacion WHERE id NOT IN (SELECT id_habitacion FROM reservacion WHERE (fecha_entrada BETWEEN :fecha_entrada AND :fecha_salida)  OR (fecha_salida BETWEEN :fecha_entrada AND :fecha_salida))')
            ->bindValue(':fecha_entrada', $fecha_entrada)
            ->bindValue(':fecha_salida', $fecha_salida)
@@ -205,8 +205,8 @@ class Reservacion extends \yii\db\ActiveRecord
 
 
 
-	
-	
-	
-	
+
+
+
+
 }

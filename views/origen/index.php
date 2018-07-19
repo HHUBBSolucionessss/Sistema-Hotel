@@ -3,11 +3,13 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 
+use yii\bootstrap\Modal;
+use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\OrigenSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Origens';
+$this->title = 'Orígenes';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="origen-index">
@@ -16,8 +18,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Origen', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::button('Crear origen', ['value'=>Url::to('../origen/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
+
+    <?php
+      Modal::begin([
+        'header' => '<h4 style="color:#337AB7";>Crear Origen</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+      ]);
+
+      echo "<div id='modalContent'></div>";
+
+      Modal::end();
+    ?>
 
     <?php
 

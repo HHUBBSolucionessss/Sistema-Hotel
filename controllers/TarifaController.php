@@ -70,12 +70,12 @@ class TarifaController extends Controller
     {
         $modelTarifa = new Tarifa;
         $modelsTarifaDetallada = [new TarifaDetallada];
-        if ($modelTarifa->load(Yii::$app->request->post())) 
+        if ($modelTarifa->load(Yii::$app->request->post()))
         {
             $modelTarifaDetallada = Model::createMultiple(TarifaDetallada::classname());
             Model::loadMultiple($modelTarifaDetallada, Yii::$app->request->post());
             // ajax validation
-            if (Yii::$app->request->isAjax) 
+            if (Yii::$app->request->isAjax)
             {
                 Yii::$app->response->format = Response::FORMAT_JSON;
                 return ArrayHelper::merge(
@@ -88,14 +88,14 @@ class TarifaController extends Controller
             //$modelTarifaDetallada->id_tarifa=0;
             $validacion=Model::validateMultiple($modelTarifaDetallada);
             //$valid =  $validacion && $valid;
-            if ($valid) 
+            if ($valid)
             {
                 $transaction = \Yii::$app->db->beginTransaction();
-                try 
+                try
                 {
-                    if ($flag = $modelTarifa->save(false)) 
+                    if ($flag = $modelTarifa->save(false))
                     {
-                        foreach ($modelTarifaDetallada as $modelTarifaDetallada) 
+                        foreach ($modelTarifaDetallada as $modelTarifaDetallada)
                         {
                             $modelTarifaDetallada->id_tarifa = $modelTarifa->id;
                             if (! ($flag = $modelTarifaDetallada->save(false)))
@@ -105,7 +105,7 @@ class TarifaController extends Controller
                             }
                         }
                     }
-                    if ($flag) 
+                    if ($flag)
                     {
                         $transaction->commit();
                         return $this->redirect(['view', 'id' => $modelTarifa->id]);
@@ -134,7 +134,7 @@ class TarifaController extends Controller
         $tarifa = $this->findModel($id);
         $tarifasDetallada = $tarifa->detalleTarifa($tarifa->id);
 
-        if ($tarifa->load(Yii::$app->request->post())) 
+        if ($tarifa->load(Yii::$app->request->post()))
         {
 
             $oldIDs = ArrayHelper::map($tarifasDetallada, 'id', 'id');

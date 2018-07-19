@@ -49,12 +49,12 @@ class Habitacion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'descripcion' => 'Descripcion',
-            'tipo_habitacion' => 'Tipo De Habitacion',
+            'descripcion' => 'Descripción',
+            'tipo_habitacion' => 'Tipo De Habitación',
             'status' => 'Estado', //Libre Ocupada
             'capacidad' => 'Capacidad',
             'create_user' => 'Create User',
-            'create_time' => 'Create Time',
+            'create_time' => 'Fecha Creación',
             'update_user' => 'Update User',
             'update_time' => 'Update Time',
         ];
@@ -78,7 +78,7 @@ class Habitacion extends \yii\db\ActiveRecord
 
     public function obtenerEstado($key)
     {
-        switch ($key) 
+        switch ($key)
         {
             case 0:
                 return 'Inactivo';
@@ -97,7 +97,7 @@ class Habitacion extends \yii\db\ActiveRecord
         $model=TipoHabitacion::findOne($id);
         return $model->descripcion;
     }
-    
+
     public function obtenerDescripcion($id)
     {
         $model=Habitacion::findOne($id);
