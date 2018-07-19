@@ -16,7 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="caja-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
@@ -25,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
       Modal::begin([
-        'header' => '<h4>Crear Habitación</h4>',
+        'header' => '<h4>Crear Caja</h4>',
         'id' => 'modal',
         'size' => 'modal-lg',
       ]);
@@ -33,9 +32,9 @@ $this->params['breadcrumbs'][] = $this->title;
       echo "<div id='modalContent'></div>";
 
       Modal::end();
-
     ?>
 
+<?php Pjax::begin(); ?>
         <?php
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],

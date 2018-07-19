@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Habitacion */
 
-$this->title = 'Crear Habitaciones';
+$this->title = 'Crear Habitación';
 $this->params['breadcrumbs'][] = ['label' => 'Habitaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -14,7 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->renderAjax('_form', [
+    <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
 

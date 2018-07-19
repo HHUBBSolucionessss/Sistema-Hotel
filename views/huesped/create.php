@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Huesped */
 
-$this->title = 'Create Huesped';
-$this->params['breadcrumbs'][] = ['label' => 'Huespeds', 'url' => ['index']];
+$this->title = 'Crear Huésped';
+$this->params['breadcrumbs'][] = ['label' => 'Huéspedes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="huesped-create">
