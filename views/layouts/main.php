@@ -38,8 +38,8 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Inicio', 'url' => ['/site/index']],
-            ['label' => 'Regístrate', 'url' => ['/site/register']],
+
+            ['label' => 'Error', 'url' => ['/site/register']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Iniciar Sesión', 'url' => ['/site/login']]
             ) : (
@@ -47,7 +47,8 @@ AppAsset::register($this);
                 . Html::beginForm(['/site/logout'], 'post')
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link logout']
+                    ['class' => 'btn btn-link logout'],
+                    ['label' => 'Inicio', 'url' => ['/site/index']]
                 )
                 . Html::endForm()
                 . '</li>'
@@ -68,9 +69,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; Hotel  <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left">&copy; Sistema Hotel - Copyright Todos los Derechos Reservados <?= date('Y') ?></p>
     </div>
 </footer>
 

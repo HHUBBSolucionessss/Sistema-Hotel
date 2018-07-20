@@ -2,7 +2,6 @@
 use yii\helpers\Url;
 use yii\helpers\Html;
 
-
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 use kartik\daterange\DateRangePicker;
@@ -23,6 +22,7 @@ use app\models\RegistrarUsuario;
 
 $this->title = 'Sistema Hotel';
 ?>
+
 <div class="site-index">
     <div class="jumbotron">
         <?= Html::a('Habitaciones', ['/habitacion/index'], ['class'=>'btn']) ?>
@@ -69,19 +69,18 @@ $this->title = 'Sistema Hotel';
                         'contentOptions'=>['class'=>'kv-sticky-column'],
                     ],
                     [
-                        'class' => 'kartik\grid\EditableColumn',
-                        'attribute' => 'status',
-                        'vAlign' => 'middle',
-                        'width' => '180px',
-                        'value' => function ($model, $key, $index, $widget) {
+                      'attribute'=>'status',
+                      'vAlign'=>'middle',
+                      'value'=>function ($model, $key, $index, $widget) {
+                          return $model->obtenerEstadoChekIn($model->status);
                         },
-                        'filterType' => GridView::FILTER_SELECT2,
-                        'filter' => ['0'=>'Pendiente','1'=>'Activa','3'=>'No Show'],
-                        'filterWidgetOptions' => [
-                            'pluginOptions' => ['allowClear' => true],
+                        'filterType'=>GridView::FILTER_SELECT2,
+                        'filter'=> ['0' => 'Pendiente', '1' => 'Activa', '2' => 'No Show'],
+                        'filterWidgetOptions'=>[
+                            'pluginOptions'=>['allowClear'=>true],
                         ],
-                        'filterInputOptions' => ['placeholder' => 'Estado'],
-                        'format' => 'raw'
+                        'filterInputOptions'=>['placeholder'=>'Estado ...'],
+                        'format'=>'raw'
                     ],
 
                     [
@@ -181,14 +180,15 @@ $this->title = 'Sistema Hotel';
                         'vAlign' => 'middle',
                         'width' => '180px',
                         'value' => function ($model, $key, $index, $widget) {
-                            $reservacion=new Reservacion();
-                            return $reservacion->obtenerEstado($model->status);
                         },
+                        'filterType' => GridView::FILTER_SELECT2,
+                        'filter' => ['0' => 'Ocupada', '1' => 'Desocupada', '2' => 'Cancelada', '3' => 'No Show' ],
+                        'filterWidgetOptions' => [
+                            'pluginOptions' => ['allowClear' => true],
+                        ],
+                        'filterInputOptions' => ['placeholder' => 'Estado'],
                         'format' => 'raw'
                     ],
-
-
-
                     [
                         'class' => 'kartik\grid\ActionColumn',
                         'template'=>'{view}',

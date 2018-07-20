@@ -68,9 +68,9 @@ class Reservacion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_habitacion' => 'ID Habitación',
+            'id_habitacion' => 'Habitación',
             'id_origen' => 'ID Origen',
-            'id_huesped' => 'ID Huésped',
+            'id_huesped' => 'Huésped',
             'fecha_entrada' => 'Fecha Entrada',
             'fecha_salida' => 'Fecha Salida',
             'notas' => 'Notas',
@@ -157,29 +157,54 @@ class Reservacion extends \yii\db\ActiveRecord
         }
 	}
 
-	public function obtenerEstado($key)
-    {
 
-        switch ($key)
-        {
-            case 0:
-                return 'Ocupada';
-                break;
-            case 1:
-                return 'Desocupada';
-                break;
-            case 2:
-                return 'Cancelada';
-				break;
-			case 3:
-                return 'No Show';
-                break;
-            default:
-                return 'Sin información';
-                break;
-        }
-	}
+public function obtenerEstadoChekIn($key)
+  {
 
+      switch ($key)
+      {
+          case 0:
+              return 'Pendiente';
+              break;
+          case 1:
+              return 'Activa';
+              break;
+          case 2:
+              return 'No Show';
+              break;
+          default:
+              return 'Sin información';
+              break;
+      }
+}
+
+public function obtenerEstado($key)
+  {
+
+      switch ($key)
+      {
+          case 0:
+              return 'Ocupada';
+              break;
+          case 1:
+              return 'Desocupada';
+              break;
+          case 2:
+              return 'Cancelada';
+              break;
+          case 3:
+              return 'No Show';
+              break;
+          default:
+              return 'Sin información';
+              break;
+      }
+}
+
+  public function obtenerEstadoHabitacion()
+  {
+    return ['0' => 'Ocupada', '1' => 'Desocupada', '2' => 'Cancelada', '3' => 'No Show' ];
+  }
 
 	public function estadosReservacion()
     {

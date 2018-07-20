@@ -55,7 +55,7 @@ class Caja extends \yii\db\ActiveRecord
             'tipo_movimiento' => 'Tipo Movimiento',
             'tipo_pago' => 'Tipo Pago',
             'create_time' => 'Fecha Creación',
-            'create_user' => 'Create User',
+            'create_user' => 'Registró',
         ];
     }
 

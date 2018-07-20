@@ -46,21 +46,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'pluginOptions' => ['allowClear'=>true, 'width'=>'100%'],
                         ],
                     ],
-                    [
-                        'attribute'=>'status',
-                        'label'=>'Estado',
-                        'format'=>'raw',
-                        'value'=>$model->status ? '<span class="label label-success">Activa </span>' : '<span class="label label-danger">Inactiva</span>',
-                        'type'=>DetailView::INPUT_SWITCH,
-                        'widgetOptions' =>
-                        [
-                            'pluginOptions' =>
-                            [
-                                'onText' => 'Activa',
-                                'offText' => 'Inactiva',
-                            ]
-                        ],
-                    ],
                     'capacidad',
                     [
                         'attribute'=>'create_time',
