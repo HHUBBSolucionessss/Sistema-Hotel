@@ -38,7 +38,7 @@ $this->title = 'Sistema Hotel';
 
         <div class="col-md-12">
             <div class="panel panel-success">
-            <div class="panel-heading">Check IN</div>
+            <div class="panel-heading">Check In</div>
             <?php Pjax::begin(); ?>
                 <?php
                 $gridColumnsIn = [
@@ -81,6 +81,7 @@ $this->title = 'Sistema Hotel';
                         ],
                         'filterInputOptions'=>['placeholder'=>'Estado ...'],
                         'format'=>'raw'
+
                     ],
 
                     [
@@ -247,7 +248,7 @@ $this->title = 'Sistema Hotel';
                         ]);
                     ?>
 
-                <?php AjaxSubmitButton::begin([
+              <br>  <?php AjaxSubmitButton::begin([
                 'label' => 'Comprobar',
                 'ajaxOptions' => [
                     'type'=>'POST',
@@ -257,10 +258,11 @@ $this->title = 'Sistema Hotel';
                         $("#output").html(html);
                         }'),
                 ],
-                'options' => ['class' => 'customclass', 'type' => 'submit'],
+                'options' => ['class' => 'customclass', 'type' => 'submit', 'class' => 'btn btn-success', 'id' => 'modalButton'],
                 ]);
                 AjaxSubmitButton::end();
             ?>
+          </br>
 
            <?php ActiveForm::end(); ?>
 

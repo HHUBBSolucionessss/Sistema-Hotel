@@ -45,7 +45,7 @@ class ReservacionController extends Controller
 				[
 					[
 						'allow' => true,
-						'roles' => ['?'],
+						'roles' => ['@'],
 					],
 				],
 			],
@@ -201,14 +201,6 @@ class ReservacionController extends Controller
 
 
 	}
-
-
-
-
-
-
-
-
 
 	/**
 	* Finds the Reservacion model based on its primary key value.
