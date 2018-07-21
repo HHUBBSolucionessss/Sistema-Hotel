@@ -3,12 +3,13 @@
 use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\editable\Editable;
+use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\RegistrarUsuario */
 
-$this->title = $model->id;
+$this->title = 'Vista del usuario '. $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -52,6 +53,27 @@ $this->params['breadcrumbs'][] = $this->title;
             ]);
 
         ?>
+        </div>
+
+        <div class="privilegios">
+
+          <p>
+              <?= Html::a(Yii::t('app', 'Definir privilegios'), ['../web/privilegio/update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+          </p>
+
+          <?php
+            Modal::begin([
+              'header' => '<h4 style="color:#337AB7";>Definir privilegios</h4>',
+              'id' => 'modal',
+              'size' => 'modal-lg',
+            ]);
+
+            echo "<div id='modalContent'></div>";
+
+            Modal::end();
+
+          ?>
+
         </div>
 
 

@@ -39,12 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
 
-                [
-                    'class' => 'kartik\grid\ActionColumn',
-                    'template'=>'{delete}',
-                    'vAlign'=>'middle',
-
-                ],
             ];
 
             echo GridView::widget([

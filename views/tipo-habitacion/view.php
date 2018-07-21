@@ -9,7 +9,7 @@ use yii\helpers\Url;
 /* @var $model app\models\TipoHabitacion */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Tipo Habitacions', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tipo Habitaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tipo-habitacion-view">
