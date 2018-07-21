@@ -165,6 +165,7 @@ class ReservacionSearch extends Reservacion
 	     */
 	    public function searchIn($params)
 	    {
+				// Consulta para el vencimiento de las entradas
 		$query = Reservacion::find()->andWhere('status!=0')->andWhere(['fecha_entrada'=>date('Y-m-d')]);
 
 		// 		add conditions that should always apply here
@@ -213,6 +214,7 @@ class ReservacionSearch extends Reservacion
 	     */
 	    public function searchOut($params)
 	    {
+				// Consulta para el vencimiento de las reservaciones
 		$query = Reservacion::find()->andWhere('status!=0')->andWhere(['fecha_salida'=>date('Y-m-d')]);
 
 
