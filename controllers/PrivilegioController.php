@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Privilegio;
+use app\models\User;
+
 use app\models\PrivilegiosSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -84,10 +86,14 @@ class PrivilegioController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+      //Antes de realizar la consulta y asignar dichos valores a $model
+      //Debo buscar el id de privilegioutilizando elid se usuaro que llegua porel requested
+
+      $usuario=User::findOne($id);
+      $model = $this->findModel($usuario['id']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_usuario]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [

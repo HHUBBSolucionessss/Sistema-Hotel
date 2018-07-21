@@ -121,24 +121,22 @@ class RegistrarUsuarioController extends Controller
 		$model = new SignupForm();
 		$privilegio= new Privilegio();
 
-		$id_usu = $model->id;
-		$privilegio->crear_habitacion=1;
-		$privilegio->id_usuario = 8;
+
+
 
 
 		if ($model->load(Yii::$app->request->post()))
 		{
 
-			if ($user = $model->signup()&&$privilegio->save())
+			if ($user = $model->signup())
 			{
-
-
-				if (Yii::$app->getUser()->login($user)) {
-
-
-					return $this->goHome();
-
+				$privilegio->id_usuario=$user->id;
+				$privilegio->crear_habitacion=1;
+				if ($privilegio->save())
+				{
+				  	return $this->goHome();
 				}
+
 
 			}
 
