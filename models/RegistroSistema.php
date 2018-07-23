@@ -41,6 +41,7 @@ class RegistroSistema extends \yii\db\ActiveRecord
             'id' => 'ID',
             'descripcion' => 'Descripción de movimiento',
             'create_time' => 'Fecha Creación',
+            'create_user' => 'create_user',
         ];
     }
 }

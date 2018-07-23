@@ -183,7 +183,7 @@ $this->title = 'Sistema Hotel';
                         'value' => function ($model, $key, $index, $widget) {
                         },
                         'filterType' => GridView::FILTER_SELECT2,
-                        'filter' => ['1' => 'Ocupada', '0' => 'Desocupada'],
+                        'filter' => ['1' => 'Ocupada', '0' => 'Terminado'],
                         'filterWidgetOptions' => [
                             'pluginOptions' => ['allowClear' => true],
                         ],

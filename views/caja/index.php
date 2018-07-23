@@ -96,7 +96,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'template'=>'{delete}',

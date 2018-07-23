@@ -107,8 +107,6 @@ class RegistrarUsuarioController extends Controller
 
 	}
 
-
-
 	/**
      * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -121,9 +119,7 @@ class RegistrarUsuarioController extends Controller
 		$model = new SignupForm();
 		$privilegio= new Privilegio();
 
-
-
-
+		$model->create_user=Yii::$app->user->identity->id;
 
 		if ($model->load(Yii::$app->request->post()))
 		{
@@ -132,6 +128,7 @@ class RegistrarUsuarioController extends Controller
 			{
 				$privilegio->id_usuario=$user->id;
 				$privilegio->crear_habitacion=1;
+				$privilegio->Yii::$app->user->identity->id;
 				if ($privilegio->save())
 				{
 				  	return $this->goHome();
@@ -165,6 +162,7 @@ class RegistrarUsuarioController extends Controller
 
 		$model = $this->findModel($id);
 
+		$model->create_user=Yii::$app->user->identity->id;
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 

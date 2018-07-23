@@ -93,7 +93,7 @@ class HabitacionController extends Controller
         if ($model->load(Yii::$app->request->post()))
         {
 
-            $model->create_user=1;
+            $model->create_user=Yii::$app->user->identity->id;
             $model->create_time=date('Y-m-d H:i:s');
             $model->status=1;
             $registroSistema->descripcion="El usuario ".'1'." ha registrado una habitación en la descripción".$model->descripcion;

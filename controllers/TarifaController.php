@@ -69,6 +69,7 @@ class TarifaController extends Controller
     public function actionCreate()
     {
         $modelTarifa = new Tarifa;
+        $modelTarifa->create_user=Yii::$app->user->identity->id;
         $modelsTarifaDetallada = [new TarifaDetallada];
         if ($modelTarifa->load(Yii::$app->request->post()))
         {
@@ -132,6 +133,8 @@ class TarifaController extends Controller
     public function actionUpdate($id)
     {
         $tarifa = $this->findModel($id);
+
+        $tarifa->create_user=Yii::$app->user->identity->id;
         $tarifasDetallada = $tarifa->detalleTarifa($tarifa->id);
 
         if ($tarifa->load(Yii::$app->request->post()))

@@ -65,7 +65,9 @@ class RegistroSistemaController extends Controller
     {
         $model = new RegistroSistema();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) 
+        $model->create_user=Yii::$app->user->identity->id;
+
+        if ($model->load(Yii::$app->request->post()) && $model->save())
         {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -84,6 +86,8 @@ class RegistroSistemaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        $model->create_user=Yii::$app->user->identity->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

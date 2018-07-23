@@ -82,6 +82,8 @@ class OrigenController extends Controller
     {
         $model = new Origen();
 
+        $model->create_user=Yii::$app->user->identity->id;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }

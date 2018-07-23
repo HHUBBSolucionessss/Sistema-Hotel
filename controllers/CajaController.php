@@ -63,12 +63,31 @@ class CajaController extends Controller
     public function actionCreate()
     {
         $model = new Caja();
+        $model->create_user=Yii::$app->user->identity->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index', 'id' => $model->id]);
         }
 
         return $this->renderAjax('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Creates a new Caja model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionApertura()
+    {
+        $model = new Caja();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index', 'id' => $model->id]);
+        }
+
+        return $this->renderAjax('apertura', [
             'model' => $model,
         ]);
     }
@@ -82,6 +101,7 @@ class CajaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->create_user=Yii::$app->user->identity->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

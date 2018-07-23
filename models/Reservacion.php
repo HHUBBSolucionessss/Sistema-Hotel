@@ -164,7 +164,7 @@ public function obtenerEstadoChekIn($key)
       switch ($key)
       {
           case 0:
-              return 'Desocupada';
+              return 'Terminado';
               break;
           case 1:
               return 'Ocupada';
@@ -193,7 +193,7 @@ public function obtenerEstado($key)
               return 'Ocupada';
               break;
           case 1:
-              return 'Desocupada';
+              return 'Terminado';
               break;
           case 2:
               return 'Cancelada';
@@ -209,14 +209,14 @@ public function obtenerEstado($key)
 
   public function obtenerEstadoHabitacion()
   {
-    return ['0' => 'Ocupada', '1' => 'Desocupada', '2' => 'Cancelada', '3' => 'No Show' ];
+    return ['0' => 'Ocupada', '1' => 'Terminado', '2' => 'Cancelada', '3' => 'No Show' ];
   }
 
 	public function estadosReservacion()
     {
 		return $estados=[
 			0 => 'Ocupada',
-			1 => 'Desocupada',
+			1 => 'Terminado',
 			2 => 'Cancelada',
 			3 => 'No Show',
 

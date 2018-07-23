@@ -80,7 +80,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-
+                [
+                    'attribute' => 'create_user',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'template'=>'{view}{delete}',
