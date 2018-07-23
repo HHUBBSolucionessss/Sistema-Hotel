@@ -16,11 +16,9 @@ use kartik\select2\Select2;
 <div class="caja-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    
     <?= $form->field($model, 'efectivo')->textInput(['maxlength' => true]) ?>
-
     <div class="form-group">
-        <?= Html::submitButton('Abrir Caja', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Cierre de caja', ['class' => 'btn btn-danger']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

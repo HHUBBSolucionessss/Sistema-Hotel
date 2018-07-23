@@ -19,7 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::button('Movimientos de caja', ['value'=>Url::to('../caja/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::button('Movimientos de caja', ['value'=>Url::to('../caja/create'), 'class' => 'btn btn-info', 'id' => 'modalButton']) ?>
+    </p>
+    <p>
+        <?= Html::button('Apertura Caja', ['value'=>Url::to('../caja/apertura'), 'class' => 'btn btn-success', 'id' => '_modalButtonApertura']) ?>
+    </p>
+    <p>
+        <?= Html::button('Cierre de caja', ['value'=>Url::to('../caja/cierre'), 'class' => 'btn btn-danger', 'id' => '_modalButtonCierre']) ?>
     </p>
 
     <?php
@@ -30,6 +36,28 @@ $this->params['breadcrumbs'][] = $this->title;
       ]);
 
       echo "<div id='modalContent'></div>";
+
+      Modal::end();
+    ?>
+    <?php
+      Modal::begin([
+        'header' => '<h4 style="color:#337AB7";>Apertura de caja</h4>',
+        'id' => '_modalApertura',
+        'size' => 'modal-md',
+      ]);
+
+      echo "<div id='_aperturaCaja'></div>";
+
+      Modal::end();
+    ?>
+    <?php
+      Modal::begin([
+        'header' => '<h4 style="color:#337AB7";>Cierre de caja</h4>',
+        'id' => '_modalCierre',
+        'size' => 'modal-md',
+      ]);
+
+      echo "<div id='_cierraCaja'></div>";
 
       Modal::end();
     ?>
@@ -95,12 +123,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
-                    'class' => 'kartik\grid\ActionColumn',
-                    'template'=>'{delete}',
-                    'vAlign'=>'middle',
-
                 ],
             ];
 

@@ -3,6 +3,7 @@
 namespace app\controllers;
 use Yii;
 use app\models\Caja;
+use app\models\EstadoCaja;
 use app\models\CajaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -82,12 +83,64 @@ class CajaController extends Controller
     public function actionApertura()
     {
         $model = new Caja();
+        $estadoCaja= new EstadoCaja();
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $model->descripcion="Apertura de caja";
+            $model->tipo_movimiento=0;	
+			$model->create_user=Yii::$app->user->identity->id;
+			$model->create_time=date('Y-m-d H:i:s');
+            $estadoCaja=0;
+            if($model->save())
+            //if ($model->save()&&$estadoCaja->save())
+            {
+                $searchModel = new CajaSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
+                return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                ]);
+            }
+         
         }
 
         return $this->renderAjax('apertura', [
+            'model' => $model,
+        ]);
+    }
+    /**
+     * Cierre de Caja.
+     * Al cerrar caja se agrega un momivimiento en caja y se imprime el corte.
+     * @return mixed
+     */
+    public function actionCierre()
+    {
+        $model = new Caja();
+        $estadoCaja= new EstadoCaja();
+
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $model->descripcion="Cierre de caja";
+            $model->tipo_movimiento=1;	
+			$model->efectivo=-($model->efectivo);
+			$model->create_user=Yii::$app->user->identity->id;
+            $model->create_time=date('Y-m-d H:i:s');
+            $estadoCaja=1;
+           if($model->save())
+            // if ($model->save()&&$estadoCaja->save())
+            {
+                $searchModel = new CajaSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+                return $this->render('index', [
+                    'searchModel' => $searchModel,
+                    'dataProvider' => $dataProvider,
+                ]);
+            }       
+        }
+
+        return $this->renderAjax('cierre', [
             'model' => $model,
         ]);
     }
