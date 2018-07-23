@@ -7,6 +7,7 @@ use kartik\detail\DetailView;
 
 use app\models\Habitacion;
 use app\models\Huesped;
+use app\models\Caja;
 use app\models\Origen;
 
 /* @var $this yii\web\View */
@@ -80,7 +81,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         'adultos',
                         'ninos',
                         'noches',
-                        'status',
+                        [
+                            'attribute'=>'status',
+                            'format'=>'raw',
+                            'value'=>$model->obtenerEstado($model->status),
+                            'displayOnly'=>true,
+                        ],
+                        
                         [
                             'attribute'=>'estado_pago',
                             'label'=>'Estado Pago',
@@ -176,12 +183,21 @@ $this->params['breadcrumbs'][] = $this->title;
                         'headerOptions'=>['class'=>'kv-sticky-column'],
                         'contentOptions'=>['class'=>'kv-sticky-column'],
                     ],
-                    [
-                        'attribute' => 'tipo_pago',
-                        'vAlign'=>'middle',
-                        'headerOptions'=>['class'=>'kv-sticky-column'],
-                        'contentOptions'=>['class'=>'kv-sticky-column'],
+                [
+                  'attribute'=>'tipo_pago',
+                  'vAlign'=>'middle',
+                  'value'=>function ($model, $key, $index, $widget) {
+                      $model=new Caja();
+                      return $model->obtenerTipoPago($model->tipo_pago);
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=> ['0' => 'Entrada', '1' => 'Salida'],
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
                     ],
+                    'filterInputOptions'=>['placeholder'=>'Tipo Pago...'],
+                    'format'=>'raw'
+                ],
                 ];
 
                 echo GridView::widget([

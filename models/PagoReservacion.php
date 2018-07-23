@@ -23,7 +23,6 @@ use Yii;
  */
 class PagoReservacion extends \yii\db\ActiveRecord
 {
-    public $total;
     public $saldo;
     /**
      * @inheritdoc
@@ -54,14 +53,15 @@ class PagoReservacion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_reservacion' => 'Id Reservacion',
+            'id_reservacion' => 'Folio Reservación',
             'efectivo' => 'Efectivo',
             'tarjeta' => 'Tarjeta',
             'comision' => 'Comision',
             'deposito' => 'Deposito',
-            'total' => 'Total',
+            'total' => 'Total del pago',
             'tipo_pago' => 'Tipo Pago',
             'estado' => 'Estado',
+            'saldo'=>'Saldo',
             'create_time' => 'Create Time',
             'create_user' => 'Create User',
         ];

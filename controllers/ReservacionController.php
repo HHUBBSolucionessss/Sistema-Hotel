@@ -96,28 +96,13 @@ class ReservacionController extends Controller
 
 	public function actionIndex()
 	{
-
-
 		$searchModel = new ReservacionSearch();
-
-
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-
 		return $this->render('index', [
 		'searchModel' => $searchModel,
 		'dataProvider' => $dataProvider,
 		]);
-
-
 	}
-
-
-
-
-
-
-
 
 
 	/**
@@ -129,17 +114,12 @@ class ReservacionController extends Controller
 
 	public function actionView($id)
 	{
-
-
 		$searchModel = new ReservacionSearch();
-
 		$dataProvider = $searchModel->buscarPagos(Yii::$app->request->queryParams);
 		return $this->render('view', [
 		'model' => $this->findModel($id),
 		'dataProvider'=>$dataProvider
 		]);
-
-
 	}
 
 
@@ -213,20 +193,11 @@ class ReservacionController extends Controller
 
 	protected function findModel($id)
 	{
-
-
-		if (($model = Reservacion::findOne($id)) !== null) {
-
-
+		if (($model = Reservacion::findOne($id)) !== null) 
+		{
 			return $model;
-
-
 		}
-
-
 		throw new NotFoundHttpException('The requested page does not exist.');
-
-
 	}
 
 
@@ -275,29 +246,54 @@ class ReservacionController extends Controller
 
 	public function actionPagoReservacion($id)
 	{
+		/*
+			Status en reservaciones
+			Desocupada=0
+			Ocupada = 1
+			Pendiente=2
+			No show=3
+			Cancelada=4
 
+			ESTADOS DE PAGO
+			no pagada =0
+			Pagada=1
+
+			CAJA
+			entrada=0
+			salida=1
+
+			Pago Reservación
+			Activo=1
+			Cancelado=0
+		*/
 		$pagoReservacion = new PagoReservacion();
 		$caja= new Caja();
 		$registroSistema= new RegistroSistema();
-		$reservacion =  $this->findModel($id);
+		$reservacion = $this->findModel($id);
 		if ($pagoReservacion->load(Yii::$app->request->post()))
 		{
+			//Pago Reservación
 			$pagoReservacion->id_reservacion=$id;
-			$pagoReservacion->create_user=1;
+			$pagoReservacion->create_user=Yii::$app->user->identity->id;
 			$pagoReservacion->create_time=date('Y-m-d H:i:s');
 			$pagoReservacion->estado=1;
-			//0			Cancelado 1 Activo
-			$caja->descripcion="PAGO A LA RESERVACION CON FOLIO ".$id;
+			
+			//CAJA
+			$caja->descripcion="PAGO A LA RESERVACION ".$id." CON FOLIO ".$pagoReservacion->id;
 			$caja->tipo_movimiento=0;
-			//0			=>'Entrada' 1=>'Salida'
 			$caja->efectivo=$pagoReservacion->efectivo;
 			$caja->tarjeta=$pagoReservacion->tarjeta;
 			$caja->deposito=$pagoReservacion->deposito;
 			$caja->tipo_pago=$pagoReservacion->tipo_pago;
-			$caja->create_user=1;
+			$caja->create_user=Yii::$app->user->identity->id;
 			$caja->create_time=date('Y-m-d H:i:s');
-			$registroSistema->descripcion="EL USUARIO ". 1 ." HA REGISTRADO UN PAGO A LA RESERVACION CON FOLIO ". $id ." CON UN MONTO DE ".$pagoReservacion->total;
-			$reservacion->saldo=$pagoReservacion->saldo;
+
+			//Registro de sistema
+			$registroSistema->descripcion="EL USUARIO ". Yii::$app->user->identity->id ." HA REGISTRADO UN PAGO A LA RESERVACION ". $id ." POR UN MONTO DE ".$pagoReservacion->total;
+			
+			
+			//Reservación
+			$reservacion->saldo-=$pagoReservacion->total;
 			if ($reservacion->saldo==0)
 			{
 				$reservacion->estado_pago=1;
@@ -306,71 +302,72 @@ class ReservacionController extends Controller
 			{
 				$reservacion->estado_pago=0;
 			}
-
 			if ($pagoReservacion->save() && $caja->save() && $registroSistema->save() && $reservacion->save() )
 			{
 				return $this->redirect(['view', 'id' => $pagoReservacion->id_reservacion]);
 			}
-
 		}
-
-
 		return $this->render('pago_reservacion', [
 		'model' => $this->findModel($id),
 		'pago'=>$pagoReservacion,
 		]);
-
-
 	}
 
 
 
 	public function actionHabitaciones()
 	{
-
-
 		if (Yii::$app->request->post())
 		{
-
-
 			$searchModel = new ReservacionSearch();
-
-
 			$dataProvider = $searchModel->buscarDisponibles(Yii::$app->request->post('fecha_entrada'),Yii::$app->request->post('fecha_salida'));
 			return $this->renderAjax('_reservacion', [
 			'dataProvider' => $dataProvider,
 			'fecha_entrada'=>Yii::$app->request->post('fecha_entrada'),
 			'fecha_salida'=>Yii::$app->request->post('fecha_salida'),
 			'tipo_habitacion'=>Yii::$app->request->post('tipo_habitacion'),
-
 			]);
-
-
 		}
-
-
-
-
 	}
 
 
 	public function actionNueva()
 	{
+		/*
+			Status en reservaciones
+			Desocupada=0
+			Ocupada = 1
+			Pendiente=2
+			No show=3
+			Cancelada=4
 
+			ESTADOS DE PAGO
+			no pagada =0
+			Pagada=1
+
+			CAJA
+			entrada=0
+			salida=1
+
+			Pago Reservación
+			Activo=1
+			Cancelado=0
+		*/
 		$model = new Reservacion();
 		$tipo_habitacion;
 		if ($model->load(Yii::$app->request->post()))
 		{
-			$model->create_user=1;
-			$model->status=1;
-			$model->saldo=Yii::$app->request->post('total');
+
+			$model->create_user=Yii::$app->user->identity->id;
+			$model->status=2;
+			$model->estado_pago=0;
+			$model->saldo=$model->total;
 			$model->create_time=date('Y-m-d H:i:s');
 			$model->save();
 			return $this->redirect([
 				'pago-reservacion',
 				'id' => $model->id,
-				'total'=>$model->total,]);
-
+				'saldo'=>$model->saldo,]);
 		}
 		else if (Yii::$app->request->post())
 		{
