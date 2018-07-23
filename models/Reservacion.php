@@ -165,7 +165,6 @@ class Reservacion extends \yii\db\ActiveRecord
 	
 	public function obtenerDescuentos()
 	{
-		
 		return [
 		'0' => 'Sin Descuento',
 		'1' => '5%',
@@ -174,139 +173,59 @@ class Reservacion extends \yii\db\ActiveRecord
 		'4' => '20%',
 		'5' => '50%',
 		'6' => '100%',
-		];
-		
+		];	
 	}
 	
-	
-	
-	public function tiposPago()
-	{
-		
-		return ['0' => 'Efectivo', '1' => 'Tarjeta','2'=>'Transferencia/Deposito','3'=>'Mixto'];
-		
-	}
-	
+
 	
 	public function obtenerComprobante($key)
 	{
-		
-		switch ($key) {
-			
+		switch ($key) {		
 			case 0:
-			return 'REMISION';
-			
+			return 'Remisión';
 			break;
-			
 			case 1:
-			return 'FACTURACION';
-			
+			return 'Factura';
 			break;
-			
 			default:
 			return 'Sin información';
-			
 			break;
-			
 		}
-		
 	}
-<<<<<<< HEAD
 	
 	
 	
 	public function obtenerEstadoChekIn($key)
-	{
-		
-		
+	{	
 		switch ($key)
 		{
-			
 			case 0:
-			return 'Pendiente';
-			
+			return 'Terminado';
 			break;
-			
-			case 1:
-			return 'Activa';
-			
-			break;
-			
-			case 2:
-			return 'No Show';
-			
-			break;
-			
-			default:
-			return 'Sin información';
-			
-			break;
-			
-		}
-		
-	}
-	
-		
-	public function obtenerEstado($key)
-	{
-		
-		
-		switch ($key)
-		{
-			
-			case 0:
-			return 'Terminada';
-			
-			break;
-			
 			case 1:
 			return 'Ocupada';
-			
 			break;
-			
 			case 2:
 			return 'Pendiente';
-			
 			break;
-			
 			case 3:
 			return 'No Show';
-			
-			break;
-			
-			case 4:
-			return 'Cancelada';
-			
-			break;
-			
+			break;			
 			default:
-			return 'Sin información';
-			
+			return 'Sin información';	
 			break;
-			
 		}
-		
 	}
 	
 	
-	public function obtenerEstadoHabitacion()
-	{
-		
-		return ['0' => 'Ocupada', '1' => 'Desocupada', '2' => 'Cancelada', '3' => 'No Show' ];
-		
-	}
 	
-	
-=======
 
-
-public function obtenerEstadoChekIn($key)
+public function obtenerEstado($key)
   {
-
       switch ($key)
       {
           case 0:
-              return 'Terminado';
+              return 'Terminada';
               break;
           case 1:
               return 'Ocupada';
@@ -317,31 +236,8 @@ public function obtenerEstadoChekIn($key)
           case 3:
               return 'No Show';
               break;
-          case 4:
-              return 'Cancelada';
-              break;
-          default:
-              return 'Sin información';
-              break;
-      }
-}
-
-public function obtenerEstado($key)
-  {
-
-      switch ($key)
-      {
-          case 0:
-              return 'Ocupada';
-              break;
-          case 1:
-              return 'Terminado';
-              break;
-          case 2:
-              return 'Cancelada';
-              break;
           case 3:
-              return 'No Show';
+              return 'Cancelada';
               break;
           default:
               return 'Sin información';
@@ -349,30 +245,17 @@ public function obtenerEstado($key)
       }
 }
 
-  public function obtenerEstadoHabitacion()
-  {
-    return ['0' => 'Ocupada', '1' => 'Terminado', '2' => 'Cancelada', '3' => 'No Show' ];
-  }
 
->>>>>>> 9ed23cb349e2f8fbb009278a7623a4d46dc00c43
 	public function estadosReservacion()
 	{
 		
 		return $estados=[
-<<<<<<< HEAD
-			0 => 'Ocupada',
-			1 => 'Terminado',
-			2 => 'Cancelada',
-			3 => 'No Show',
-
-=======
 		0 => 'Terminada',
 		1 => 'Ocupada',
 		2 => 'Pendiente',
         3 => 'No Show',
         4=>'Cancelada',
 		
->>>>>>> 1df888739a1bdf4403e764ed1e9a0dfae419242a
 		];
 			
 	}
@@ -380,8 +263,6 @@ public function obtenerEstado($key)
 	
 	public function obtenerDisponibles($fecha_entrada,$fecha_Salida)
 	{
-		
-		
 		$habitaciones=Yii::$app->db->createCommand('SELECT id, descripcion, tipo_habitacion FROM habitacion WHERE id NOT IN (SELECT id_habitacion FROM reservacion WHERE (fecha_entrada BETWEEN :fecha_entrada AND :fecha_salida)  OR (fecha_salida BETWEEN :fecha_entrada AND :fecha_salida))')
 		->bindValue(':fecha_entrada', $fecha_entrada)
 		->bindValue(':fecha_salida', $fecha_salida)
