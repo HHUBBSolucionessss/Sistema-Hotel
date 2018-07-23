@@ -58,7 +58,8 @@ class PrivilegiosSearch extends Privilegio
 
         // grid filtering conditions
         $query->andFilterWhere([
-            
+
+            'id_usuario' => $this->id_usuario,
             'crear_habitacion' => $this->crear_habitacion,
             'modificar_habitacion' => $this->modificar_habitacion,
             'eliminar_habitacion' => $this->eliminar_habitacion,

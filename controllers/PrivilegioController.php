@@ -90,11 +90,14 @@ class PrivilegioController extends Controller
       //Debo buscar el id de privilegioutilizando elid se usuaro que llegua porel requested
 
       $usuario=User::findOne($id);
-      $model = $this->findModel($usuario['id']);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+      $model = new Privilegio();
+
+      //$model = $this->findModel($usuario['id']);
+
+      if ($model->load(Yii::$app->request->post())) {
+          return $this->redirect(['update', 'id_usuario' => $model->id_usuario]);
+      }
 
         return $this->render('update', [
             'model' => $model,

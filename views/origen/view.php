@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'hover'=>true,
                 'mode'=>DetailView::MODE_VIEW,
                 'panel'=>[
-                    'heading'=>'Huesped </br>' . $model->nombre,
+                    'heading'=>'Huésped </br>' . $model->nombre,
                     'type'=>DetailView::TYPE_INFO,
                 ],
                 'attributes'=>

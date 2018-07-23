@@ -164,13 +164,19 @@ public function obtenerEstadoChekIn($key)
       switch ($key)
       {
           case 0:
-              return 'Pendiente';
+              return 'Desocupada';
               break;
           case 1:
-              return 'Activa';
+              return 'Ocupada';
               break;
           case 2:
+              return 'Pendiente';
+              break;
+          case 3:
               return 'No Show';
+              break;
+          case 4:
+              return 'Cancelada';
               break;
           default:
               return 'Sin información';
