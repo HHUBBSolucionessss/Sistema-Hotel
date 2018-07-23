@@ -272,7 +272,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]);?>
 
                 <?php echo Html::a('<span class="glyphicon glyphicon-plus">Nuevo Huesped</span>',
-                        ['/huesped/create'], 
+                        ['/huesped/nuevo'], 
                         [
                             'title' => 'Agregar Huesped',
                             'target' => '_blank',

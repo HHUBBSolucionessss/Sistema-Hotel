@@ -91,6 +91,28 @@ class HuespedController extends Controller
         ]);
     }
 
+
+    /**
+     * Creates a new Huesped model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionNuevo()
+    {
+        $model = new Huesped();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('nuevo', [
+            'model' => $model,
+        ]);
+    }
+
+
+
+
     /**
      * Updates an existing Huesped model.
      * If update is successful, the browser will be redirected to the 'view' page.
