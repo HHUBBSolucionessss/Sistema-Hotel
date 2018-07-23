@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="privilegios">
 
           <p>
-              <?= Html::a(Yii::t('app', 'Definir privilegios'), ['../web/privilegio/update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+              <?= Html::a(Yii::t('app', 'Definir privilegios'), ['../web/privilegio/update', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
           </p>
 
           <?php

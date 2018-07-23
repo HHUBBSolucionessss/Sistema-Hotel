@@ -62,10 +62,10 @@ class HabitacionController extends Controller
         $registroSistema= new RegistroSistema();
         if ($model->load(Yii::$app->request->post()))
         {
-            $registroSistema->descripcion="EL USUARIO ".'1'." HA REGISTRADO UNA NUEVA HABITACION CON LA DESCRIPCION".$model->descripcion;
+            $registroSistema->descripcion="El usuario ".'1'." ha actualizado una habitación".$model->descripcion;
             if ($model->save() && $registroSistema->save())
             {
-                Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
+                Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizó correctamente');
                 return $this->redirect(['view', 'id'=>$model->id]);
             }
             else
@@ -96,7 +96,7 @@ class HabitacionController extends Controller
             $model->create_user=1;
             $model->create_time=date('Y-m-d H:i:s');
             $model->status=1;
-            $registroSistema->descripcion="EL USUARIO ".'1'." HA REGISTRADO UNA NUEVA HABITACION CON LA DESCRIPCION".$model->descripcion;
+            $registroSistema->descripcion="El usuario ".'1'." ha registrado una habitación en la descripción".$model->descripcion;
 
             if ($model->save()&&$registroSistema->save())
                 return $this->redirect(['view', 'id' => $model->id]);

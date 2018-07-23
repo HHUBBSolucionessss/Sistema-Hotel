@@ -75,7 +75,7 @@ $this->title = 'Sistema Hotel';
                           return $model->obtenerEstadoChekIn($model->status);
                         },
                         'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=> ['0' => 'Pendiente', '1' => 'Activa', '2' => 'No Show'],
+                        'filter'=> ['2' => 'Pendiente', '1' => 'Ocupada', '3' => 'No Show'],
                         'filterWidgetOptions'=>[
                             'pluginOptions'=>['allowClear'=>true],
                         ],
@@ -183,7 +183,7 @@ $this->title = 'Sistema Hotel';
                         'value' => function ($model, $key, $index, $widget) {
                         },
                         'filterType' => GridView::FILTER_SELECT2,
-                        'filter' => ['0' => 'Ocupada', '1' => 'Desocupada', '2' => 'Cancelada', '3' => 'No Show' ],
+                        'filter' => ['1' => 'Ocupada', '0' => 'Desocupada'],
                         'filterWidgetOptions' => [
                             'pluginOptions' => ['allowClear' => true],
                         ],

@@ -61,6 +61,7 @@ class Privilegio extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'id_usuario' => Yii::t('app', 'Id Usuario'),
             'crear_habitacion' => Yii::t('app', 'Crear Habitacion'),
             'modificar_habitacion' => Yii::t('app', 'Modificar Habitacion'),

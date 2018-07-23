@@ -86,7 +86,25 @@ class HuespedController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->renderAjax('create', [
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Creates a new Huesped model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionModal()
+    {
+        $model = new Huesped();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->renderAjax('modal', [
             'model' => $model,
         ]);
     }

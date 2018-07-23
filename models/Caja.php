@@ -48,6 +48,9 @@ class Caja extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'inicio' => 'Abrió con: $',
+            'abrir_con' => 'Abrir con: $',
+            'total_efectivo' => 'Total: $',
             'descripcion' => 'Descripción',
             'efectivo' => 'Efectivo',
             'tarjeta' => 'Tarjeta',

@@ -211,6 +211,7 @@ class Reservacion extends \yii\db\ActiveRecord
 		}
 		
 	}
+<<<<<<< HEAD
 	
 	
 	
@@ -296,6 +297,64 @@ class Reservacion extends \yii\db\ActiveRecord
 	}
 	
 	
+=======
+
+
+public function obtenerEstadoChekIn($key)
+  {
+
+      switch ($key)
+      {
+          case 0:
+              return 'Desocupada';
+              break;
+          case 1:
+              return 'Ocupada';
+              break;
+          case 2:
+              return 'Pendiente';
+              break;
+          case 3:
+              return 'No Show';
+              break;
+          case 4:
+              return 'Cancelada';
+              break;
+          default:
+              return 'Sin información';
+              break;
+      }
+}
+
+public function obtenerEstado($key)
+  {
+
+      switch ($key)
+      {
+          case 0:
+              return 'Ocupada';
+              break;
+          case 1:
+              return 'Desocupada';
+              break;
+          case 2:
+              return 'Cancelada';
+              break;
+          case 3:
+              return 'No Show';
+              break;
+          default:
+              return 'Sin información';
+              break;
+      }
+}
+
+  public function obtenerEstadoHabitacion()
+  {
+    return ['0' => 'Ocupada', '1' => 'Desocupada', '2' => 'Cancelada', '3' => 'No Show' ];
+  }
+
+>>>>>>> 9ed23cb349e2f8fbb009278a7623a4d46dc00c43
 	public function estadosReservacion()
 	{
 		
