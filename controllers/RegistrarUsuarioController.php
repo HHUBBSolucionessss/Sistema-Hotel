@@ -119,7 +119,7 @@ class RegistrarUsuarioController extends Controller
 		$model = new SignupForm();
 		$privilegio= new Privilegio();
 
-		$model->create_user=Yii::$app->user->identity->id;
+		//$model->create_user=Yii::$app->user->identity->id;
 
 		if ($model->load(Yii::$app->request->post()))
 		{
@@ -128,10 +128,9 @@ class RegistrarUsuarioController extends Controller
 			{
 				$privilegio->id_usuario=$user->id;
 				$privilegio->crear_habitacion=1;
-				$privilegio->$app->user->identity->id;
 				if ($privilegio->save())
 				{
-				  	return $this->goHome();
+				  	return $this->redirect(['index']);
 				}
 
 
@@ -162,11 +161,11 @@ class RegistrarUsuarioController extends Controller
 
 		$model = $this->findModel($id);
 
-		$model->create_user=Yii::$app->user->identity->id;
+		//$model->create_user=Yii::$app->user->identity->id;
 
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 
-			return $this->redirect(['view', 'id' => $model->id]);
+			return $this->redirect(['index', 'id' => $model->id]);
 
 		}
 

@@ -42,7 +42,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
         ['status', 'default', 'value' => self::STATUS_ACTIVE],
         ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
-          [['create_time', 'update_time'], 'safe'],
+          [['create_time', 'create_user', 'update_time'], 'safe'],
           [['username', 'nombre', 'email'], 'string', 'max' => 45],
         ];
     }
@@ -60,6 +60,7 @@ class User extends ActiveRecord implements IdentityInterface
           'email' => 'Correo Electrónico',
           'status' => 'Estado',
           'create_time' => 'Fecha Creación',
+          'create_user' => 'create_user',
         ];
     }
 
