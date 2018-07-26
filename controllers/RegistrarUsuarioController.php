@@ -128,7 +128,7 @@ class RegistrarUsuarioController extends Controller
 			{
 				$privilegio->id_usuario=$user->id;
 				$privilegio->crear_habitacion=1;
-				$privilegio->Yii::$app->user->identity->id;
+				$privilegio->$app->user->identity->id;
 				if ($privilegio->save())
 				{
 				  	return $this->goHome();

@@ -40,31 +40,31 @@ use Yii;
 
 class Reservacion extends \yii\db\ActiveRecord
 {
-	
-	
+
+
 	/**
      * {@inheritdoc}
      */
-	
+
 	public static function tableName()
 	{
-		
+
 		return 'reservacion';
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
      * {@inheritdoc}
      */
-	
+
 	public function rules()
 	{
-		
+
 		return [
 		[['id_habitacion', 'id_origen', 'id_huesped'], 'required'],
-		[['id_habitacion', 'id_origen', 'id_huesped', 'adultos', 'ninos', 'noches', 'status', 'estado_pago', 'tipo', 'create_user', 'update_user'], 'integer'],
+		[['id_habitacion', 'id_origen', 'id_huesped', 'adultos', 'ninos', 'noches', 'status', 'statusCheckOut', 'estado_pago', 'tipo', 'create_user', 'update_user'], 'integer'],
 		[['fecha_entrada', 'fecha_salida', 'create_time', 'update_time'], 'safe'],
 		[['saldo', 'subtotal', 'descuento', 'total'], 'number'],
 		[['notas'], 'string', 'max' => 45],
@@ -72,18 +72,18 @@ class Reservacion extends \yii\db\ActiveRecord
 		[['id_huesped'], 'exist', 'skipOnError' => true, 'targetClass' => Huesped::className(), 'targetAttribute' => ['id_huesped' => 'id']],
 		[['id_origen'], 'exist', 'skipOnError' => true, 'targetClass' => Origen::className(), 'targetAttribute' => ['id_origen' => 'id']],
 		];
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
      * {@inheritdoc}
      */
-	
+
 	public function attributeLabels()
 	{
-		
+
 		return [
 		'id' => 'ID',
 		'id_habitacion' => 'Habitación',
@@ -96,6 +96,7 @@ class Reservacion extends \yii\db\ActiveRecord
 		'ninos' => 'Niños',
 		'noches' => 'Noches',
 		'status' => 'Estado',
+		'statusCheckOut' => 'Estado',
 		'estado_pago' => 'Estado Pago',
 		'tipo' => 'Tipo',
 		'saldo' => 'Saldo',
@@ -107,62 +108,62 @@ class Reservacion extends \yii\db\ActiveRecord
 		'update_time' => 'Update Time',
 		'update_user' => 'Update User',
 		];
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
      * @return \yii\db\ActiveQuery
      */
-	
+
 	public function getPagoReservacions()
 	{
-		
+
 		return $this->hasMany(PagoReservacion::className(), ['id_reservacion' => 'id']);
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
      * @return \yii\db\ActiveQuery
      */
-	
+
 	public function getHabitacion()
 	{
-		
+
 		return $this->hasOne(Habitacion::className(), ['id' => 'id_habitacion']);
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
      * @return \yii\db\ActiveQuery
      */
-	
+
 	public function getHuesped()
 	{
-		
+
 		return $this->hasOne(Huesped::className(), ['id' => 'id_huesped']);
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
      * @return \yii\db\ActiveQuery
      */
-	
+
 	public function getOrigen()
 	{
-		
+
 		return $this->hasOne(Origen::className(), ['id' => 'id_origen']);
-		
+
 	}
-	
-	
+
+
 	public function obtenerDescuentos()
 	{
 		return [
@@ -173,14 +174,14 @@ class Reservacion extends \yii\db\ActiveRecord
 		'4' => '20%',
 		'5' => '50%',
 		'6' => '100%',
-		];	
+		];
 	}
-	
 
-	
+
+
 	public function obtenerComprobante($key)
 	{
-		switch ($key) {		
+		switch ($key) {
 			case 0:
 			return 'Remisión';
 			break;
@@ -192,33 +193,36 @@ class Reservacion extends \yii\db\ActiveRecord
 			break;
 		}
 	}
-	
-	
-	
+
+
+
 	public function obtenerEstadoChekIn($key)
-	{	
+	{
 		switch ($key)
 		{
-			case 0:
-			return 'Terminado';
-			break;
-			case 1:
-			return 'Ocupada';
-			break;
-			case 2:
-			return 'Pendiente';
-			break;
-			case 3:
-			return 'No Show';
-			break;			
-			default:
-			return 'Sin información';	
-			break;
+				case 0:
+						return 'Terminada';
+						break;
+				case 1:
+						return 'Ocupada';
+						break;
+				case 2:
+						return 'Pendiente';
+						break;
+				case 3:
+						return 'No Show';
+						break;
+				case 4:
+						return 'Cancelada';
+						break;
+				default:
+						return 'Sin información';
+						break;
 		}
 	}
-	
-	
-	
+
+
+
 
 public function obtenerEstado($key)
   {
@@ -236,7 +240,7 @@ public function obtenerEstado($key)
           case 3:
               return 'No Show';
               break;
-          case 3:
+          case 4:
               return 'Cancelada';
               break;
           default:
@@ -248,36 +252,35 @@ public function obtenerEstado($key)
 
 	public function estadosReservacion()
 	{
-		
+
 		return $estados=[
 		0 => 'Terminada',
 		1 => 'Ocupada',
 		2 => 'Pendiente',
         3 => 'No Show',
         4=>'Cancelada',
-		
+
 		];
-			
+
 	}
-	
-	
+
+
 	public function obtenerDisponibles($fecha_entrada,$fecha_Salida)
 	{
 		$habitaciones=Yii::$app->db->createCommand('SELECT id, descripcion, tipo_habitacion FROM habitacion WHERE id NOT IN (SELECT id_habitacion FROM reservacion WHERE (fecha_entrada BETWEEN :fecha_entrada AND :fecha_salida)  OR (fecha_salida BETWEEN :fecha_entrada AND :fecha_salida))')
 		->bindValue(':fecha_entrada', $fecha_entrada)
 		->bindValue(':fecha_salida', $fecha_salida)
 		->queryAl();
-		
-		return $habitaciones;
-		
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-}
 
+		return $habitaciones;
+
+	}
+
+
+
+
+
+
+
+
+}

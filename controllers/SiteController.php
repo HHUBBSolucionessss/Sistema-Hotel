@@ -14,6 +14,7 @@ use app\models\Reservacion;
 use app\models\ReservacionSearch;
 use app\models\RegistroSistema;
 use app\models\RegistroSistemaSearch;
+use yii\helpers\Json;
 
 use app\models\User;
 
@@ -76,6 +77,28 @@ class SiteController extends Controller
         $dataIn = $searchModelIn->searchIn(Yii::$app->request->queryParams);
         $searchModelOut = new ReservacionSearch();
 		    $dataOut = $searchModelOut->searchOut(Yii::$app->request->queryParams);
+
+				if (Yii::$app->request->post('hasEditable'))
+          {
+
+              $estadoId = Yii::$app->request->post('editableKey');
+							$estado = Reservacion::findOne($estadoId);
+
+							$out = Json::encode(['output'=>'', 'message'=>'']);
+							$post = [];
+							$posted = current($_POST['Reservacion']);
+							$post['Reservacion'] = $posted;
+
+								if ($estado->load($post))
+								{
+									$estado->save();
+									$output = '';
+									$out = Json::encode(['output'=>$output, 'message'=>'']);
+								}
+
+								echo $out;
+	        			return;
+          }
 
 		return $this->render('index', [
 		            'searchModelIn' => $searchModelIn,

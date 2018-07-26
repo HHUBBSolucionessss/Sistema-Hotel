@@ -69,18 +69,24 @@ $this->title = 'Sistema Hotel';
                         'contentOptions'=>['class'=>'kv-sticky-column'],
                     ],
                     [
-                      'attribute'=>'status',
-                      'vAlign'=>'middle',
-                      'value'=>function ($model, $key, $index, $widget) {
-                          return $model->obtenerEstadoChekIn($model->status);
-                        },
-                        'filterType'=>GridView::FILTER_SELECT2,
-                        'filter'=> ['2' => 'Pendiente', '1' => 'Ocupada', '3' => 'No Show'],
-                        'filterWidgetOptions'=>[
-                            'pluginOptions'=>['allowClear'=>true],
-                        ],
-                        'filterInputOptions'=>['placeholder'=>'Estado ...'],
-                        'format'=>'raw'
+                      'class' => 'kartik\grid\EditableColumn',
+                       'attribute' => 'status',
+                       'value'=>function ($model, $key, $index, $widget) {
+                         return $model->obtenerEstado($model->status);
+                       },
+                       'filterType'=>GridView::FILTER_SELECT2,
+                       'filter'=> ['2' => 'Pendiente', '1' => 'Ocupada', '3' => 'No Show'],
+                       'filterWidgetOptions'=>[
+                           'pluginOptions'=>['allowClear'=>true],
+                       ],
+                       'filterInputOptions'=>['placeholder'=>'Estado ...'],
+                       'format'=>'raw',
+                       'editableOptions' => [
+                               'header' => 'estado',
+                               'size' => 'sm',
+                               'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
+                               'data'=>['1'=>'Ocupada','3'=>'No Show']
+                           ],
 
                     ],
 
@@ -176,19 +182,25 @@ $this->title = 'Sistema Hotel';
                         'format'=>'raw'
                     ],
                     [
-                        'class' => 'kartik\grid\EditableColumn',
-                        'attribute' => 'status',
-                        'vAlign' => 'middle',
-                        'width' => '180px',
-                        'value' => function ($model, $key, $index, $widget) {
-                        },
-                        'filterType' => GridView::FILTER_SELECT2,
-                        'filter' => ['1' => 'Ocupada', '0' => 'Terminado'],
-                        'filterWidgetOptions' => [
-                            'pluginOptions' => ['allowClear' => true],
-                        ],
-                        'filterInputOptions' => ['placeholder' => 'Estado'],
-                        'format' => 'raw'
+                      'class' => 'kartik\grid\EditableColumn',
+                       'attribute' => 'statusCheckOut',
+                       'value'=>function ($model, $key, $index, $widget) {
+                         return $model->obtenerEstado($model->statusCheckOut);
+                       },
+                       'filterType'=>GridView::FILTER_SELECT2,
+                       'filter'=> ['1' => 'Ocupada', '0' => 'Terminado'],
+                       'filterWidgetOptions'=>[
+                           'pluginOptions'=>['allowClear'=>true],
+                       ],
+                       'filterInputOptions'=>['placeholder'=>'Estado ...'],
+                       'format'=>'raw',
+                       'editableOptions' => [
+                               'header' => 'estado',
+                               'size' => 'sm',
+                               'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
+                               'data'=>['1' => 'Ocupada', '0' => 'Terminado']
+                           ],
+
                     ],
                     [
                         'class' => 'kartik\grid\ActionColumn',

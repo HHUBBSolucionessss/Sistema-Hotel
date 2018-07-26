@@ -6,3 +6,5 @@ $(function(){
       .load($(this).attr('value'));
   });
 });
+
+//$.pjax.reload({container:'#$dataIn'});
