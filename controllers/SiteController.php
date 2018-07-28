@@ -91,6 +91,8 @@ class SiteController extends Controller
 
 								if ($estado->load($post))
 								{
+									$estadoCheck = new Reservacion();
+									$estadoCheck->save();
 									$estado->save();
 									$output = '';
 									$out = Json::encode(['output'=>$output, 'message'=>'']);
@@ -98,6 +100,8 @@ class SiteController extends Controller
 
 								echo $out;
 	        			return;
+
+								$estadoCheck->statusCheckOut = $estadoCheck->status;
           }
 
 		return $this->render('index', [

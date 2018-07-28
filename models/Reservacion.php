@@ -41,6 +41,14 @@ use Yii;
 class Reservacion extends \yii\db\ActiveRecord
 {
 
+	public $nombre;
+	public $email;
+	public $calle;
+	public $ciudad;
+	public $estado;
+	public $pais;
+	public $cp;
+	public $telefono;
 
 	/**
      * {@inheritdoc}
@@ -63,7 +71,7 @@ class Reservacion extends \yii\db\ActiveRecord
 	{
 
 		return [
-		[['id_habitacion', 'id_origen', 'id_huesped'], 'required'],
+		[['id_habitacion', 'id_origen'], 'required'],
 		[['id_habitacion', 'id_origen', 'id_huesped', 'adultos', 'ninos', 'noches', 'status', 'statusCheckOut', 'estado_pago', 'tipo', 'create_user', 'update_user'], 'integer'],
 		[['fecha_entrada', 'fecha_salida', 'create_time', 'update_time'], 'safe'],
 		[['saldo', 'subtotal', 'descuento', 'total'], 'number'],
@@ -250,19 +258,26 @@ public function obtenerEstado($key)
 }
 
 
-	public function estadosReservacion()
-	{
+public function estadosReservacion()
+{
 
-		return $estados=[
-		0 => 'Terminada',
-		1 => 'Ocupada',
-		2 => 'Pendiente',
-        3 => 'No Show',
-        4=>'Cancelada',
+	return $estados=[
+	0 => 'Terminada',
+	1 => 'Ocupada',
+	2 => 'Pendiente',
+			3 => 'No Show',
+			4=>'Cancelada',
 
-		];
+	];
 
-	}
+}
+
+public function tiposPago()
+{
+
+			return ['0' => 'Efectivo', '1' => 'Tarjeta','2'=>'Transferencia/Deposito','3'=>'Mixto'];
+
+}
 
 
 	public function obtenerDisponibles($fecha_entrada,$fecha_Salida)

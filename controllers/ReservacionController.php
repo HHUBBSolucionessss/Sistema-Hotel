@@ -193,7 +193,7 @@ class ReservacionController extends Controller
 
 	protected function findModel($id)
 	{
-		if (($model = Reservacion::findOne($id)) !== null) 
+		if (($model = Reservacion::findOne($id)) !== null)
 		{
 			return $model;
 		}
@@ -242,8 +242,6 @@ class ReservacionController extends Controller
 
 	}
 
-
-
 	public function actionPagoReservacion($id)
 	{
 		/*
@@ -268,16 +266,28 @@ class ReservacionController extends Controller
 		*/
 		$pagoReservacion = new PagoReservacion();
 		$caja= new Caja();
+		$huesped = new Huesped();
 		$registroSistema= new RegistroSistema();
 		$reservacion = $this->findModel($id);
 		if ($pagoReservacion->load(Yii::$app->request->post()))
 		{
+			//Huésped
+			$huesped->nombre = $reservacion->nombre;
+			$huesped->email = $reservacion->email;
+			$huesped->calle = $reservacion->calle;
+			$huesped->ciudad = $reservacion->ciudad;
+			$huesped->estado = $reservacion->estado;
+			$huesped->pais = $reservacion->pais;
+			$huesped->cp = $reservacion->cp;
+			$huesped->telefono = $reservacion->telefono;
+
+
 			//Pago Reservación
 			$pagoReservacion->id_reservacion=$id;
 			$pagoReservacion->create_user=Yii::$app->user->identity->id;
 			$pagoReservacion->create_time=date('Y-m-d H:i:s');
 			$pagoReservacion->estado=1;
-			
+
 			//CAJA
 			$caja->descripcion="PAGO A LA RESERVACION ".$id." CON FOLIO ".$pagoReservacion->id;
 			$caja->tipo_movimiento=0;
@@ -290,8 +300,8 @@ class ReservacionController extends Controller
 
 			//Registro de sistema
 			$registroSistema->descripcion="EL USUARIO ". Yii::$app->user->identity->id ." HA REGISTRADO UN PAGO A LA RESERVACION ". $id ." POR UN MONTO DE ".$pagoReservacion->total;
-			
-			
+
+
 			//Reservación
 			$reservacion->saldo-=$pagoReservacion->total;
 			if ($reservacion->saldo==0)
@@ -302,9 +312,14 @@ class ReservacionController extends Controller
 			{
 				$reservacion->estado_pago=0;
 			}
-			if ($pagoReservacion->save() && $caja->save() && $registroSistema->save() && $reservacion->save() )
+			if ($pagoReservacion->save() && $caja->save() && $registroSistema->save() && $reservacion->save())
 			{
-				return $this->redirect(['view', 'id' => $pagoReservacion->id_reservacion]);
+				if(empty($_POST['nombre']))
+				{
+					$huesped->save();
+				}
+					return $this->redirect(['view', 'id' => $pagoReservacion->id_reservacion]);
+
 			}
 		}
 		return $this->render('pago_reservacion', [

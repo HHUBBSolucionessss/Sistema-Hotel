@@ -72,6 +72,8 @@ class RegistrarUsuarioController extends Controller
 	{
 
 		$model = $this->findModel($id);
+		$privilegioId = new Privilegio();
+		$currentPrivilegio = $privilegioId->id;
 
 		if ($model->load(Yii::$app->request->post()))
 		{

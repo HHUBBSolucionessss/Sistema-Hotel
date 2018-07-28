@@ -86,12 +86,12 @@ $this->registerJs($js);
 
     <div class="padding-v-md">
         <div class="line line-dashed">
-        
-        
+
+
         </div>
     </div>
 
-    <div class="row">            
+    <div class="row">
             <?php DynamicFormWidget::begin([
                 'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
                 'widgetBody' => '.container-items', // required: css class selector
