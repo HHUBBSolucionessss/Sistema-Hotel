@@ -68,7 +68,8 @@ class UsuarioSearch extends User
             ->andFilterWhere(['like', 'nombre', $this->nombre])
             ->andFilterWhere(['like', 'email', $this->email])
             ->andFilterWhere(['like', 'status', $this->status])
-            ->andFilterWhere(['like', 'create_time', $this->create_time]);
+            ->andFilterWhere(['like', 'create_time', $this->create_time])
+            ->andFilterWhere(['like', 'create_user', $this->create_user]);
 
         return $dataProvider;
     }
