@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use kartik\detail\DetailView;
+use app\models\User;
 use kartik\editable\Editable;
 use yii\helpers\Url;
 
@@ -18,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-6">
         <?php
+        $user= new User();
             echo DetailView::widget([
                 'model'=>$model,
                 'condensed'=>true,
@@ -29,17 +31,23 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'attributes'=>
                 [
+                    [
+                      'attribute'=>'id',
+                      'format'=>'raw',
+                      'label'=>'ID',
+                      'displayOnly'=>true,
+                    ],
                     'nombre',
+                    [
+                        'attribute'=>'create_user',
+                        'format'=>'raw',
+                        'value'=>$user->obtenerNombre($model->create_user),
+                        'displayOnly'=>true,
+                    ],
                     [
                         'attribute'=>'create_time',
                         'format'=>'date',
                         'value'=>$model->create_time,
-                        'displayOnly'=>true,
-                    ],
-                    [
-                        'attribute'=>'create_user',
-                        'format'=>'raw',
-                        'value'=>$model->create_user,
                         'displayOnly'=>true,
                     ],
                     [

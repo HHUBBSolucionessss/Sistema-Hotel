@@ -38,19 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],
                 [
-                    'attribute' => 'id',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
                     'attribute' => 'nombre',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
-                    'attribute' => 'create_time',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],

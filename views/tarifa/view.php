@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
+use app\models\User;
 use yii\helpers\ArrayHelper;
 use kartik\detail\DetailView;
 use kartik\editable\Editable;
@@ -16,6 +17,7 @@ use app\models\TarifaDetalladaSearch;
 <div class="tarifa-view">
     <div class="col-md-6">
             <?php
+            $user= new User();
             echo DetailView::widget([
                 'model'=>$model,
                 'condensed'=>true,
@@ -31,6 +33,12 @@ use app\models\TarifaDetalladaSearch;
                     'id',
                     'nombre',
                     [
+                      'attribute'=>'id_tipo_habitacion',
+                      'format'=>'raw',
+                      'label'=>'Tipo Habitación',
+                      'displayOnly'=>true,
+                    ],
+                    [
                         'attribute'=>'fecha_ini',
                         'format'=>'date',
                         'value'=>$model->fecha_ini,
@@ -45,7 +53,7 @@ use app\models\TarifaDetalladaSearch;
                     [
                         'attribute'=>'create_user',
                         'format'=>'raw',
-                        'value'=>$model->create_user,
+                        'value'=>$user->obtenerNombre($model->create_user),
                         'displayOnly'=>true,
                     ],
                     [

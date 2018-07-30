@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\editable\Editable;
 use yii\helpers\Url;
+use app\models\User;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\TipoHabitacion */
@@ -19,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
         <div class="col-md-6">
         <?php
+        $user= new User();
             echo DetailView::widget([
                 'model'=>$model,
                 'condensed'=>true,
@@ -30,8 +32,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'attributes'=>
                 [
-                    'id',
+                  [
+                    'attribute'=>'id',
+                    'format'=>'raw',
+                    'label'=>'ID',
+                    'displayOnly'=>true,
+                  ],
                     'descripcion',
+                    [
+                        'attribute'=>'create_time',
+                        'format'=>'date',
+                        'value'=>$model->create_time,
+                        'displayOnly'=>true,
+                    ],
+                    [
+                        'attribute'=>'create_user',
+                        'format'=>'raw',
+                        'value'=>$user->obtenerNombre($model->create_user),
+                        'displayOnly'=>true,
+                    ],
                 ]
             ]);
 

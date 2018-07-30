@@ -11,6 +11,7 @@ use yii\helpers\Url;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Tipo de Habitaciones';
+$this->params['breadcrumbs'][] = ['label' => 'Habitaciones', 'url' => ['habitacion/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="tipo-habitacion-index">
@@ -36,12 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],
-                [
-                    'attribute' => 'id',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
                 [
                     'attribute' => 'descripcion',
                     'vAlign'=>'middle',

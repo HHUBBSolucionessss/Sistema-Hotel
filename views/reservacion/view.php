@@ -8,6 +8,7 @@ use kartik\detail\DetailView;
 use app\models\Habitacion;
 use app\models\Huesped;
 use app\models\Caja;
+use app\models\User;
 use app\models\Origen;
 
 /* @var $this yii\web\View */
@@ -39,6 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $habitacion= new Habitacion();
             $origen= new Origen();
             $huesped= new Huesped();
+            $user= new User();
             echo DetailView::widget([
                     'model'=>$model,
                     'condensed'=>true,
@@ -51,6 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons1' => '{view}',
                     'attributes'=>
                     [
+                        [
+                          'attribute'=>'id',
+                          'format'=>'raw',
+                          'label'=>'ID',
+                          'displayOnly'=>true,
+                        ],
                         [
                             'attribute'=>'id_habitacion',
                             'format'=>'raw',
@@ -87,7 +95,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value'=>$model->obtenerEstado($model->status),
                             'displayOnly'=>true,
                         ],
-                        
+
                         [
                             'attribute'=>'estado_pago',
                             'label'=>'Estado Pago',
@@ -120,15 +128,15 @@ $this->params['breadcrumbs'][] = $this->title;
                         'descuento',
                         'total',
                         [
-                            'attribute'=>'create_time',
-                            'format'=>'date',
-                            'value'=>$model->create_time,
+                            'attribute'=>'create_user',
+                            'format'=>'raw',
+                            'value'=>$user->obtenerNombre($model->create_user),
                             'displayOnly'=>true,
                         ],
                         [
-                            'attribute'=>'create_user',
-                            'format'=>'raw',
-                            'value'=>$model->create_user,
+                            'attribute'=>'create_time',
+                            'format'=>'date',
+                            'value'=>$model->create_time,
                             'displayOnly'=>true,
                         ],
                         [
@@ -214,6 +222,24 @@ $this->params['breadcrumbs'][] = $this->title;
                         '{export}',
                         '{toggleData}'
                     ],
+                    'exportConfig' => [
+                       GridView::EXCEL => [
+                           'label' => 'Exportar a Excel',
+                           'iconOptions' => ['class' => 'text-success'],
+                           'showHeader' => true,
+                           'showPageSummary' => true,
+                           'showFooter' => true,
+                           'showCaption' => true,
+                           'filename' => 'exportacion-reservacion',
+                           'alertMsg' => 'The EXCEL export file will be generated for download.',
+                           'options' => ['title' => 'Microsoft Excel 95+'],
+                           'mime' => 'application/vnd.ms-excel',
+                           'config' => [
+                           'worksheet' => 'ExportWorksheet',
+                               'cssFile' => ''
+                           ]
+                       ],
+                   ],
                     'pjax' => true,
                     'bordered' => true,
                     'striped' => false,

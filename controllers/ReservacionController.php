@@ -238,8 +238,6 @@ class ReservacionController extends Controller
 
 
 		return $out;
-
-
 	}
 
 	public function actionPagoReservacion($id)

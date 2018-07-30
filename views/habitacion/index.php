@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\widgets\Pjax;
+use app\models\User;
 
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
@@ -43,26 +44,10 @@ $this->params['breadcrumbs'][] = $this->title;
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],
                 [
-                    'attribute' => 'id',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
                     'attribute' => 'descripcion',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
-                    'attribute' => 'status',
-                    'value'=>function ($model, $key, $index, $widget) {
-                        return $model->obtenerEstado($model->status);
-                    },
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                    'format'=>'raw'
                 ],
                 [
                     'attribute' => 'tipo_habitacion',
@@ -75,13 +60,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format'=>'raw'
                 ],
                 [
-                    'attribute' => 'capacidad',
+                    'attribute' => 'status',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        return $model->obtenerEstado($model->status);
+                    },
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
+                    'format'=>'raw'
                 ],
                 [
-                    'attribute' => 'create_user',
+                    'attribute' => 'capacidad',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],

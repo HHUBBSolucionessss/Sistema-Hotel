@@ -46,16 +46,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
                 [
-                    'attribute' => 'fecha_ini',
+                    'attribute'=>'id_origen',
                     'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
-                    'attribute' => 'fecha_fin',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                    'value'=>function ($model, $key, $index, $widget) {
+                        $origen=new Origen();
+                        return $origen->obtenerOrigen($model->id_origen);
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'),
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>'Origen...'],
+                    'format'=>'raw'
                 ],
                 [
                     'attribute'=>'id_tipo_habitacion',
@@ -73,21 +76,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format'=>'raw'
                 ],
                 [
-                    'attribute'=>'id_origen',
+                    'attribute' => 'fecha_ini',
                     'vAlign'=>'middle',
-                    'value'=>function ($model, $key, $index, $widget) {
-                        $origen=new Origen();
-                        return $origen->obtenerOrigen($model->id_origen);
-                    },
-                    'filterType'=>GridView::FILTER_SELECT2,
-                    'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'),
-                    'filterWidgetOptions'=>[
-                        'pluginOptions'=>['allowClear'=>true],
-                    ],
-                    'filterInputOptions'=>['placeholder'=>'Origen...'],
-                    'format'=>'raw'
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-
+                [
+                    'attribute' => 'fecha_fin',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'template'=>'{view} {update}',

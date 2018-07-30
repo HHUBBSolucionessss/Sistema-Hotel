@@ -53,7 +53,7 @@ class Habitacion extends \yii\db\ActiveRecord
             'tipo_habitacion' => 'Tipo De Habitación',
             'status' => 'Estado', //Libre Ocupada
             'capacidad' => 'Capacidad',
-            'create_user' => 'Create User',
+            'create_user' => 'Registró',
             'create_time' => 'Fecha Creación',
             'update_user' => 'Update User',
             'update_time' => 'Update Time',

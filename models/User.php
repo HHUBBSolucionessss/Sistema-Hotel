@@ -109,6 +109,13 @@ class User extends ActiveRecord implements IdentityInterface
         ]);
     }
 
+    public function obtenerNombre($id)
+    {
+        $model=User::findOne($id);
+        return $model->nombre;
+
+    }
+
     /**
      * Finds out if password reset token is valid
      *

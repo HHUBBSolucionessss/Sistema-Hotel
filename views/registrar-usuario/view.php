@@ -31,9 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'attributes'=>
                 [
+                    [
+                      'attribute'=>'id',
+                      'format'=>'raw',
+                      'label'=>'ID',
+                      'displayOnly'=>true,
+                    ],
                     'nombre',
-                    'email:email',
                     'username',
+                    'email:email',
                     [
                         'attribute'=>'status',
                         'label'=>'Estado',

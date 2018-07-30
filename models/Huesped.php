@@ -63,7 +63,7 @@ class Huesped extends \yii\db\ActiveRecord
             'cp' => 'Código Postal',
             'telefono' => 'Teléfono',
             'create_time' => 'Fecha Creación',
-            'create_user' => 'Creó',
+            'create_user' => 'Registró',
             'update_time' => 'Actualizado',
             'update_user' => 'Actualizó',
         ];

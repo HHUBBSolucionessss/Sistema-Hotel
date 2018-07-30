@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],
                 [
-                    'attribute' => 'id',
+                    'attribute' => 'nombre',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
@@ -53,18 +53,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
                 [
-                    'attribute' => 'nombre',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
                     'attribute' => 'email',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'template'=>'{view}{delete}',

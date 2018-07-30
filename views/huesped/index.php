@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use kartik\grid\GridView;
 use yii\widgets\Pjax;
 
+use app\models\User;
+
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 /* @var $this yii\web\View */
@@ -41,12 +43,6 @@ $this->params['breadcrumbs'][] = $this->title;
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],
                 [
-                    'attribute' => 'id',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
                     'attribute' => 'nombre',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
@@ -59,18 +55,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
                 [
-                    'attribute' => 'create_user',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
                     'attribute' => 'telefono',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-
+                [
+                    'attribute' => 'calle',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
+                [
+                    'attribute' => 'colonia',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'template'=>'{view}{delete}',

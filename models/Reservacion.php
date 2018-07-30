@@ -95,7 +95,7 @@ class Reservacion extends \yii\db\ActiveRecord
 		return [
 		'id' => 'ID',
 		'id_habitacion' => 'Habitación',
-		'id_origen' => 'ID Origen',
+		'id_origen' => 'Origen',
 		'id_huesped' => 'Huésped',
 		'fecha_entrada' => 'Fecha Entrada',
 		'fecha_salida' => 'Fecha Salida',
@@ -112,7 +112,7 @@ class Reservacion extends \yii\db\ActiveRecord
 		'descuento' => 'Descuento',
 		'total' => 'Total',
 		'create_time' => 'Fecha Creación',
-		'create_user' => 'Create User',
+		'create_user' => 'Registró',
 		'update_time' => 'Update Time',
 		'update_user' => 'Update User',
 		];

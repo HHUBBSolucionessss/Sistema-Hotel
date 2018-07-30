@@ -5,6 +5,7 @@ use kartik\detail\DetailView;
 use kartik\editable\Editable;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use app\models\User;
 
 use app\models\TipoHabitacion;
 
@@ -23,6 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row">
         <div class="col-md-6">
         <?php
+        $user= new User();
             echo DetailView::widget([
                 'model'=>$model,
                 'condensed'=>true,
@@ -34,6 +36,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 'attributes'=>
                 [
+                    [
+                      'attribute'=>'id',
+                      'format'=>'raw',
+                      'label'=>'ID',
+                      'displayOnly'=>true,
+                    ],
                     'descripcion',
                     [
                         'attribute'=>'tipo_habitacion',
@@ -46,7 +54,28 @@ $this->params['breadcrumbs'][] = $this->title;
                             'pluginOptions' => ['allowClear'=>true, 'width'=>'100%'],
                         ],
                     ],
+                    [
+                        'attribute'=>'status',
+                        'label'=>'Estado',
+                        'format'=>'raw',
+                        'value'=>$model->status ? '<span class="label label-success">Activa </span>' : '<span class="label label-danger">Inactiva</span>',
+                        'type'=>DetailView::INPUT_SWITCH,
+                        'widgetOptions' =>
+                        [
+                            'pluginOptions' =>
+                            [
+                                'onText' => 'Activa',
+                                'offText' => 'Inactiva',
+                            ]
+                        ],
+                    ],
                     'capacidad',
+                    [
+                        'attribute'=>'create_user',
+                        'format'=>'raw',
+                        'value'=>$user->obtenerNombre($model->create_user),
+                        'displayOnly'=>true,
+                    ],
                     [
                         'attribute'=>'create_time',
                         'format'=>'date',
@@ -58,9 +87,5 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ?>
         </div>
-
-
-
-
-
+      </div>
 </div>

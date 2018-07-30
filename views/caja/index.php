@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 use kartik\grid\GridView;
+use app\models\User;
 
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
@@ -39,12 +40,6 @@ $this->params['breadcrumbs'][] = $this->title;
             $gridColumns = [
                 ['class' => 'kartik\grid\SerialColumn'],
                 [
-                    'attribute' => 'create_time',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
                     'attribute' => 'descripcion',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
@@ -63,23 +58,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
                 [
-                  'attribute'=>'tipo_pago',
-                  'vAlign'=>'middle',
-                  'value'=>function ($model, $key, $index, $widget) {
-                      return $model->obtenerTipoPago($model->tipo_pago);
-                    },
-                    'filterType'=>GridView::FILTER_SELECT2,
-                    'filter'=> ['0' => 'Entrada', '1' => 'Salida'],
-                    'filterWidgetOptions'=>[
-                        'pluginOptions'=>['allowClear'=>true],
-                    ],
-                    'filterInputOptions'=>['placeholder'=>'Tipo Pago...'],
-                    'format'=>'raw'
-                ],
-                [
                   'attribute'=>'tipo_movimiento',
                   'vAlign'=>'middle',
-                  'value'=>function ($model, $key, $index, $widget) {
+                  'value'=>function ($model, $key, $index) {
                       return $model->obtenerTipoMovimiento($model->tipo_movimiento);
                     },
                     'filterType'=>GridView::FILTER_SELECT2,
@@ -91,10 +72,33 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format'=>'raw'
                 ],
                 [
-                    'attribute' => 'create_user',
+                  'attribute'=>'tipo_pago',
+                  'vAlign'=>'middle',
+                  'value'=>function ($model, $key, $index) {
+                      return $model->obtenerTipoPago($model->tipo_pago);
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=> ['0' => 'Entrada', '1' => 'Salida'],
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>'Tipo Pago...'],
+                    'format'=>'raw'
+                ],
+                [
+                    'attribute' => 'create_time',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
+                [
+                    'attribute'=>'create_user',
+                    'vAlign'=>'middle',
+                    'value'=>function ($model, $key, $index) {
+                        $usuario= new User();
+                        return $usuario->obtenerNombre($model->create_user);
+                    },
+                    'format'=>'raw'
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',

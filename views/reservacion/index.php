@@ -44,12 +44,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'expandOneOnly' => true
                 ],
                 [
-                    'attribute' => 'id',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
                     'attribute'=>'id_habitacion',
                     'vAlign'=>'middle',
                     'value'=>function ($model, $key, $index, $widget) {
@@ -68,6 +62,27 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format'=>'raw'
                 ],
                 [
+                    'attribute'=>'id_origen',
+                    'vAlign'=>'middle',
+                    'value'=>function ($model, $key, $index, $widget) {
+                        $origen=new Origen();
+                        return $origen->obtenerOrigen($model->id_origen);
+                    },
+                    'filterType'=>GridView::FILTER_SELECT2,
+                    'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'),
+                    'filterWidgetOptions'=>[
+                        'pluginOptions'=>['allowClear'=>true],
+                    ],
+                    'filterInputOptions'=>['placeholder'=>'Origen...'],
+                    'format'=>'raw'
+                ],
+                [
+                    'attribute' => 'notas',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
+                ],
+                [
                     'attribute' => 'fecha_entrada',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
@@ -75,12 +90,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'attribute' => 'fecha_salida',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
-                    'attribute' => 'noches',
                     'vAlign'=>'middle',
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
@@ -99,28 +108,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-                [
-                    'attribute' => 'saldo',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
-                    'attribute'=>'id_origen',
-                    'vAlign'=>'middle',
-                    'value'=>function ($model, $key, $index, $widget) {
-                        $origen=new Origen();
-                        return $origen->obtenerOrigen($model->id_origen);
-                    },
-                    'filterType'=>GridView::FILTER_SELECT2,
-                    'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'),
-                    'filterWidgetOptions'=>[
-                        'pluginOptions'=>['allowClear'=>true],
-                    ],
-                    'filterInputOptions'=>['placeholder'=>'Origen...'],
-                    'format'=>'raw'
-                ],
-
                 [
                     'class' => 'kartik\grid\ActionColumn',
                     'template'=>'{view}{delete}',

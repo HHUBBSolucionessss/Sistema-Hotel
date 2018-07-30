@@ -101,4 +101,5 @@ class Caja extends \yii\db\ActiveRecord
           }
   	}
 
+
 }
