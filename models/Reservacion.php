@@ -72,7 +72,7 @@ class Reservacion extends \yii\db\ActiveRecord
 
 		return [
 		[['id_habitacion', 'id_origen'], 'required'],
-		[['id_habitacion', 'id_origen', 'id_huesped', 'adultos', 'ninos', 'noches', 'status', 'statusCheckOut', 'estado_pago', 'tipo', 'create_user', 'update_user'], 'integer'],
+		[['id_habitacion', 'id_origen', 'id_huesped', 'adultos', 'ninos', 'noches', 'status', 'estado_pago', 'tipo', 'create_user', 'update_user'], 'integer'],
 		[['fecha_entrada', 'fecha_salida', 'create_time', 'update_time'], 'safe'],
 		[['saldo', 'subtotal', 'descuento', 'total'], 'number'],
 		[['notas'], 'string', 'max' => 45],
@@ -104,7 +104,6 @@ class Reservacion extends \yii\db\ActiveRecord
 		'ninos' => 'Niños',
 		'noches' => 'Noches',
 		'status' => 'Estado',
-		'statusCheckOut' => 'Estado',
 		'estado_pago' => 'Estado Pago',
 		'tipo' => 'Tipo',
 		'saldo' => 'Saldo',
@@ -202,36 +201,6 @@ class Reservacion extends \yii\db\ActiveRecord
 		}
 	}
 
-
-
-	public function obtenerEstadoChekIn($key)
-	{
-		switch ($key)
-		{
-				case 0:
-						return 'Terminada';
-						break;
-				case 1:
-						return 'Ocupada';
-						break;
-				case 2:
-						return 'Pendiente';
-						break;
-				case 3:
-						return 'No Show';
-						break;
-				case 4:
-						return 'Cancelada';
-						break;
-				default:
-						return 'Sin información';
-						break;
-		}
-	}
-
-
-
-
 public function obtenerEstado($key)
   {
       switch ($key)
@@ -290,12 +259,5 @@ public function tiposPago()
 		return $habitaciones;
 
 	}
-
-
-
-
-
-
-
-
+	
 }
