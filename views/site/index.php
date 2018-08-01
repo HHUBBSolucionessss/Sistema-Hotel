@@ -38,10 +38,23 @@ $this->title = 'Sistema Hotel';
     <div class="body-content">
 
       <div class="col-md-12">
-          <div class="panel panel-success">
               <?php
+
+              $js = "$('#downloadSelected').on('click',function() {
+                        $.post(
+                            \"delete-multiple\", {
+                                pk : $('#w0').yiiGridView('getSelectedRows')
+                            },
+                            function () {
+                                $.pjax.reload({container:'#kv-unique-id-2'});
+                            }
+                        );
+                    });
+            ";
+            $this->registerJs($js, $this::POS_READY);
+
               $gridColumnsIn = [
-                  ['class'=>'kartik\grid\SerialColumn', 'order'=>DynaGrid::ORDER_FIX_LEFT],
+                  ['class' => 'kartik\grid\SerialColumn'],
                   [
                       'attribute' => 'id',
                       'vAlign'=>'middle',
@@ -74,8 +87,8 @@ $this->title = 'Sistema Hotel';
                   ],
                   [
                     'class' => 'kartik\grid\EditableColumn',
-                     'attribute' => 'status',
-                     'value'=>function ($model, $key, $index, $widget) {
+                    'attribute' => 'status',
+                    'value'=>function ($model, $key, $index, $widget) {
                        return $model->obtenerEstado($model->status);
                      },
                      'filterType'=>GridView::FILTER_SELECT2,
@@ -85,137 +98,82 @@ $this->title = 'Sistema Hotel';
                      ],
                      'filterInputOptions'=>['placeholder'=>'Estado ...'],
                      'format'=>'raw',
-                     'editableOptions' => [
-                             'header' => 'estado',
-                             'size' => 'sm',
-                             'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
-                             'data'=>['1'=>'Ocupada','3'=>'No Show']
+                     'editableOptions' => function ($model, $key, $index) {
+                       return [
+                         'formOptions' => [
+                             'id' => 'status_' . $model->status . $index. '_form_entrada',
+                           ],
+                         'options' => [
+                             'id' => 'status_' . $model->status . $index . '_entrada',
                          ],
-
+                         'header' => 'estado',
+                           'size' => 'sm',
+                           'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
+                           'data'=>['1'=>'Ocupada','3'=>'No Show']
+                       ];
+                       },
                   ],
                   [
-                      'class'=>'kartik\grid\ActionColumn',
-                      'dropdown'=>false,
-                      'order'=>DynaGrid::ORDER_FIX_RIGHT
+                      'class' => 'kartik\grid\ActionColumn',
+                      'template'=>'{view}',
+                      'vAlign'=>'middle',
                   ],
-                  ['class'=>'kartik\grid\CheckboxColumn', 'order'=>DynaGrid::ORDER_FIX_RIGHT],
               ];
 
-              echo DynaGrid::widget([
-                'columns'=>$gridColumnsIn,
-                'storage'=>DynaGrid::TYPE_COOKIE,
-                'theme'=>'panel-success',
-                'gridOptions'=>[
-                    'dataProvider'=>$dataIn,
-                    'filterModel'=>$searchModelIn,
-                    'panel'=>['heading'=>'<h3 class="panel-title">Check In</h3>'],
-                ],
-                'options'=>['id'=>'dynagrid-1'] // a unique identifier is important
-              ]);
-                ?>
-          </div>
-      </div>
-
-      <div class="col-md-12">
-          <div class="panel panel-success">
-              <?php
-              $gridColumnsOut = [
-                  ['class'=>'kartik\grid\SerialColumn', 'order'=>DynaGrid::ORDER_FIX_LEFT],
-                  [
-                      'attribute' => 'id',
-                      'vAlign'=>'middle',
-                      'headerOptions'=>['class'=>'kv-sticky-column'],
-                      'contentOptions'=>['class'=>'kv-sticky-column'],
+              echo GridView::widget([
+                  'dataProvider' => $dataIn,
+                  'filterModel' => $searchModelIn,
+                  'columns' => $gridColumnsIn,
+                  'containerOptions' => ['style'=>'overflow: false'], // only set when $responsive = false
+                  'beforeHeader'=>[
+                      [
+                          'options'=>['class'=>'skip-export'] // remove this row from export
+                      ]
                   ],
-                  [
-                      'attribute'=>'id_habitacion',
-                      'vAlign'=>'middle',
-                      'value'=>function ($model, $key, $index, $widget) {
-                          $habitacion= new Habitacion();
-                          return $habitacion->obtenerDescripcion($model->id_habitacion);
-                      },
-                      'format'=>'raw'
-                  ],
-                  [
-                      'attribute'=>'id_huesped',
-                      'vAlign'=>'middle',
-                      'value'=>function ($model, $key, $index, $widget) {
-                          $huesped= new Huesped();
-                          return $huesped->obtenerNombre($model->id_huesped);
-                      },
-                      'format'=>'raw'
-                  ],
-                  [
-                      'attribute' => 'total',
-                      'vAlign'=>'middle',
-                      'headerOptions'=>['class'=>'kv-sticky-column'],
-                      'contentOptions'=>['class'=>'kv-sticky-column'],
-                  ],
-                  [
-                      'attribute'=>'id_origen',
-                      'vAlign'=>'middle',
-                      'value'=>function ($model, $key, $index, $widget) {
-                          $origen=new Origen();
-                          return $origen->obtenerOrigen($model->id_origen);
-                      },
-                      'filterType'=>GridView::FILTER_SELECT2,
-                      'filter'=>ArrayHelper::map(Origen::find()->all(), 'id', 'nombre'),
-                      'filterWidgetOptions'=>[
-                          'pluginOptions'=>['allowClear'=>true],
+                  'toolbar' =>  [
+                    ['content'=>
+                      Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], ['data-pjax'=>0, 'class' => 'btn btn-default', 'title'=>Yii::t('app', 'Recargar')])
                       ],
-                      'filterInputOptions'=>['placeholder'=>'Origen...'],
-                      'format'=>'raw'
                   ],
-                  [
-                    'class' => 'kartik\grid\EditableColumn',
-                     'attribute' => 'status',
-                     'value'=>function ($model, $key, $index, $widget) {
-                       return $model->obtenerEstado($model->status);
-                     },
-                     'filterType'=>GridView::FILTER_SELECT2,
-                     'filter'=> ['2' => 'Pendiente', '1' => 'Ocupada', '3' => 'No Show'],
-                     'filterWidgetOptions'=>[
-                         'pluginOptions'=>['allowClear'=>true],
-                     ],
-                     'filterInputOptions'=>['placeholder'=>'Estado ...'],
-                     'format'=>'raw',
-                     'editableOptions' => [
-                             'header' => 'estado',
-                             'size' => 'sm',
-                             'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
-                             'data'=>['1'=>'Ocupada','3'=>'No Show']
-                         ],
-
+                  'pjax' => true,
+                  'pjaxSettings' =>[
+                  'neverTimeout'=>true,
+                  'options'=>[
+                          'id'=>'kv-unique-id-2',
+                      ]
                   ],
-                  [
-                      'class'=>'kartik\grid\ActionColumn',
-                      'dropdown'=>false,
-                      'order'=>DynaGrid::ORDER_FIX_RIGHT
+                  'bordered' => true,
+                  'striped' => false,
+                  'condensed' => false,
+                  'responsive' => true,
+                  'hover' => true,
+                  //'floatHeader' => false,
+                  'showPageSummary' => true,
+                  'panel' => [
+                    'type' => GridView::TYPE_SUCCESS,
+                    'heading' => 'Check In',
                   ],
-                  ['class'=>'kartik\grid\CheckboxColumn', 'order'=>DynaGrid::ORDER_FIX_RIGHT],
-              ];
-
-              echo DynaGrid::widget([
-                'columns'=>$gridColumnsOut,
-                'moduleId' => 'dynagridCustom', // change the module identifier to use the respective module's settings
-                'storage'=>DynaGrid::TYPE_COOKIE,
-                'theme'=>'panel-danger',
-                'gridOptions'=>[
-                    'dataProvider'=>$dataOut,
-                    'filterModel'=>$searchModelOut,
-                    'panel'=>['heading'=>'<h3 class="panel-title">Check Out</h3>'],
-                ],
-                'options'=>['id'=>'dynagrid-1'] // a unique identifier is important
               ]);
                 ?>
-          </div>
       </div>
 
         <div class="col-md-12">
-            <div class="panel panel-danger">
-            <div class="panel-heading">Check Out</div>
                 <?php Pjax::begin(); ?>
                 <?php
+
+                  $js = "$('#downloadSelected').on('click',function() {
+                            $.post(
+                                \"delete-multiple\", {
+                                    pk : $('#w0').yiiGridView('getSelectedRows')
+                                },
+                                function () {
+                                    $.pjax.reload({container:'#kv-unique-id-1'});
+                                }
+                            );
+                        });
+                ";
+                $this->registerJs($js, $this::POS_READY);
+
                 $gridColumnsOut = [
                     ['class' => 'kartik\grid\SerialColumn'],
                     [
@@ -276,12 +234,20 @@ $this->title = 'Sistema Hotel';
                        ],
                        'filterInputOptions'=>['placeholder'=>'Estado ...'],
                        'format'=>'raw',
-                       'editableOptions' => [
-                               'header' => 'estado',
-                               'size' => 'sm',
-                               'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
-                               'data'=>['1' => 'Ocupada', '0' => 'Terminado']
-                           ],
+                       'editableOptions' => function ($model, $key, $index) {
+                         return [
+                             'formOptions' => [
+                                 'id' => 'status_' . $model->status . $index. '_form_salida',
+                               ],
+                             'options' => [
+                                 'id' => 'status_' . $model->status . $index . '_salida',
+                             ],
+                             'header' => 'estado',
+                             'size' => 'sm',
+                             'inputType' => \kartik\editable\Editable::INPUT_DROPDOWN_LIST,
+                             'data'=>['0'=>'Terminado']
+                         ];
+                         },
 
                     ],
                     [
@@ -303,9 +269,17 @@ $this->title = 'Sistema Hotel';
                         ]
                     ],
                     'toolbar' =>  [
-
+                      ['content'=>
+                        Html::a('<i class="glyphicon glyphicon-repeat"></i>', ['index'], ['data-pjax'=>0, 'class' => 'btn btn-default', 'title'=>Yii::t('app', 'Recargar')])
+                        ],
                     ],
                     'pjax' => true,
+                    'pjaxSettings' =>[
+                    'neverTimeout'=>true,
+                    'options'=>[
+                            'id'=>'kv-unique-id-1',
+                        ]
+                    ],
                     'bordered' => true,
                     'striped' => false,
                     'condensed' => false,
@@ -314,12 +288,12 @@ $this->title = 'Sistema Hotel';
                     //'floatHeader' => false,
                     'showPageSummary' => true,
                     'panel' => [
-                        //'type' => GridView::TYPE_PRIMARY
+                      'type' => GridView::TYPE_DANGER,
+                      'heading' => 'Check Out',
                     ],
                 ]);
             ?>
         <?php Pjax::end(); ?>
-            </div>
         </div>
         <div class="col-md-8">
             <div class="panel panel-warning">
