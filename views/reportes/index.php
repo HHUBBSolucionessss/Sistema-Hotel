@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::button('Habitaciones por día', ['value'=>Url::to('../habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?= Html::button('Habitaciones por día', ['value'=>Url::to('../reportes/tabla'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
     <p>
         <?= Html::button('Llegadas y entradas', ['value'=>Url::to('../habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
@@ -38,5 +38,17 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::button('Registro sistema', ['value'=>Url::to('../habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
+
+    <?php
+      Modal::begin([
+        'header' => '<h4 style="color:#337AB7";>Habitaciones por día</h4>',
+        'id' => 'modal',
+        'size' => 'modal-lg',
+      ]);
+
+      echo "<div id='modalContent'></div>";
+
+      Modal::end();
+    ?>
 
 </div>

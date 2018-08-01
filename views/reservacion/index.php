@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return Yii::$app->controller->renderPartial('ver_reservacion', ['model' => $model]);
                     },
                     'headerOptions' => ['class' => 'kartik-sheet-style'],
-                    'expandOneOnly' => true
+                    'expandOneOnly' => true,
                 ],
                 [
                     'attribute'=>'id_habitacion',

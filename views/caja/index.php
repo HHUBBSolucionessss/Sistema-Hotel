@@ -119,7 +119,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'headerOptions'=>['class'=>'kv-sticky-column'],
                     'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
-<<<<<<< HEAD
                 [
                     'attribute'=>'create_user',
                     'vAlign'=>'middle',
@@ -135,8 +134,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'vAlign'=>'middle',
 
                 ],
-=======
->>>>>>> 6cd66844ab37cdbe808845b2901113e7a6ac4e01
             ];
 
             echo GridView::widget([

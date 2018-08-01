@@ -13,10 +13,18 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'modules' => [
+          'dynagrid'=> [
+            'class'=>'\kartik\dynagrid\Module',
+            // other module settings
+        ],
+     'dynagridCustom' =>  [
+          'class' => '\kartik\dynagrid\Module',
+          // your other dynagrid module settings
+      ],
         'gridview' =>  [
              'class' => '\kartik\grid\Module',
-             // enter optional module parameters below - only if you need to  
-             // use your own export download action or custom translation 
+             // enter optional module parameters below - only if you need to
+             // use your own export download action or custom translation
              // message source
              // 'downloadAction' => 'gridview/export/download',
              // 'i18n' => []

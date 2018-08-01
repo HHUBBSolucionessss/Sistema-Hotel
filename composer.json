@@ -28,7 +28,8 @@
         "demogorgorn/yii2-ajax-submit-button": "*",
         "2amigos/yii2-date-picker-widget": "~1.0",
         "kartik-v/yii2-field-range": "*",
-        "yiisoft/yii2-jui": "*"
+        "yiisoft/yii2-jui": "*",
+        "kartik-v/yii2-dynagrid": "@dev"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

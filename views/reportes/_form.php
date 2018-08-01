@@ -11,7 +11,7 @@ use kartik\select2\Select2;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="habitacion-form">
+<div class="reportes-form">
         <?php $form = ActiveForm::begin(); ?>
         <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'tipo_habitacion')->widget(Select2::classname(), [

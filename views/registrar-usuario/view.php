@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute'=>'status',
                         'label'=>'Estado',
                         'format'=>'raw',
-                        'value'=>$model->status ? '<span class="label label-success">Activa </span>' : '<span class="label label-danger">Inactiva</span>',
+                        'value'=>$model->status ? '<span class="label label-success">Activo </span>' : '<span class="label label-danger">Inactivo</span>',
                         'type'=>DetailView::INPUT_SWITCH,
                         'widgetOptions' =>
                         [
