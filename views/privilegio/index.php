@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\PrivilegiosSearch */
+/* @var $searchModel app\models\PrivilegioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = Yii::t('app', 'Privilegios');
@@ -25,11 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
+            'id',
             'id_usuario',
             'crear_habitacion',
             'modificar_habitacion',
             'eliminar_habitacion',
-            'crear_tipo_habitacion',
+            //'crear_tipo_habitacion',
             //'modificar_tipo_habitacion',
             //'eliminar_tipo_habitacion',
             //'crear_caja',

@@ -8,9 +8,9 @@ use yii\data\ActiveDataProvider;
 use app\models\Privilegio;
 
 /**
- * PrivilegiosSearch represents the model behind the search form of `app\models\Privilegio`.
+ * PrivilegioSearch represents the model behind the search form of `app\models\Privilegio`.
  */
-class PrivilegiosSearch extends Privilegio
+class PrivilegioSearch extends Privilegio
 {
     /**
      * {@inheritdoc}
@@ -18,7 +18,7 @@ class PrivilegiosSearch extends Privilegio
     public function rules()
     {
         return [
-            [['id_usuario', 'crear_habitacion', 'modificar_habitacion', 'eliminar_habitacion', 'crear_tipo_habitacion', 'modificar_tipo_habitacion', 'eliminar_tipo_habitacion', 'crear_caja', 'modificar_caja', 'eliminar_caja', 'crear_huesped', 'modificar_huesped', 'eliminar_huesped', 'crear_reservacion', 'modificar_reservacion', 'eliminar_reservacion', 'descuento', 'crear_tarifa', 'modificar_tarifa', 'eliminar_tarifa', 'crear_origen', 'modificar_origen', 'eliminar_origen', 'crear_usuario', 'modificar_usuario', 'eliminar_usuario'], 'integer'],
+            [['id', 'id_usuario', 'crear_habitacion', 'modificar_habitacion', 'eliminar_habitacion', 'crear_tipo_habitacion', 'modificar_tipo_habitacion', 'eliminar_tipo_habitacion', 'crear_caja', 'modificar_caja', 'eliminar_caja', 'crear_huesped', 'modificar_huesped', 'eliminar_huesped', 'crear_reservacion', 'modificar_reservacion', 'eliminar_reservacion', 'descuento', 'crear_tarifa', 'modificar_tarifa', 'eliminar_tarifa', 'crear_origen', 'modificar_origen', 'eliminar_origen', 'crear_usuario', 'modificar_usuario', 'eliminar_usuario'], 'integer'],
         ];
     }
 
@@ -58,7 +58,6 @@ class PrivilegiosSearch extends Privilegio
 
         // grid filtering conditions
         $query->andFilterWhere([
-
             'id' => $this->id,
             'id_usuario' => $this->id_usuario,
             'crear_habitacion' => $this->crear_habitacion,

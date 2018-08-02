@@ -4,9 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Privilegio;
-use app\models\User;
-
-use app\models\PrivilegiosSearch;
+use app\models\PrivilegioSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,7 +35,7 @@ class PrivilegioController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new PrivilegiosSearch();
+        $searchModel = new PrivilegioSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -69,7 +67,7 @@ class PrivilegioController extends Controller
         $model = new Privilegio();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_usuario]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -86,40 +84,13 @@ class PrivilegioController extends Controller
      */
     public function actionUpdate($id)
     {
-      //Antes de realizar la consulta y asignar dichos valores a $model
-      //Debo buscar el id de privilegioutilizando elid se usuaro que llegua porel requested
-
-      $usuario=User::findOne($id);
-
-      $model = new Privilegio();
-
-      //$model = $this->findModel($usuario['id']);
-
-      if ($model->load(Yii::$app->request->post())) {
-          return $this->redirect(['update', 'id_usuario' => $model->id_usuario]);
-      }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Privilegio model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionPrivilegio($id)
-    {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id_usuario]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('privilegio', [
+        return $this->render('update', [
             'model' => $model,
         ]);
     }

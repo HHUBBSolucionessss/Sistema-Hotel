@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\PrivilegiosSearch */
+/* @var $model app\models\PrivilegioSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,6 +15,8 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
+    <?= $form->field($model, 'id') ?>
+
     <?= $form->field($model, 'id_usuario') ?>
 
     <?= $form->field($model, 'crear_habitacion') ?>
@@ -23,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'eliminar_habitacion') ?>
 
-    <?= $form->field($model, 'crear_tipo_habitacion') ?>
+    <?php // echo $form->field($model, 'crear_tipo_habitacion') ?>
 
     <?php // echo $form->field($model, 'modificar_tipo_habitacion') ?>
 
