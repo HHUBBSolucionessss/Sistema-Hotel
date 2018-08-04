@@ -72,8 +72,12 @@ class RegistrarUsuarioController extends Controller
 	{
 
 		$model = $this->findModel($id);
-		$privilegioId = new Privilegio();
-		$currentPrivilegio = $privilegioId->id;
+
+		$sql = Privilegio::find()
+		->where(['id_usuario' => $model->id])
+		->one();
+
+		$idUsuario = $sql->id;
 
 		if ($model->load(Yii::$app->request->post()))
 		{
@@ -82,6 +86,12 @@ class RegistrarUsuarioController extends Controller
 			{
 
 				Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizó correctamente');
+
+				$content = $this->renderPartial('view',[
+
+					'idUsuario' => $idUsuario,
+
+				]);
 
 				return $this->redirect(['view', 'id'=>$model->id]);
 
@@ -128,13 +138,17 @@ class RegistrarUsuarioController extends Controller
 			if ($model->signup())
 			{
 
+				$sql = User::findOne(['email' => $model->email]);
+
+				$id = $sql->id;
+
+				$privilegio->id_usuario = $id;
 				$privilegio->crear_habitacion=1;
 				$privilegio->modificar_tipo_habitacion=1;
 
-				if ($privilegio->save()) {
-
+				if($privilegio->save()){
 					return $this->redirect(['index']);
-        }
+				}
 
 			}
 

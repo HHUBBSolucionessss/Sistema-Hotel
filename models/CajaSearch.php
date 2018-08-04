@@ -48,6 +48,7 @@ class CajaSearch extends Caja
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [ 'pageSize' => 'all' ],
         ]);
 
         $this->load($params);
@@ -73,4 +74,5 @@ class CajaSearch extends Caja
 
         return $dataProvider;
     }
+
 }

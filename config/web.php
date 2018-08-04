@@ -1,4 +1,5 @@
 <?php
+use kartik\mpdf\Pdf;
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
@@ -12,10 +13,22 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    // ...
+    'components' => [
+        // setup Krajee Pdf component
+
+    ],
     'modules' => [
           'dynagrid'=> [
             'class'=>'\kartik\dynagrid\Module',
             // other module settings
+        ],
+        'pdf' => [
+            'class' => Pdf::classname(),
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            // refer settings section for all configuration options
         ],
      'dynagridCustom' =>  [
           'class' => '\kartik\dynagrid\Module',

@@ -15,10 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="registrar-usuario-view">
 
+
     <h1><?= Html::encode($this->title) ?></h1>
 
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <?php
             echo DetailView::widget([
                 'model'=>$model,
@@ -64,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="privilegios">
 
           <p>
-              <?= Html::a(Yii::t('app', 'Definir privilegios'), ['../web/privilegio/update', 'id' => $model->id], ['class' => 'btn btn-success']) ?>
+              <?= Html::a(Yii::t('app', 'Definir privilegios'), ['../web/privilegio/update', 'id' => $idUsuario], ['class' => 'btn btn-success']) ?>
           </p>
 
           <?php

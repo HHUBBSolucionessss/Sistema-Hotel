@@ -257,7 +257,6 @@ public function tiposPago()
 		->queryAl();
 
 		return $habitaciones;
-
 	}
-	
+
 }

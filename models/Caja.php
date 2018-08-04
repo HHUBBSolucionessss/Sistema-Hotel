@@ -19,6 +19,7 @@ use Yii;
  */
 class Caja extends \yii\db\ActiveRecord
 {
+
     /**
      * @inheritdoc
      */
@@ -61,6 +62,13 @@ class Caja extends \yii\db\ActiveRecord
             'create_user' => 'Registró',
         ];
     }
+
+    /*public function obtenerTotalCaja()
+  	{
+  		$totalCaja=Yii::$app->db->createCommand('SELECT Sum(efectivo), sum(tarjeta), sum(deposito)');
+
+      return $totalCaja;
+      }*/
 
     public function obtenerTipoMovimiento($key)
       {
