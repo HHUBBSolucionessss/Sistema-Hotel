@@ -84,11 +84,10 @@ class PrivilegioController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-
+        $idPrivilegio = Yii::$app->db->createCommand('SELECT id FROM privilegio WHERE id_usuario='.$id)->queryOne();
+        $model = $this->findModel($idPrivilegio);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $idUsuario]);
+            return $this->redirect(['registrar-usuario/view', 'id' => $id]);
         }
 
         return $this->render('update', [

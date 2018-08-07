@@ -7,6 +7,7 @@ use app\models\User;
 
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use app\models\EstadoCaja;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CajaSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -20,14 +21,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::button('Movimientos de caja', ['value'=>Url::to('../caja/create'), 'class' => 'btn btn-info', 'id' => 'modalButton']) ?>
+        <?php
+
+        $valor = $estado_caja->estado_caja['estado_caja'];
+
+        echo Html::button('Movimientos de caja', ['value'=>Url::to('../caja/create'), 'class' => 'btn btn-info', 'id' => 'modalButton']) ?>
     </p>
     <p>
-        <?= Html::button('Apertura Caja', ['value'=>Url::to('../caja/apertura'), 'class' => 'btn btn-success', 'id' => '_modalButtonApertura']) ?>
+        <?php echo Html::button('Apertura Caja', ['value'=>Url::to('../caja/apertura'), 'class' => 'btn btn-success', 'id' => '_modalButtonApertura'])?>
     </p>
     <p>
-        <?= Html::button('Cierre de caja', ['value'=>Url::to('../caja/cierre'), 'class' => 'btn btn-danger', 'id' => '_modalButtonCierre']) ?>
+        <?php echo Html::button('Cierre de caja', ['value'=>Url::to('../caja/cierre'), 'class' => 'btn btn-danger', 'id' => '_modalButtonCierre']); ?>
     </p>
+
 
     <?php
       Modal::begin([

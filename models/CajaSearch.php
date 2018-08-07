@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
+use yii\data\SqlDataProvider;
 use app\models\Caja;
 
 /**
@@ -33,46 +34,77 @@ class CajaSearch extends Caja
         return Model::scenarios();
     }
 
-    /**
-     * Creates data provider instance with search query applied
-     *
-     * @param array $params
-     *
-     * @return ActiveDataProvider
-     */
-    public function search($params)
-    {
-        $query = Caja::find();
+/**
+ * Creates data provider instance with search query applied
+ *
+ * @param array $params
+ *
+ * @return ActiveDataProvider
+ */
+public function buscarMovimientosCierre($params)
+{
+    
+    $aperturaCaja = Caja::find()
+    ->where(['descripcion' => 'Apertura de caja'])
+    ->max('id');
 
-        // add conditions that should always apply here
+    $cierreCaja = Caja::find()
+    ->where(['descripcion' => 'Cierre de caja'])
+    ->max('id');
 
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-            'pagination' => [ 'pageSize' => 'all' ],
-        ]);
+    $query = Caja::find()
+    ->where(['between', 'id', $aperturaCaja, $cierreCaja]);
 
-        $this->load($params);
+    // add conditions that should always apply here
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
+    $dataProvider = new ActiveDataProvider([
+        'query' => $query,
+        'pagination' => [ 'pageSize' => 'all' ],
+    ]);
 
-        // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-            'efectivo' => $this->efectivo,
-            'tarjeta' => $this->tarjeta,
-            'tipo_movimiento' => $this->tipo_movimiento,
-            'tipo_pago' => $this->tipo_pago,
-            'create_time' => $this->create_time,
-            'create_user' => $this->create_user,
-        ]);
+    return $dataProvider;
+}
 
-        $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
+/**
+ * Creates data provider instance with search query applied
+ *
+ * @param array $params
+ *
+ * @return ActiveDataProvider
+ */
+public function search($params)
+{
+    $query = Caja::find();
 
+    // add conditions that should always apply here
+
+    $dataProvider = new ActiveDataProvider([
+        'query' => $query,
+        'pagination' => [ 'pageSize' => 'all' ],
+    ]);
+
+    $this->load($params);
+
+    if (!$this->validate()) {
+        // uncomment the following line if you do not want to return any records when validation fails
+        // $query->where('0=1');
         return $dataProvider;
     }
+
+    // grid filtering conditions
+    $query->andFilterWhere([
+        'id' => $this->id,
+        'efectivo' => $this->efectivo,
+        'tarjeta' => $this->tarjeta,
+        'tipo_movimiento' => $this->tipo_movimiento,
+        'tipo_pago' => $this->tipo_pago,
+        'create_time' => $this->create_time,
+        'create_user' => $this->create_user,
+    ]);
+
+    $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
+
+    return $dataProvider;
+}
 
 }

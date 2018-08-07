@@ -21,13 +21,20 @@ $this->title = 'Corte de caja';
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <p>Efectivo: $<?=$efectivo?></p>
-    <p>Tarjeta: $<?=$tarjeta?></p>
-    <p>Depósito: $<?=$deposito?></p>
+    <p>Total retirado</p>
+    <br>
+      <p>Efectivo Retirado: $ <?php echo $totalesRetirados[0]['efectivo']?></p>
+      <p>Tarjeta Retirada: $ <?php echo $totalesRetirados[0]['tarjeta']?></p>
+      <p>Depósito Retirado: $ <?php echo $totalesRetirados[0]['deposito']?></p>
+    <br>
+    <p>Total en caja</p>
+    <br>
+      <p>Efectivo: $ <?=$totalCaja[0]['Sum(efectivo)']?></p>
+      <p>Tarjeta: $ <?=$totalCaja[0]['Sum(tarjeta)']?></p>
+      <p>Depósito: $ <?=$totalCaja[0]['Sum(deposito)']?></p>
+    <br>
 
-    <p>Reservaciones terminadas: <?=$terminada?></p>
-    <p>Reservaciones creadas: <?=$creada?></p>
-    <p>Reservaciones en uso: <?=$uso?></p>
+    <p>Reservaciones realizadas: <?=$numHabitaciones?></p>
     <br>
     <?php ActiveForm::end(); ?>
 
@@ -47,14 +54,11 @@ $this->title = 'Corte de caja';
                     'value'=>function ($model, $key, $index) {
                         return $model->obtenerTipoMovimiento($model->tipo_movimiento);
                       },
-                      'filterType'=>GridView::FILTER_SELECT2,
-                      'filter'=> ['0' => 'Entrada', '1' => 'Salida'],
-                      'filterWidgetOptions'=>[
-                          'pluginOptions'=>['allowClear'=>true],
-                      ],
-                      'filterInputOptions'=>['placeholder'=>'Tipo Movimiento...'],
                       'format'=>'raw'
                   ],
+                  'efectivo',
+                  'tarjeta',
+                  'deposito',
                   [
                       'attribute'=>'create_user',
                       'vAlign'=>'middle',

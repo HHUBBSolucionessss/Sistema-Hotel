@@ -29,11 +29,7 @@ use yii\widgets\ActiveForm;
   </p>
   <p> Caja
 
-    <?= $form->field($model, 'crear_caja')->checkbox(array('label'=>'Crear caja')); ?>
-
     <?= $form->field($model, 'modificar_caja')->checkbox(array('label'=>'Modificar caja')); ?>
-
-    <?= $form->field($model, 'eliminar_caja')->checkbox(array('label'=>'Eliminar caja')); ?>
 
   </p>
   <p> Huéspedes
@@ -53,7 +49,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'eliminar_reservacion')->checkbox(array('label'=>'Eliminar reservación')); ?>
 
-    <?= $form->field($model, 'descuento')->checkbox(array('label'=>'% de descuento')); ?>
+    <?= $form->field($model, 'descuento')->Input(['autofocus' => true], ['placeholder' => "Descuento"]) ?>
 
   </p>
   <p> Tarifas

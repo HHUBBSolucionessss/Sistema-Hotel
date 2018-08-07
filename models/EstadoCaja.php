@@ -27,7 +27,7 @@ class EstadoCaja extends \yii\db\ActiveRecord
     {
         return [
             [['id'], 'required'],
-            [['id', 'estado_caja'], 'integer'],
+            [['id', 'estado_caja', 'update_caja'], 'integer'],
             [['id'], 'unique'],
         ];
     }
@@ -40,6 +40,7 @@ class EstadoCaja extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'estado_caja' => 'Estado Caja',
+            'update_caja' => 'update_caja',
         ];
     }
 }

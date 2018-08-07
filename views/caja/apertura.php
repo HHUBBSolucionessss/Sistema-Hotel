@@ -16,9 +16,9 @@ use kartik\select2\Select2;
 <div class="caja-form">
 
     <?php $form = ActiveForm::begin(); ?>
-    <p>Efectivo: <?=$efectivo?></p>
-    <p>Tarjeta: <?=$tarjeta?></p>
-    <p>Depósito: <?=$deposito?></p>
+    <p>Efectivo: $ <?=$totalCaja[0]['Sum(efectivo)']?></p>
+    <p>Tarjeta: $ <?=$totalCaja[0]['Sum(tarjeta)']?></p>
+    <p>Depósito: $ <?=$totalCaja[0]['Sum(deposito)']?></p>
 
     <?= $form->field($model, 'efectivo')->Input(['autofocus' => true], ['placeholder' => "Efectivo a retirar"]) ?>
 

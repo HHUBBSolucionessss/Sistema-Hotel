@@ -73,11 +73,7 @@ class RegistrarUsuarioController extends Controller
 
 		$model = $this->findModel($id);
 
-		$sql = Privilegio::find()
-		->where(['id_usuario' => $model->id])
-		->one();
-
-		$idUsuario = $sql->id;
+		$idUsuario = Yii::$app->db->createCommand('SELECT id FROM privilegio WHERE id_usuario='.$id)->queryOne();
 
 		if ($model->load(Yii::$app->request->post()))
 		{
@@ -93,7 +89,9 @@ class RegistrarUsuarioController extends Controller
 
 				]);
 
-				return $this->redirect(['view', 'id'=>$model->id]);
+				return $this->redirect(['view', 'id'=>$model->id,
+				'idUsuario' => $idUsuario,
+			]);
 
 			}
 
@@ -144,7 +142,15 @@ class RegistrarUsuarioController extends Controller
 
 				$privilegio->id_usuario = $id;
 				$privilegio->crear_habitacion=1;
+				$privilegio->modificar_habitacion=1;
+				$privilegio->eliminar_habitacion=1;
+				$privilegio->crear_tipo_habitacion=1;
 				$privilegio->modificar_tipo_habitacion=1;
+				$privilegio->eliminar_tipo_habitacion=1;
+				$privilegio->modificar_caja=1;
+				$privilegio->crear_reservacion=1;
+				$privilegio->modificar_reservacion=1;
+				$privilegio->eliminar_reservacion=1;
 
 				if($privilegio->save()){
 					return $this->redirect(['index']);
