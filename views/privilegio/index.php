@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use moonland\phpexcel\Excel;
+use app\models\Privilegio;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PrivilegioSearch */
@@ -18,6 +20,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Create Privilegio'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
+    <?php
+    Excel::export([
+      	'models' => $dataProvider,
+      	'columns' => ['column1','column2','column3'], //without header working, because the header will be get label from attribute label.
+      	'header' => ['column1' => 'Header Column 1','column2' => 'Header Column 2', 'column3' => 'Header Column 3'],
+      ]);
+
+      ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -89,18 +89,20 @@ class CajaController extends Controller
     public function actionApertura()
     {
         $model = new Caja();
-        $estadoCaja= new EstadoCaja();
 
         $totalCaja=Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
-        $estadoCaja=Yii::$app->db->createCommand('SELECT * FROM estado_caja AS EstadoCaja')->queryAll();
+        $estado_caja = Yii::$app->db->createCommand('SELECT * FROM estado_caja WHERE id = 1')->queryAll();
+
+        $sql = EstadoCaja::findOne(['id' => 1]);
+        $sql->estado_caja = 1;
+        $sql->save();
 
         if ($model->load(Yii::$app->request->post()))
         {
             $model->descripcion="Apertura de caja";
-            $model->tipo_movimiento=0;
+            $model->tipo_movimiento = 0;
             $model->create_user=Yii::$app->user->identity->id;
             $model->create_time=date('Y-m-d H:i:s');
-            $estado->estado_caja=0;
             if($model->save())
             //if ($model->save()&&$estadoCaja->save())
             {
@@ -110,6 +112,7 @@ class CajaController extends Controller
                 return $this->render('index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    'estado_caja' => $estado_caja,
                 ]);
             }
 
@@ -137,11 +140,16 @@ class CajaController extends Controller
     public function actionCierre()
     {
         $model = new Caja();
-        $estadoCaja = new EstadoCaja();
+        $estado_caja = new EstadoCaja();
 
         $totalCaja = Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
         $totalesRetirado = Yii::$app->db->createCommand('SELECT * FROM caja WHERE id=(SELECT MAX(id) FROM caja WHERE descripcion=\'Cierre de caja\')')->queryAll();
         $habitacionesRealizadas = Yii::$app->db->createCommand('SELECT * FROM reservacion WHERE create_time BETWEEN (SELECT MAX(create_time) FROM caja WHERE descripcion=\'Apertura de caja\') AND (SELECT MAX(create_time) FROM caja WHERE descripcion=\'Cierre de caja\')')->queryAll();
+        $estado_caja = Yii::$app->db->createCommand('SELECT * FROM estado_caja WHERE id = 1')->queryAll();
+
+        $sql = EstadoCaja::findOne(['id' => 1]);
+        $sql->estado_caja = 0;
+        $sql->save();
 
         $numHabitaciones = Count($habitacionesRealizadas);
 
@@ -152,7 +160,6 @@ class CajaController extends Controller
             $model->efectivo=-($model->efectivo);
             $model->create_user=Yii::$app->user->identity->id;
             $model->create_time=date('Y-m-d H:i:s');
-            $estadoCaja=1;
 
            if($model->save())
             // if ($model->save()&&$estadoCaja->save())
@@ -200,6 +207,7 @@ class CajaController extends Controller
         return $this->renderAjax('cierre', [
             'model' => $model,
             'totalCaja'=>$totalCaja,
+            'estado_caja' => $estado_caja,
         ]);
     }
 
