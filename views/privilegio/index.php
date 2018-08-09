@@ -4,6 +4,8 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use moonland\phpexcel\Excel;
 use app\models\Privilegio;
+use app\models\Habitacion;
+
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\PrivilegioSearch */
@@ -21,30 +23,19 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('app', 'Create Privilegio'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php
-    Excel::export([
-      	'models' => $dataProvider,
-      	'columns' => ['column1','column2','column3'], //without header working, because the header will be get label from attribute label.
-      	'header' => ['column1' => 'Header Column 1','column2' => 'Header Column 2', 'column3' => 'Header Column 3'],
-      ]);
-
-      ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'id_usuario',
-            'crear_habitacion',
-            'modificar_habitacion',
             'eliminar_habitacion',
             //'crear_tipo_habitacion',
             //'modificar_tipo_habitacion',
             //'eliminar_tipo_habitacion',
-            //'modificar_caja',
+            //'movimientos_caja',
+            //'apertura_caja',
+            //'cierro_caja',
             //'crear_huesped',
             //'modificar_huesped',
             //'eliminar_huesped',
@@ -65,4 +56,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
+
+    <?php
+
+    Excel::widget([
+   	'models' => Privilegio::find()->all(),
+      	'headers' => [
+     		'id' => 'Date Created Content',
+		],
+]);
+      ?>
+
 </div>

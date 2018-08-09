@@ -76,10 +76,7 @@ $this->title = 'Corte de caja';
                 ]);
 
             ?>
-
-
-
-
+            
         <?php Pjax::end(); ?>
 
 </div>

@@ -61,6 +61,7 @@ class HuespedSearch extends Huesped
         $query->andFilterWhere([
             'id' => $this->id,
             'create_user' => $this->create_user,
+            'create_time' => $this->create_time,
             'update_time' => $this->update_time,
             'update_user' => $this->update_user,
         ]);
@@ -74,7 +75,10 @@ class HuespedSearch extends Huesped
             ->andFilterWhere(['like', 'pais', $this->pais])
             ->andFilterWhere(['like', 'cp', $this->cp])
             ->andFilterWhere(['like', 'telefono', $this->telefono])
-            ->andFilterWhere(['like', 'create_time', $this->create_time]);
+            ->andFilterWhere(['like', 'create_user', $this->create_user])
+            ->andFilterWhere(['like', 'create_time', $this->create_time])
+            ->andFilterWhere(['like', 'update_user', $this->update_user])
+            ->andFilterWhere(['like', 'update_time', $this->update_time]);
 
         return $dataProvider;
     }

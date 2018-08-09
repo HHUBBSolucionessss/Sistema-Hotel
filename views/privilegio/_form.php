@@ -29,7 +29,11 @@ use yii\widgets\ActiveForm;
   </p>
   <p> Caja
 
-    <?= $form->field($model, 'modificar_caja')->checkbox(array('label'=>'Modificar caja')); ?>
+    <?= $form->field($model, 'movimientos_caja')->checkbox(array('label'=>'Movimientos de caja')); ?>
+
+    <?= $form->field($model, 'apertura_caja')->checkbox(array('label'=>'Apertura de caja')); ?>
+
+    <?= $form->field($model, 'cierre_caja')->checkbox(array('label'=>'Cierre de caja')); ?>
 
   </p>
   <p> Huéspedes

@@ -31,7 +31,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'eliminar_tipo_habitacion') ?>
 
-    <?php // echo $form->field($model, 'modificar_caja') ?>
+    <?php // echo $form->field($model, 'movimientos_caja') ?>
+
+    <?php // echo $form->field($model, 'apertura_caja') ?>
+
+    <?php // echo $form->field($model, 'cierre_caja') ?>
 
     <?php // echo $form->field($model, 'crear_huesped') ?>
 

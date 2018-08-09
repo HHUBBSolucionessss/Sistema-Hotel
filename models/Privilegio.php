@@ -15,7 +15,9 @@ use Yii;
  * @property int $crear_tipo_habitacion
  * @property int $modificar_tipo_habitacion
  * @property int $eliminar_tipo_habitacion
- * @property int $modificar_caja
+ * @property int $movimientos_caja
+ * @property int $apertura_caja
+ * @property int $cierre_caja
  * @property int $crear_huesped
  * @property int $modificar_huesped
  * @property int $eliminar_huesped
@@ -67,7 +69,9 @@ class Privilegio extends \yii\db\ActiveRecord
             'crear_tipo_habitacion' => Yii::t('app', 'Crear Tipo Habitacion'),
             'modificar_tipo_habitacion' => Yii::t('app', 'Modificar Tipo Habitacion'),
             'eliminar_tipo_habitacion' => Yii::t('app', 'Eliminar Tipo Habitacion'),
-            'modificar_caja' => Yii::t('app', 'Modificar Caja'),
+            'movimientos_caja' => Yii::t('app', 'Movimientos de Caja'),
+            'apertura_caja' => Yii::t('app', 'Apertura de Caja'),
+            'cierre_caja' => Yii::t('app', 'Cierre de Caja'),
             'crear_huesped' => Yii::t('app', 'Crear Huesped'),
             'modificar_huesped' => Yii::t('app', 'Modificar Huesped'),
             'eliminar_huesped' => Yii::t('app', 'Eliminar Huesped'),
