@@ -72,8 +72,20 @@ class CajaController extends Controller
         $model = new Caja();
         $model->create_user=Yii::$app->user->identity->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+          $model->create_user=Yii::$app->user->identity->id;
+          $model->create_time=date('Y-m-d H:i:s');
+
+          if($model->tipo_movimiento = 1){
+            $model->efectivo=-($model->efectivo);
+          } else {
+            $model->efectivo= $model->efectivo;
+          }
+            if($model->save()){
+              return $this->redirect(['index', 'id' => $model->id]);
+            }
+
         }
 
         return $this->renderAjax('create', [

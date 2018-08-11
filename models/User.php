@@ -25,7 +25,7 @@ use yii\web\IdentityInterface;
 class User extends ActiveRecord implements IdentityInterface
 {
   public $idUsuario;
-  
+
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 1;
     /**
@@ -113,7 +113,8 @@ class User extends ActiveRecord implements IdentityInterface
 
     public function obtenerNombre($id)
     {
-        $model=User::findOne($id);
+
+        $model = new User();
         return $model->nombre;
 
     }

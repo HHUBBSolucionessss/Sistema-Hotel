@@ -52,12 +52,14 @@ use app\models\TarifaDetalladaSearch;
                     ],
                     [
                         'attribute'=>'create_user',
+                        'label'=>'Registró',
                         'format'=>'raw',
                         'value'=>$user->obtenerNombre($model->create_user),
                         'displayOnly'=>true,
                     ],
                     [
                         'attribute'=>'create_time',
+                        'label'=>'Fecha Creación',
                         'format'=>'date',
                         'value'=>$model->create_time,
                         'displayOnly'=>true,
@@ -65,12 +67,14 @@ use app\models\TarifaDetalladaSearch;
 
                     [
                         'attribute'=>'update_user',
+                        'label'=>'Actualizó',
                         'format'=>'raw',
                         'value'=>$model->update_user,
                         'displayOnly'=>true,
                     ],
                     [
                         'attribute'=>'update_time',
+                        'label'=>'Fecha Actualización',
                         'format'=>'date',
                         'value'=>$model->update_time,
                         'displayOnly'=>true,
@@ -105,24 +109,7 @@ use app\models\TarifaDetalladaSearch;
                 'dataProvider' => $dataProvider,
                 'columns' => $gridColumns,
                 'containerOptions' => ['style'=>'overflow: false'], // only set when $responsive = false
-                'exportConfig' => [
-                   GridView::EXCEL => [
-                       'label' => 'Exportar a Excel',
-                       'iconOptions' => ['class' => 'text-success'],
-                       'showHeader' => true,
-                       'showPageSummary' => true,
-                       'showFooter' => true,
-                       'showCaption' => true,
-                       'filename' => 'exportacion-reservaciones',
-                       'alertMsg' => 'The EXCEL export file will be generated for download.',
-                       'options' => ['title' => 'Microsoft Excel 95+'],
-                       'mime' => 'application/vnd.ms-excel',
-                       'config' => [
-                       'worksheet' => 'ExportWorksheet',
-                           'cssFile' => ''
-                       ]
-                   ],
-               ],
+                'export' => false,
                 'pjax' => true,
                 'bordered' => true,
                 'striped' => false,

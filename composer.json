@@ -30,7 +30,7 @@
         "kartik-v/yii2-field-range": "*",
         "yiisoft/yii2-jui": "*",
         "kartik-v/yii2-dynagrid": "@dev",
-        "kartik-v/yii2-mpdf": "^1.0",
+        "kartik-v/yii2-mpdf": "dev-master",
         "moonlandsoft/yii2-phpexcel": "*"
     },
     "require-dev": {

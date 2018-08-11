@@ -297,7 +297,7 @@ class ReservacionController extends Controller
 			$caja->create_time=date('Y-m-d H:i:s');
 
 			//Registro de sistema
-			$registroSistema->descripcion="EL USUARIO ". Yii::$app->user->identity->id ." HA REGISTRADO UN PAGO A LA RESERVACION ". $id ." POR UN MONTO DE ".$pagoReservacion->total;
+			$registroSistema->descripcion="EL USUARIO ". Yii::$app->user->identity->$model->nombre ." HA REGISTRADO UN PAGO A LA RESERVACION ". $id ." POR UN MONTO DE ".$pagoReservacion->total;
 
 
 			//Reservación

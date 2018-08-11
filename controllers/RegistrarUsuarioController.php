@@ -139,7 +139,6 @@ class RegistrarUsuarioController extends Controller
 				$sql = User::findOne(['email' => $model->email]);
 
 				$id = $sql->id;
-
 				$privilegio->id_usuario = $id;
 				$privilegio->crear_habitacion=1;
 				$privilegio->modificar_habitacion=1;
@@ -147,7 +146,9 @@ class RegistrarUsuarioController extends Controller
 				$privilegio->crear_tipo_habitacion=1;
 				$privilegio->modificar_tipo_habitacion=1;
 				$privilegio->eliminar_tipo_habitacion=1;
-				$privilegio->modificar_caja=1;
+				$privilegio->movimientos_caja=1;
+				$privilegio->apertura_caja=1;
+				$privilegio->cierre_caja=1;
 				$privilegio->crear_reservacion=1;
 				$privilegio->modificar_reservacion=1;
 				$privilegio->eliminar_reservacion=1;

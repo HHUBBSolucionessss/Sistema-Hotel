@@ -20,7 +20,7 @@ use kartik\select2\Select2;
     <p>Tarjeta: $ <?=$totalCaja[0]['Sum(tarjeta)']?></p>
     <p>Depósito: $ <?=$totalCaja[0]['Sum(deposito)']?></p>
 
-    <?= $form->field($model, 'efectivo')->Input(['autofocus' => true], ['placeholder' => "Efectivo a retirar"]) ?>
+    <?= $form->field($model, 'efectivo')->Input(['autofocus' => true], ['placeholder' => "Efectivo a ingresar"]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Abrir Caja', ['class' => 'btn btn-success']) ?>

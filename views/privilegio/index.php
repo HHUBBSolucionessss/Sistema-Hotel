@@ -29,7 +29,8 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'eliminar_habitacion',
+            'id_usuario',
+            //'eliminar_habitacion',
             //'crear_tipo_habitacion',
             //'modificar_tipo_habitacion',
             //'eliminar_tipo_habitacion',
@@ -59,12 +60,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php
 
-    Excel::widget([
+    /*Excel::widget([
    	'models' => Privilegio::find()->all(),
       	'headers' => [
      		'id' => 'Date Created Content',
 		],
-]);
+]);*/
       ?>
 
 </div>
