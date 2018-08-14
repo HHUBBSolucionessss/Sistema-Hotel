@@ -50,7 +50,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'heading'=>'RESERVACION  </br>FOLIO'. $model->id,
                         'type'=>DetailView::TYPE_INFO,
                     ],
-                    'buttons1' => '{view}',
                     'attributes'=>
                     [
                         [
@@ -93,7 +92,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute'=>'status',
                             'format'=>'raw',
                             'value'=>$model->obtenerEstado($model->status),
-                            'displayOnly'=>true,
                         ],
 
                         [
@@ -142,11 +140,13 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                             'attribute'=>'update_time',
                             'format'=>'date',
+                            'label'=>'Actualizado el',
                             'value'=>$model->update_time,
                             'displayOnly'=>true,
                         ],
                         [
                             'attribute'=>'update_user',
+                            'label'=>'Actualizó',
                             'format'=>'raw',
                             'value'=>$model->update_user,
                             'displayOnly'=>true,
@@ -222,24 +222,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         '{export}',
                         '{toggleData}'
                     ],
-                    'exportConfig' => [
-                       GridView::EXCEL => [
-                           'label' => 'Exportar a Excel',
-                           'iconOptions' => ['class' => 'text-success'],
-                           'showHeader' => true,
-                           'showPageSummary' => true,
-                           'showFooter' => true,
-                           'showCaption' => true,
-                           'filename' => 'exportacion-reservacion',
-                           'alertMsg' => 'The EXCEL export file will be generated for download.',
-                           'options' => ['title' => 'Microsoft Excel 95+'],
-                           'mime' => 'application/vnd.ms-excel',
-                           'config' => [
-                           'worksheet' => 'ExportWorksheet',
-                               'cssFile' => ''
-                           ]
-                       ],
-                   ],
+                    'export' => false,
                     'pjax' => true,
                     'bordered' => true,
                     'striped' => false,

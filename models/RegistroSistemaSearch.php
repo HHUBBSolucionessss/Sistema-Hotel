@@ -61,7 +61,6 @@ class RegistroSistemaSearch extends RegistroSistema
         $query->andFilterWhere([
             'id' => $this->id,
             'create_time' => $this->create_time,
-            'create_user' => $this->create_user,
         ]);
 
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);

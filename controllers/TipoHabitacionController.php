@@ -7,6 +7,7 @@ use app\models\TipoHabitacion;
 use app\models\TipoHabitacionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use app\models\RegistroSistema;
 use yii\filters\VerbFilter;
 
 /**
@@ -53,9 +54,11 @@ class TipoHabitacionController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $registroSistema= new RegistroSistema();
         if ($model->load(Yii::$app->request->post()))
         {
-            if ($model->save())
+
+            if ($model->save() && $registroSistema->save())
             {
                 Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
                 return $this->redirect(['view', 'id'=>$model->id]);
@@ -82,8 +85,11 @@ class TipoHabitacionController extends Controller
     public function actionCreate()
     {
         $model = new TipoHabitacion();
+        $registroSistema = new RegistroSistema();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $registroSistema->descripcion=Yii::$app->user->identity->id ." ha registrado un tipo de habitación en la descripción: ";
+
+        if ($model->load(Yii::$app->request->post()) && $model->save() && $registroSistema->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

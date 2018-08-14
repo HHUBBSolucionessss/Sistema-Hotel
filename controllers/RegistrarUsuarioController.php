@@ -8,6 +8,7 @@ use Yii;
 use app\models\User;
 use app\models\Privilegio;
 use app\models\UsuarioSearch;
+use app\models\RegistroSistema;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -72,13 +73,16 @@ class RegistrarUsuarioController extends Controller
 	{
 
 		$model = $this->findModel($id);
+		$registroSistema= new RegistroSistema();
 
 		$idUsuario = Yii::$app->db->createCommand('SELECT id FROM privilegio WHERE id_usuario='.$id)->queryOne();
 
 		if ($model->load(Yii::$app->request->post()))
 		{
 
-			if ($model->save())
+			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado datos del usuario ". $model->nombre;
+
+			if ($model->save() && $registroSistema->save())
 			{
 
 				Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizó correctamente');
@@ -129,9 +133,12 @@ class RegistrarUsuarioController extends Controller
 		$model = new SignupForm();
 		$usuario = new User();
 		$privilegio= new Privilegio();
+		$registroSistema= new RegistroSistema();
 
 		if ($model->load(Yii::$app->request->post()))
 		{
+
+			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado al usuario ". $model->nombre;
 
 			if ($model->signup())
 			{
@@ -153,7 +160,7 @@ class RegistrarUsuarioController extends Controller
 				$privilegio->modificar_reservacion=1;
 				$privilegio->eliminar_reservacion=1;
 
-				if($privilegio->save()){
+				if($privilegio->save() && $registroSistema->save()){
 					return $this->redirect(['index']);
 				}
 
@@ -211,10 +218,15 @@ class RegistrarUsuarioController extends Controller
 	public function actionDelete($id)
 	{
 
-		$this->findModel($id)->delete();
+		$model = $this->findModel($id);
+		$registroSistema= new RegistroSistema();
 
-
-		return $this->redirect(['index']);
+		if($model->delete()){
+			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado al usuario ". $model->nombre;
+			if($registroSistema->save()){
+				return $this->redirect(['index']);
+			}
+		}
 
 	}
 

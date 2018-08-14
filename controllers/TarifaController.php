@@ -9,6 +9,7 @@ use app\models\TarifaSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\RegistroSistema;
 use app\models\Model;
 use yii\web\Response;
 use yii\widgets\ActiveForm;
@@ -54,12 +55,31 @@ class TarifaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
+     public function actionView($id)
+     {
+         $model = $this->findModel($id);
+         $registroSistema= new RegistroSistema();
+         if ($model->load(Yii::$app->request->post()))
+         {
+             $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado la tarifa ". $model->nombre;
+             if ($model->save() && $registroSistema->save())
+             {
+                 Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
+                 return $this->redirect(['view', 'id'=>$model->id]);
+             }
+             else
+             {
+                 Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
+                 return $this->redirect(['view', 'id'=>$model->id]);
+
+             }
+         }
+         else
+         {
+             return $this->render('view', ['model'=>$model]);
+
+         }
+     }
 
     /**
      * Creates a new Tarifa model.
@@ -69,10 +89,13 @@ class TarifaController extends Controller
     public function actionCreate()
     {
         $modelTarifa = new Tarifa;
+        $registroSistema= new RegistroSistema();
         $modelTarifa->create_user=Yii::$app->user->identity->id;
         $modelsTarifaDetallada = [new TarifaDetallada];
         if ($modelTarifa->load(Yii::$app->request->post()))
         {
+            $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha creado la tarifa ". $modelTarifa->nombre;
+            $registroSistema->save();
             $modelTarifaDetallada = Model::createMultiple(TarifaDetallada::classname());
             Model::loadMultiple($modelTarifaDetallada, Yii::$app->request->post());
             // ajax validation

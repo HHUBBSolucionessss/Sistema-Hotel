@@ -181,9 +181,12 @@ class SiteController extends Controller
 	*/
 	public function actionView($id)
 	{
+		$searchModel = new ReservacionSearch();
+		$dataProvider = $searchModel->buscarPagos(Yii::$app->request->queryParams);
 		return $this->render('/reservacion/view', [
-			'model' => $this->findModelReservacion($id),
-			]);
+		'model' => $this->findModelReservacion($id),
+		'dataProvider'=>$dataProvider
+		]);
 	}
 	/**
 	* Finds the Reservacion model based on its primary key value.

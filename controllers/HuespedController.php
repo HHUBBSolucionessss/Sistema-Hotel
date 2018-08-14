@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Huesped;
 use app\models\HuespedSearch;
+use app\models\RegistroSistema;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -52,9 +53,11 @@ class HuespedController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $registroSistema= new RegistroSistema();
         if ($model->load(Yii::$app->request->post()))
         {
-            if ($model->save())
+            $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado datos del huésped ". $model->nombre;
+            if ($model->save() && $registroSistema->save())
             {
                 Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
                 return $this->redirect(['view', 'id'=>$model->id]);
@@ -81,11 +84,16 @@ class HuespedController extends Controller
     public function actionCreate()
     {
         $model = new Huesped();
-
+        $registroSistema= new RegistroSistema();
         $model->create_user=Yii::$app->user->identity->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+          $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado al huésped ". $model->nombre;
+
+          if($model->save() && $registroSistema->save())
+          {
             return $this->redirect(['view', 'id' => $model->id]);
+          }
         }
 
         return $this->render('create', [

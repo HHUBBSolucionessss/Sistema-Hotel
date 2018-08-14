@@ -27,7 +27,6 @@ use app\models\TarifaDetalladaSearch;
                     'heading'=>'Tarifa </br>' . $model->nombre,
                     'type'=>DetailView::TYPE_INFO,
                 ],
-                'buttons1' => '{view}',
                 'attributes'=>
                 [
                     'id',

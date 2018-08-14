@@ -60,6 +60,7 @@ class TipoHabitacionSearch extends TipoHabitacion
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'descripcion' => $this->descripcion,
         ]);
 
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);

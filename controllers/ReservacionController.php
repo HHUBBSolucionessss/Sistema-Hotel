@@ -266,6 +266,7 @@ class ReservacionController extends Controller
 		$caja= new Caja();
 		$huesped = new Huesped();
 		$registroSistema= new RegistroSistema();
+		$reserva = new Reservacion();
 		$reservacion = $this->findModel($id);
 		if ($pagoReservacion->load(Yii::$app->request->post()))
 		{
@@ -278,7 +279,6 @@ class ReservacionController extends Controller
 			$huesped->pais = $reservacion->pais;
 			$huesped->cp = $reservacion->cp;
 			$huesped->telefono = $reservacion->telefono;
-
 
 			//Pago Reservación
 			$pagoReservacion->id_reservacion=$id;
@@ -297,7 +297,7 @@ class ReservacionController extends Controller
 			$caja->create_time=date('Y-m-d H:i:s');
 
 			//Registro de sistema
-			$registroSistema->descripcion="EL USUARIO ". Yii::$app->user->identity->$model->nombre ." HA REGISTRADO UN PAGO A LA RESERVACION ". $id ." POR UN MONTO DE ".$pagoReservacion->total;
+			$registroSistema->descripcion="EL USUARIO ". $reserva->create_user=Yii::$app->user->identity->id ." HA REGISTRADO UN PAGO A LA RESERVACION ". $id ." POR UN MONTO DE ".$pagoReservacion->total;
 
 
 			//Reservación
