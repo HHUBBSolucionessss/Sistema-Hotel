@@ -67,7 +67,10 @@ class HabitacionSearch extends Habitacion
             'create_time' => $this->create_time,
             'update_user' => $this->update_user,
             'update_time' => $this->update_time,
+            
         ]);
+
+        $query->andFilterWhere(['eliminado' => 0 ]);
 
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
 
@@ -77,5 +80,5 @@ class HabitacionSearch extends Habitacion
 
 
 
-    
+
 }

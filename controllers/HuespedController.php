@@ -57,6 +57,8 @@ class HuespedController extends Controller
         if ($model->load(Yii::$app->request->post()))
         {
             $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado datos del huésped ". $model->nombre;
+            $model->update_user=Yii::$app->user->identity->id;
+            $model->update_time=date('Y-m-d H:i:s');
             if ($model->save() && $registroSistema->save())
             {
                 Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
@@ -84,10 +86,12 @@ class HuespedController extends Controller
     public function actionCreate()
     {
         $model = new Huesped();
-        $registroSistema= new RegistroSistema();
-        $model->create_user=Yii::$app->user->identity->id;
+        $registroSistema = new RegistroSistema();
 
         if ($model->load(Yii::$app->request->post())) {
+
+          $model->create_user=Yii::$app->user->identity->id;
+          $model->create_time=date('Y-m-d H:i:s');
           $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado al huésped ". $model->nombre;
 
           if($model->save() && $registroSistema->save())
@@ -168,11 +172,19 @@ class HuespedController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
+     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
+      $model = $this->findModel($id);
+      $registroSistema= new RegistroSistema();
+
+      $model->eliminado = 1;
+      $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado al huésped ". $model->nombre;
+
+      if($model->save() && $registroSistema->save()){
         return $this->redirect(['index']);
+      }
+
     }
 
     /**

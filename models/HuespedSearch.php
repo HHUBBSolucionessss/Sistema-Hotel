@@ -18,8 +18,8 @@ class HuespedSearch extends Huesped
     public function rules()
     {
         return [
-            [['id', 'create_user', 'update_user'], 'integer'],
-            [['nombre', 'email', 'calle', 'ciudad', 'colonia', 'estado', 'pais', 'cp', 'telefono', 'create_time', 'update_time'], 'safe'],
+            [['id', 'create_user'], 'integer'],
+            [['nombre', 'email', 'calle', 'ciudad', 'colonia', 'estado', 'pais', 'cp', 'telefono'], 'safe'],
         ];
     }
 
@@ -79,6 +79,8 @@ class HuespedSearch extends Huesped
             ->andFilterWhere(['like', 'create_time', $this->create_time])
             ->andFilterWhere(['like', 'update_user', $this->update_user])
             ->andFilterWhere(['like', 'update_time', $this->update_time]);
+
+        $query->andFilterWhere(['eliminado' => 0 ]);
 
         return $dataProvider;
     }

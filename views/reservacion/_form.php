@@ -43,6 +43,15 @@ $this->params['breadcrumbs'][] = $this->title;
             var tipo = <?= $tipo_habitacion ?>;
             var noches=diasT1=diasT2=diasT3=diasT4=total=subtotal=descuento=tarifa1=tarifa2=tarifa3=tarifa4=subtotal=0;
 
+            $(document).on('click', '#_totalLibre', function(){
+              if($('#_totalLibre').is(':checked')){
+                $('#_total').attr('readonly', false);
+              } else {
+                $('#_total').attr('readonly', true);
+              }
+
+            });
+
             function vaciarTarifas()
             {
                 $("#_ltarifa1").text("Tarifa 1 ");
@@ -154,7 +163,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 noches=salida.diff(entrada, 'days');
                 $('#_noches').val(noches);
             });
-
 
             $(document).on('click', '#_btnTarifa', function()
             {
@@ -298,6 +306,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'tarifa4')->textInput(['id'=>'_tarifa4','value'=>0,'readonly'=>true])->label('Tarifa 4',['class'=>'label-class','id'=>'_ltarifa4']) ?>
         </div>
         <div class="col-md-6">
+                <?= $form->field($model, 'total')->checkbox(array(
+                    'label'=>'Total libre',
+                    'id'=>'_totalLibre'
+                  ));
+                  ?>
+
                 <?= $form->field($model, 'subtotal')->textInput(['id'=>'_subtotal','readonly'=>true]) ?>
                 <?= $form->field($model, 'descuento')->widget(Select2::classname(), [
                     'data'=>$model->obtenerDescuentos(),

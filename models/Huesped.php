@@ -40,9 +40,8 @@ class Huesped extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['create_user', 'update_user'], 'integer'],
-            [['update_time'], 'safe'],
-            [['nombre', 'email', 'calle', 'ciudad', 'colonia', 'estado', 'pais', 'cp', 'telefono', 'create_time'], 'string', 'max' => 45],
+            [['create_user'], 'integer'],
+            [['nombre', 'email', 'calle', 'ciudad', 'colonia', 'estado', 'pais', 'cp', 'telefono'], 'string', 'max' => 45],
         ];
     }
 

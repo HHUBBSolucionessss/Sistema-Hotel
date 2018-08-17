@@ -90,11 +90,12 @@ class TarifaController extends Controller
     {
         $modelTarifa = new Tarifa;
         $registroSistema= new RegistroSistema();
-        $modelTarifa->create_user=Yii::$app->user->identity->id;
         $modelsTarifaDetallada = [new TarifaDetallada];
         if ($modelTarifa->load(Yii::$app->request->post()))
         {
             $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha creado la tarifa ". $modelTarifa->nombre;
+            $modelTarifa->create_user=Yii::$app->user->identity->id;
+            $modelTarifa->create_time=date('Y-m-d H:i:s');
             $registroSistema->save();
             $modelTarifaDetallada = Model::createMultiple(TarifaDetallada::classname());
             Model::loadMultiple($modelTarifaDetallada, Yii::$app->request->post());
@@ -229,12 +230,20 @@ class TarifaController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+     public function actionDelete($id)
+    	{
 
-        return $this->redirect(['index']);
-    }
+    		$model = $this->findModel($id);
+    		$registroSistema= new RegistroSistema();
+
+       $model->eliminado = 1;
+  			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado la tarifa ". $model->nombre;
+
+  			if($model->save() && $registroSistema->save()){
+  				return $this->redirect(['index']);
+  			}
+
+    	}
 
     /**
      * Finds the Tarifa model based on its primary key value.

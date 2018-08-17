@@ -63,6 +63,8 @@ class TipoHabitacionSearch extends TipoHabitacion
             'descripcion' => $this->descripcion,
         ]);
 
+        $query->andFilterWhere(['eliminado' => 0 ]);
+
         $query->andFilterWhere(['like', 'descripcion', $this->descripcion]);
 
         return $dataProvider;

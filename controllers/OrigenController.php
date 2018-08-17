@@ -57,9 +57,11 @@ class OrigenController extends Controller
         if ($model->load(Yii::$app->request->post()))
         {
             $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado el origen ". $model->nombre;
+            $model->update_user=Yii::$app->user->identity->id;
+            $model->update_time=date('Y-m-d H:i:s');
             if ($model->save() && $registroSistema->save())
             {
-                Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
+                Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizó correctamente');
                 return $this->redirect(['view', 'id'=>$model->id]);
             }
             else
@@ -85,9 +87,10 @@ class OrigenController extends Controller
     {
         $model = new Origen();
         $registroSistema= new RegistroSistema();
-        $model->create_user=Yii::$app->user->identity->id;
 
         if ($model->load(Yii::$app->request->post())) {
+          $model->create_user=Yii::$app->user->identity->id;
+          $model->create_time=date('Y-m-d H:i:s');
           $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha creado el origen ". $model->nombre;
 
           if($model->save() && $registroSistema->save())
@@ -109,12 +112,20 @@ class OrigenController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+     public function actionDelete($id)
+    	{
 
-        return $this->redirect(['index']);
-    }
+    		$model = $this->findModel($id);
+    		$registroSistema= new RegistroSistema();
+
+       $model->eliminado = 1;
+  			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado el origen ". $model->nombre;
+
+  			if($model->save() && $registroSistema->save()){
+  				return $this->redirect(['index']);
+  			}
+
+    	}
 
     /**
      * Finds the Origen model based on its primary key value.

@@ -62,7 +62,10 @@ class HabitacionController extends Controller
         $registroSistema= new RegistroSistema();
         if ($model->load(Yii::$app->request->post()))
         {
-            $registroSistema->descripcion="El usuario ". Yii::$app->user->identity->nombre ." ha actualizado la habitación ".$model->descripcion;
+            $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado la habitación ".$model->descripcion;
+            $model->update_user=Yii::$app->user->identity->id;
+            $model->update_time=date('Y-m-d H:i:s');
+
             if ($model->save() && $registroSistema->save())
             {
                 Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizó correctamente');
@@ -90,13 +93,14 @@ class HabitacionController extends Controller
     {
         $model = new Habitacion();
         $registroSistema = new RegistroSistema();
+
         if ($model->load(Yii::$app->request->post()))
         {
 
             $model->create_user=Yii::$app->user->identity->id;
             $model->create_time=date('Y-m-d H:i:s');
             $model->status=1;
-            $registroSistema->descripcion="El usuario ". Yii::$app->user->identity->nombre ." ha registrado la habitación ".$model->descripcion;
+            $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado la habitación ".$model->descripcion;
 
             if ($model->save()&&$registroSistema->save())
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -116,11 +120,19 @@ class HabitacionController extends Controller
      * @return mixed
      */
     public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
+   	{
 
-        return $this->redirect(['index']);
-    }
+   		$model = $this->findModel($id);
+   		$registroSistema= new RegistroSistema();
+
+      $model->eliminado = 1;
+ 			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado la habitación ". $model->descripcion;
+
+ 			if($model->save() && $registroSistema->save()){
+ 				return $this->redirect(['index']);
+ 			}
+
+   	}
 
     /**
      * Finds the Habitacion model based on its primary key value.

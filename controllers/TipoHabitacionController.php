@@ -57,6 +57,9 @@ class TipoHabitacionController extends Controller
         $registroSistema= new RegistroSistema();
         if ($model->load(Yii::$app->request->post()))
         {
+            $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado el tipo de habitación ".$model->descripcion;
+            $model->update_user=Yii::$app->user->identity->id;
+            $model->update_time=date('Y-m-d H:i:s');
 
             if ($model->save() && $registroSistema->save())
             {
@@ -86,16 +89,19 @@ class TipoHabitacionController extends Controller
     {
         $model = new TipoHabitacion();
         $registroSistema = new RegistroSistema();
+        if($model->load(Yii::$app->request->post())){
+            $registroSistema->descripcion=Yii::$app->user->identity->nombre ." ha registrado el tipo de habitación ". $model->descripcion;
+            $model->create_user=Yii::$app->user->identity->id;
 
-        $registroSistema->descripcion=Yii::$app->user->identity->id ." ha registrado un tipo de habitación en la descripción: ";
+            if ($model->save()&&$registroSistema->save()){
+              return $this->redirect(['view', 'id' => $model->id]);
+            }
+      }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save() && $registroSistema->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+      return $this->renderAjax('create', [
+          'model' => $model,
+      ]);
 
-        return $this->renderAjax('create', [
-            'model' => $model,
-        ]);
     }
 
 
@@ -107,11 +113,19 @@ class TipoHabitacionController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
 
+      $model = $this->findModel($id);
+      $registroSistema= new RegistroSistema();
+
+      $model->eliminado = 1;
+      $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado el tipo de habitación ". $model->descripcion;
+ 
+      if($model->save() && $registroSistema->save()){
         return $this->redirect(['index']);
+      }
+
     }
 
     /**

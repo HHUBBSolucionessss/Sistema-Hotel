@@ -68,6 +68,8 @@ class OrigenSearch extends Origen
 
         $query->andFilterWhere(['like', 'nombre', $this->nombre]);
 
+        $query->andFilterWhere(['eliminado' => 0 ]);
+
         return $dataProvider;
     }
 }

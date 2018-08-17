@@ -71,54 +71,30 @@ class RegistrarUsuarioController extends Controller
 
 	public function actionView($id)
 	{
-
 		$model = $this->findModel($id);
 		$registroSistema= new RegistroSistema();
-
 		$idUsuario = Yii::$app->db->createCommand('SELECT id FROM privilegio WHERE id_usuario='.$id)->queryOne();
-
 		if ($model->load(Yii::$app->request->post()))
 		{
-
 			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado datos del usuario ". $model->nombre;
-
 			if ($model->save() && $registroSistema->save())
 			{
-
 				Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizó correctamente');
-
-				$content = $this->renderPartial('view',[
-
-					'idUsuario' => $idUsuario,
-
-				]);
-
 				return $this->redirect(['view', 'id'=>$model->id,
 				'idUsuario' => $idUsuario,
+				'model'=>$model,
 			]);
-
 			}
-
 			else
 			{
-
 				Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
-
 				return $this->redirect(['view', 'id'=>$model->id]);
-
-
 			}
-
 		}
-
 		else
 		{
-
 			return $this->render('view', ['model'=>$model]);
-
-
 		}
-
 	}
 
 	/**
@@ -215,20 +191,20 @@ class RegistrarUsuarioController extends Controller
      * @return mixed
      */
 
-	public function actionDelete($id)
-	{
+		 public function actionDelete($id)
+	 	{
 
-		$model = $this->findModel($id);
-		$registroSistema= new RegistroSistema();
+	 		$model = $this->findModel($id);
+	 		$registroSistema= new RegistroSistema();
 
-		if($model->delete()){
-			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado al usuario ". $model->nombre;
-			if($registroSistema->save()){
-				return $this->redirect(['index']);
-			}
-		}
+	 		$model->eliminado = 1;
+	 		$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado al usuario ". $model->nombre;
 
-	}
+	 		if($model->save() && $registroSistema->save()){
+	 			return $this->redirect(['index']);
+	 		}
+
+	 	}
 
 
 

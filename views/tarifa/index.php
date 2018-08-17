@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'class' => 'kartik\grid\ActionColumn',
-                    'template'=>'{view} {update}',
+                    'template'=>'{view} {delete}',
                     'vAlign'=>'middle',
 
                 ],

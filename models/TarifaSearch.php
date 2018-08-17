@@ -70,6 +70,8 @@ class TarifaSearch extends Tarifa
             'update_time' => $this->update_time,
         ]);
 
+        $query->andFilterWhere(['eliminado' => 0 ]);
+
         $query->andFilterWhere(['like', 'nombre', $this->nombre]);
 
         return $dataProvider;

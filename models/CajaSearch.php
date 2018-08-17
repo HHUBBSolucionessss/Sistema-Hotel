@@ -43,7 +43,7 @@ class CajaSearch extends Caja
  */
 public function buscarMovimientosCierre($params)
 {
-    
+
     $aperturaCaja = Caja::find()
     ->where(['descripcion' => 'Apertura de caja'])
     ->max('id');

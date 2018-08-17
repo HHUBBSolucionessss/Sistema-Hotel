@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use kartik\detail\DetailView;
 use kartik\editable\Editable;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\helpers\Url;
 use app\models\User;
 
@@ -29,10 +30,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model'=>$model,
                 'condensed'=>true,
                 'hover'=>true,
-                'mode'=>DetailView::MODE_VIEW,
+                'mode' =>DetailView::MODE_VIEW,
+                'deleteOptions'=>[
+                  'params'=>['id' => $model->id],
+                  'url'=> ['delete', 'id' => $model->id],
+                  'data'=> [
+                    'confirm'=>'¿Está seguro que desea eliminar esta habitación?',
+                    'method'=>'post',
+                  ],
+                ],
                 'panel'=>[
                     'heading'=>'Habitacion </br>' . $model->descripcion,
                     'type'=>DetailView::TYPE_INFO,
+
                 ],
                 'attributes'=>
                 [
