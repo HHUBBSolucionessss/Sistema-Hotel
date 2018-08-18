@@ -23,7 +23,7 @@ $this->title = 'Corte de caja';
 
     <p>Total retirado</p>
     <br>
-      <p>Efectivo Retirado: $ <?php echo $totalesRetirados[0]['efectivo']?></p>
+      <p>Efectivo Retirado: $ <?php echo -($totalesRetirados[0]['efectivo'])?></p>
       <p>Tarjeta Retirada: $ <?php echo $totalesRetirados[0]['tarjeta']?></p>
       <p>Depósito Retirado: $ <?php echo $totalesRetirados[0]['deposito']?></p>
     <br>
@@ -34,7 +34,7 @@ $this->title = 'Corte de caja';
       <p>Depósito: $ <?=$totalCaja[0]['Sum(deposito)']?></p>
     <br>
 
-    <p>Reservaciones realizadas: <?=$numHabitaciones?></p>
+
     <br>
     <?php ActiveForm::end(); ?>
 
@@ -76,7 +76,7 @@ $this->title = 'Corte de caja';
                 ]);
 
             ?>
-            
+
         <?php Pjax::end(); ?>
 
 </div>

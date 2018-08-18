@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use moonland\phpexcel\Excel;
 use app\models\Privilegio;
+use app\models\User;
 use app\models\Habitacion;
 
 
@@ -22,6 +23,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('app', 'Create Privilegio'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
+
+
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

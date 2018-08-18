@@ -25,6 +25,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 'condensed'=>true,
                 'hover'=>true,
                 'mode'=>DetailView::MODE_VIEW,
+                'deleteOptions'=>[
+                  'params'=>['id' => $model->id],
+                  'url'=> ['delete', 'id' => $model->id],
+                  'data'=> [
+                    //'confirm'=>'¿Está seguro que desea eliminar esta habitación?',
+                    'method'=>'post',
+                  ],
+                ],
                 'panel'=>[
                     'heading'=>'Huésped </br>' . $model->nombre,
                     'type'=>DetailView::TYPE_INFO,

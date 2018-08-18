@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   'params'=>['id' => $model->id],
                   'url'=> ['delete', 'id' => $model->id],
                   'data'=> [
-                    'confirm'=>'¿Está seguro que desea eliminar esta habitación?',
+                    //'confirm'=>'¿Está seguro que desea eliminar esta habitación?',
                     'method'=>'post',
                   ],
                 ],

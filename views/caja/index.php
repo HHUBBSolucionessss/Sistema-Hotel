@@ -131,12 +131,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     },
                     'format'=>'raw'
                 ],
-                [
-                    'class' => 'kartik\grid\ActionColumn',
-                    'template'=>'{delete}',
-                    'vAlign'=>'middle',
-
-                ],
             ];
 
             echo GridView::widget([

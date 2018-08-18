@@ -69,13 +69,13 @@ class CajaController extends Controller
     public function actionCreate()
     {
         $model = new Caja();
-        if ($model->load(Yii::$app->request->post())) 
+        if ($model->load(Yii::$app->request->post()))
         {
           $model->create_user=Yii::$app->user->identity->id;
           $model->create_time=date('Y-m-d H:i:s');
-          if($model->tipo_movimiento === 1)
-            $model->efectivo=-($model->efectivo); 
-          else 
+          if($model->tipo_movimiento == 1)
+            $model->efectivo=-($model->efectivo);
+          else
             $model->efectivo= $model->efectivo;
           if($model->save())
           {
@@ -153,32 +153,7 @@ class CajaController extends Controller
             $model->create_time=date('Y-m-d H:i:s');
             if($model->save() && $sql->save())
             {
-                $totalesRetirado = Yii::$app->db->createCommand('SELECT * FROM caja WHERE id=(SELECT MAX(id) FROM caja WHERE descripcion=\'Cierre de caja\')')->queryAll();
-                $habitacionesRealizadas = Yii::$app->db->createCommand('SELECT COUNT(*) FROM reservacion WHERE create_time BETWEEN (SELECT MAX(create_time) FROM caja WHERE descripcion=\'Apertura de caja\') AND (SELECT MAX(create_time) FROM caja WHERE descripcion=\'Cierre de caja\')')->queryAll();
-                $searchModel = new CajaSearch();
-                $dataProvider = $searchModel->buscarMovimientosCierre(Yii::$app->request->queryParams);
-                $content = $this->renderPartial('corteCaja',[
-                    'dataProvider' => $dataProvider,
-                    'totalesRetirados'=>$totalesRetirado,
-                    'totalCaja'=>$totalCaja,
-                    'numHabitaciones'=>$habitacionesRealizadas
-                ]);
-
-                $pdf = new Pdf([
-                    'mode' => Pdf::MODE_CORE,
-                    'format' => Pdf::FORMAT_A4,
-                    'orientation' => Pdf::ORIENT_PORTRAIT,
-                    'destination' => Pdf::DEST_BROWSER,
-                    'content' => $content,
-                    'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
-                    'cssInline' => '.kv-heading-1{font-size:18px}',
-                    'options' => ['title' => 'Reporte Cierre'],
-                    'methods' => [
-                        'SetHeader'=>['Reporte de cierre de caja '. date('d-m-Y')],
-                        'SetFooter'=>['Página {PAGENO}'],
-                    ]
-                ]);
-                return $pdf->render();
+                return $this->render('info');
             }
         }
 
@@ -189,6 +164,37 @@ class CajaController extends Controller
         ]);
     }
 
+    public function actionInfo(){
+
+      $totalCaja = Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
+      $totalesRetirado = Yii::$app->db->createCommand('SELECT * FROM caja WHERE id=(SELECT MAX(id) FROM caja WHERE descripcion=\'Cierre de caja\')')->queryAll();
+      $habitacionesRealizadas = Yii::$app->db->createCommand('SELECT COUNT(*) FROM reservacion WHERE create_time BETWEEN (SELECT MAX(create_time) FROM caja WHERE descripcion=\'Apertura de caja\') AND (SELECT MAX(create_time) FROM caja WHERE descripcion=\'Cierre de caja\')')->queryAll();
+      $searchModel = new CajaSearch();
+      $dataProvider = $searchModel->buscarMovimientosCierre(Yii::$app->request->queryParams);
+      $content = $this->renderPartial('corteCaja',[
+          'dataProvider' => $dataProvider,
+          'totalesRetirados'=>$totalesRetirado,
+          'totalCaja'=>$totalCaja,
+          'numHabitaciones'=>$habitacionesRealizadas,
+      ]);
+
+      $pdf = new Pdf([
+          'mode' => Pdf::MODE_CORE,
+          'format' => Pdf::FORMAT_A4,
+          'orientation' => Pdf::ORIENT_PORTRAIT,
+          'destination' => Pdf::DEST_BROWSER,
+          'content' => $content,
+          'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+          'cssInline' => '.kv-heading-1{font-size:18px}',
+          'options' => ['title' => 'Reporte Cierre'],
+          'methods' => [
+              'SetHeader'=>['Reporte de cierre de caja '. date('d-m-Y')],
+              'SetFooter'=>['Página {PAGENO}'],
+          ]
+      ]);
+      return $pdf->render();
+
+    }
 
 
     /**
