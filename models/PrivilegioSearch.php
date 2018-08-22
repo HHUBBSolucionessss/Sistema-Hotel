@@ -18,7 +18,11 @@ class PrivilegioSearch extends Privilegio
     public function rules()
     {
         return [
-            [['id', 'id_usuario', 'crear_habitacion', 'modificar_habitacion', 'eliminar_habitacion', 'crear_tipo_habitacion', 'modificar_tipo_habitacion', 'eliminar_tipo_habitacion', 'movimientos_caja', 'apertura_caja', 'cierre_caja', 'crear_huesped', 'modificar_huesped', 'eliminar_huesped', 'crear_reservacion', 'modificar_reservacion', 'eliminar_reservacion', 'descuento', 'crear_tarifa', 'modificar_tarifa', 'eliminar_tarifa', 'crear_origen', 'modificar_origen', 'eliminar_origen', 'crear_usuario', 'modificar_usuario', 'eliminar_usuario', 'definir_privilegios'], 'integer'],
+            [['id', 'id_usuario', 'crear_habitacion', 'modificar_habitacion', 'eliminar_habitacion', 'crear_tipo_habitacion',
+            'modificar_tipo_habitacion', 'eliminar_tipo_habitacion', 'movimientos_caja', 'apertura_caja', 'cierre_caja', 'crear_huesped',
+            'modificar_huesped', 'eliminar_huesped', 'crear_reservacion', 'modificar_reservacion', 'eliminar_reservacion', 'descuento',
+            'realizar_pago', 'crear_tarifa', 'modificar_tarifa', 'eliminar_tarifa', 'crear_origen', 'modificar_origen', 'eliminar_origen',
+            'crear_usuario', 'modificar_usuario', 'eliminar_usuario', 'definir_privilegios'], 'integer'],
         ];
     }
 
@@ -76,6 +80,7 @@ class PrivilegioSearch extends Privilegio
             'modificar_reservacion' => $this->modificar_reservacion,
             'eliminar_reservacion' => $this->eliminar_reservacion,
             'descuento' => $this->descuento,
+            'realizar_pago' => $this->realizar_pago,
             'crear_tarifa' => $this->crear_tarifa,
             'modificar_tarifa' => $this->modificar_tarifa,
             'eliminar_tarifa' => $this->eliminar_tarifa,

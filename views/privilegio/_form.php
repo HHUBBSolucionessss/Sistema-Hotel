@@ -53,7 +53,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'eliminar_reservacion')->checkbox(array('label'=>'Eliminar reservación')); ?>
 
-    <?= $form->field($model, 'descuento')->Input(['autofocus' => true], ['placeholder' => "Descuento"]) ?>
+    <?= $form->field($model, 'realizar_pago')->checkbox(array('label'=>'Realizar Pago')); ?>
+
+    <?= $form->field($model, 'descuento')->Input(['autofocus' => true], ['placeholder' => "Descuento"]); ?>
 
   </p>
   <p> Tarifas

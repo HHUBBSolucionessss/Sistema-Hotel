@@ -26,12 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <p>
     <?php
-        if($model->saldo>0)
+        if($model->saldo > 0 && $privilegio[0]['realizar_pago'] == 1)
         echo Html::a('Realizar Pago', ['pago-reservacion','id'=>$model->id], ['class' => 'btn btn-info', 'id'=>'_Pago']) ?>
 </p>
 <p>
-    <?php
-        echo Html::a('Modificar reservación', ['update','id'=>$model->id], ['class' => 'btn btn-success', 'id'=>'_Pago']) ?>
+  <?php
+  if($privilegio[0]['modificar_reservacion'] == 1)
+  echo Html::a('Modificar reservación', ['update','id'=>$model->id], ['class' => 'btn btn-success', 'id'=>'_Pago']) ?>
         <?= Html::a('Generar PDF', ['reservacion/info', 'id'=>$model->id], ['class'=>'btn', 'target'=>'_blank']) ?>
 </p>
 
@@ -83,21 +84,41 @@ $this->params['breadcrumbs'][] = $this->title;
                             'value'=>$huesped->obtenerTelefono($model->id_huesped),
                             'displayOnly'=>true,
                         ],
-                        'fecha_entrada',
-                        'fecha_salida',
-                        'notas',
-                        'adultos',
-                        'ninos',
-                        'noches',
                         [
-                            'attribute'=>'status',
-                            'format'=>'raw',
-                            'value'=>$model->obtenerEstado($model->status),
+                          'attribute'=>'fecha_entrada',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'fecha_salida',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'notas',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'adultos',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'ninos',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'noches',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'status',
+                          'format'=>'raw',
+                          'value'=>$model->obtenerEstado($model->status),
+                          'displayOnly'=>true,
                         ],
 
                         [
                             'attribute'=>'estado_pago',
                             'label'=>'Estado Pago',
+                            'displayOnly'=>true,
                             'format'=>'raw',
                             'value'=>$model->estado_pago ? '<span class="label label-success">Pagada</span>' : '<span class="label label-danger">No Pagada</span>',
                             'type'=>DetailView::INPUT_SWITCH,
@@ -114,6 +135,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute'=>'tipo',
                             'label'=>'Tipo Comprobante',
                             'format'=>'raw',
+                            'displayOnly'=>true,
                             'value'=>  $model->obtenerComprobante($model->tipo),
                             'type'=>DetailView::INPUT_SELECT2,
                             'widgetOptions'=>[
@@ -122,10 +144,22 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'pluginOptions' => ['allowClear'=>true, 'width'=>'100%'],
                             ],
                         ],
-                        'saldo',
-                        'subtotal',
-                        'descuento',
-                        'total',
+                        [
+                          'attribute'=>'saldo',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'subtotal',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'descuento',
+                          'displayOnly'=>true,
+                        ],
+                        [
+                          'attribute'=>'total',
+                          'displayOnly'=>true,
+                        ],
                         [
                             'attribute'=>'create_user',
                             'format'=>'raw',

@@ -80,6 +80,7 @@ class Privilegio extends \yii\db\ActiveRecord
             'modificar_reservacion' => Yii::t('app', 'Modificar Reservacion'),
             'eliminar_reservacion' => Yii::t('app', 'Eliminar Reservacion'),
             'descuento' => Yii::t('app', 'Descuento'),
+            'realizar_pago' => Yii::t('app', 'Realizar Pago'),
             'crear_tarifa' => Yii::t('app', 'Crear Tarifa'),
             'modificar_tarifa' => Yii::t('app', 'Modificar Tarifa'),
             'eliminar_tarifa' => Yii::t('app', 'Eliminar Tarifa'),

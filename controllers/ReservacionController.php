@@ -117,9 +117,13 @@ class ReservacionController extends Controller
 	{
 		$searchModel = new ReservacionSearch();
 		$dataProvider = $searchModel->buscarPagos(Yii::$app->request->queryParams);
+		$id_current_user = Yii::$app->user->identity->id;
+		$privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
 		return $this->render('view', [
 		'model' => $this->findModel($id),
-		'dataProvider'=>$dataProvider
+		'dataProvider'=>$dataProvider,
+		'privilegio'=>$privilegio,
 		]);
 	}
 
@@ -137,14 +141,19 @@ class ReservacionController extends Controller
 
 	public function actionUpdate($id)
 	{
-
-
 		$model = $this->findModel($id);
-
+		$id_current_user = Yii::$app->user->identity->id;
+		$privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 		$habitacion=Habitacion::find()->where(['id' => $model->id_habitacion])->one();
-		if ($model->load(Yii::$app->request->post()) && $model->save())
-		{
-			return $this->redirect(['view', 'id' => $model->id]);
+		if($privilegio[0]['modificar_reservacion'] == 1){
+			if ($model->load(Yii::$app->request->post()) && $model->save())
+			{
+				return $this->redirect(['view', 'id' => $model->id]);
+			}
+		}
+		else {
+			Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+			return $this->redirect(['view', 'id'=>$model->id]);
 		}
 
 
@@ -198,15 +207,27 @@ class ReservacionController extends Controller
 
 
 	public function actionDelete($id)
-	{
+	 {
+		 $model = $this->findModel($id);
+		 $id_current_user = Yii::$app->user->identity->id;
+		 $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
+		 if($privilegio[0]['eliminar_reservacion'] == 1){
+			 $registroSistema= new RegistroSistema();
 
-		$this->findModel($id)->delete();
+			 $model->eliminado = 1;
+			 $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado la reservacion ". $model->id;
 
-		return $this->redirect(['index']);
-
-
-	}
+			 if($model->save() && $registroSistema->save()){
+				 Yii::$app->session->setFlash('kv-detail-success', 'La reservación se ha eliminado correctamente');
+				 return $this->redirect(['index']);
+			 }
+		 }
+		 else{
+			 Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+			 return $this->redirect(['view', 'id'=>$model->id]);
+		 }
+	 }
 
 	/**
 	* Finds the Reservacion model based on its primary key value.
@@ -288,63 +309,72 @@ class ReservacionController extends Controller
 			Activo=1
 			Cancelado=0
 		*/
-		$pagoReservacion = new PagoReservacion();
-		$caja= new Caja();
-		$huesped = new Huesped();
-		$registroSistema= new RegistroSistema();
-		$reserva = new Reservacion();
-		$reservacion = $this->findModel($id);
-		if ($pagoReservacion->load(Yii::$app->request->post()))
-		{
-			//Huésped
-			$huesped->nombre = $reservacion->nombre;
-			$huesped->email = $reservacion->email;
-			$huesped->calle = $reservacion->calle;
-			$huesped->ciudad = $reservacion->ciudad;
-			$huesped->estado = $reservacion->estado;
-			$huesped->pais = $reservacion->pais;
-			$huesped->cp = $reservacion->cp;
-			$huesped->telefono = $reservacion->telefono;
 
-			//Pago Reservación
-			$pagoReservacion->id_reservacion=$id;
-			$pagoReservacion->create_user=Yii::$app->user->identity->id;
-			$pagoReservacion->create_time=date('Y-m-d H:i:s');
-			$pagoReservacion->estado=1;
+		$id_current_user = Yii::$app->user->identity->id;
+		$privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
-			//CAJA
-			$caja->descripcion="PAGO A LA RESERVACION ".$id." CON FOLIO ".$pagoReservacion->id;
-			$caja->tipo_movimiento=0;
-			$caja->efectivo=$pagoReservacion->efectivo;
-			$caja->tarjeta=$pagoReservacion->tarjeta;
-			$caja->deposito=$pagoReservacion->deposito;
-			$caja->tipo_pago=$pagoReservacion->tipo_pago;
-			$caja->create_user=Yii::$app->user->identity->id;
-			$caja->create_time=date('Y-m-d H:i:s');
-
-			//Registro de sistema
-			$registroSistema->descripcion="EL USUARIO ". $reserva->create_user=Yii::$app->user->identity->id ." HA REGISTRADO UN PAGO A LA RESERVACION ". $id ." POR UN MONTO DE ".$pagoReservacion->total;
-
-
-			//Reservación
-			$reservacion->saldo-=$pagoReservacion->total;
-			if ($reservacion->saldo==0)
+		if($privilegio[0]['realizar_pago'] == 1){
+			$pagoReservacion = new PagoReservacion();
+			$caja= new Caja();
+			$huesped = new Huesped();
+			$registroSistema= new RegistroSistema();
+			$reserva = new Reservacion();
+			$reservacion = $this->findModel($id);
+			if ($pagoReservacion->load(Yii::$app->request->post()))
 			{
-				$reservacion->estado_pago=1;
-			}
-			else
-			{
-				$reservacion->estado_pago=0;
-			}
-			if ($pagoReservacion->save() && $caja->save() && $registroSistema->save() && $reservacion->save())
-			{
-				if(empty($_POST['nombre']))
+				//Huésped
+				$huesped->nombre = $reservacion->nombre;
+				$huesped->email = $reservacion->email;
+				$huesped->calle = $reservacion->calle;
+				$huesped->ciudad = $reservacion->ciudad;
+				$huesped->estado = $reservacion->estado;
+				$huesped->pais = $reservacion->pais;
+				$huesped->cp = $reservacion->cp;
+				$huesped->telefono = $reservacion->telefono;
+
+				//Pago Reservación
+				$pagoReservacion->id_reservacion=$id;
+				$pagoReservacion->create_user=Yii::$app->user->identity->id;
+				$pagoReservacion->create_time=date('Y-m-d H:i:s');
+				$pagoReservacion->estado=1;
+
+				//CAJA
+				$caja->descripcion="PAGO A LA RESERVACION ".$id." CON FOLIO ".$pagoReservacion->id;
+				$caja->tipo_movimiento=0;
+				$caja->efectivo=$pagoReservacion->efectivo;
+				$caja->tarjeta=$pagoReservacion->tarjeta;
+				$caja->deposito=$pagoReservacion->deposito;
+				$caja->tipo_pago=$pagoReservacion->tipo_pago;
+				$caja->create_user=Yii::$app->user->identity->id;
+				$caja->create_time=date('Y-m-d H:i:s');
+
+				//Registro de sistema
+				$registroSistema->descripcion="EL USUARIO ". $reserva->create_user=Yii::$app->user->identity->id ." HA REGISTRADO UN PAGO A LA RESERVACION ". $id ." POR UN MONTO DE ".$pagoReservacion->total;
+
+
+				//Reservación
+				$reservacion->saldo-=$pagoReservacion->total;
+				if ($reservacion->saldo==0)
 				{
-					$huesped->save();
+					$reservacion->estado_pago=1;
 				}
-					return $this->redirect(['view', 'id' => $pagoReservacion->id_reservacion]);
+				else
+				{
+					$reservacion->estado_pago=0;
+				}
+				if ($pagoReservacion->save() && $caja->save() && $registroSistema->save() && $reservacion->save())
+				{
+					if(empty($_POST['nombre']))
+					{
+						$huesped->save();
+					}
+						return $this->redirect(['view', 'id' => $pagoReservacion->id_reservacion]);
 
+				}
 			}
+		}
+		else{
+			return $this->redirect(['index']);
 		}
 		return $this->render('pago_reservacion', [
 		'model' => $this->findModel($id),

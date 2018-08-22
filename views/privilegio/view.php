@@ -46,6 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'modificar_reservacion',
             'eliminar_reservacion',
             'descuento',
+            'realizar_pago',
             'crear_tarifa',
             'modificar_tarifa',
             'eliminar_tarifa',

@@ -90,6 +90,7 @@ class ReservacionSearch extends Reservacion
 		        ]);
 
 		$query->andFilterWhere(['like', 'notas', $this->notas]);
+		$query->andFilterWhere(['eliminado' => 0 ]);
 
 		return $dataProvider;
 	}
@@ -202,6 +203,8 @@ class ReservacionSearch extends Reservacion
 		            'total' => $this->total,
 		        ]);
 
+						$query->andFilterWhere(['eliminado' => 0 ]);
+
 		return $dataProvider;
 	}
 
@@ -252,6 +255,8 @@ class ReservacionSearch extends Reservacion
 		            'total' => $this->total,
 
 		        ]);
+
+						$query->andFilterWhere(['eliminado' => 0 ]);
 
 		return $dataProvider;
 	}

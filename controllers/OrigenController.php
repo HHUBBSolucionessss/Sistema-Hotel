@@ -133,7 +133,6 @@ class OrigenController extends Controller
      */
      public function actionDelete($id)
     	{
-
     		$model = $this->findModel($id);
         $id_current_user = Yii::$app->user->identity->id;
         $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
@@ -153,7 +152,6 @@ class OrigenController extends Controller
           Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
           return $this->redirect(['view', 'id'=>$model->id]);
         }
-
     	}
 
     /**

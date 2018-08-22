@@ -129,6 +129,7 @@ class CajaController extends Controller
     {
         $id_current_user = Yii::$app->user->identity->id;
         $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+        $totalCaja=Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
 
         if($privilegio[0]['apertura_caja'] == 1){
           $model = new Caja();
@@ -136,7 +137,6 @@ class CajaController extends Controller
 
           if ($model->load(Yii::$app->request->post()))
           {
-            $totalCaja=Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
             $model->descripcion="Apertura de caja";
             $model->tipo_movimiento = 0;
             $model->create_user=Yii::$app->user->identity->id;
@@ -180,6 +180,7 @@ class CajaController extends Controller
     {
         $id_current_user = Yii::$app->user->identity->id;
         $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+        $totalCaja=Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
 
         if($privilegio[0]['cierre_caja'] == 1){
           $model = new Caja();
@@ -188,7 +189,6 @@ class CajaController extends Controller
 
           if ($model->load(Yii::$app->request->post()))
             {
-              $totalCaja = Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
               $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha realizado un cierre de caja de $".$model->efectivo. ' de efectivo';
               $sql = EstadoCaja::findOne(['id' => 1]);
               $sql->estado_caja = 0;
