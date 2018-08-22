@@ -22,7 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::button('Crear huésped', ['value'=>Url::to('../huesped/modal'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+      <?php
+      if($privilegio[0]['crear_huesped'] == 1)
+        echo Html::button('Crear huésped', ['value'=>Url::to('../huesped/modal'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php

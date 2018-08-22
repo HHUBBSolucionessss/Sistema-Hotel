@@ -54,9 +54,13 @@ class RegistrarUsuarioController extends Controller
 
 		$searchModel = new UsuarioSearch();
 		$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+		$id_current_user = Yii::$app->user->identity->id;
+		$privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
 		return $this->render('index', [
 		'searchModel' => $searchModel,
 		'dataProvider' => $dataProvider,
+		'privilegio'=>$privilegio,
 		]);
 
 	}
@@ -71,29 +75,43 @@ class RegistrarUsuarioController extends Controller
 
 	public function actionView($id)
 	{
+		$id_current_user = Yii::$app->user->identity->id;
+		$privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 		$model = $this->findModel($id);
 		$registroSistema= new RegistroSistema();
 		$idUsuario = Yii::$app->db->createCommand('SELECT id FROM privilegio WHERE id_usuario='.$id)->queryOne();
 		if ($model->load(Yii::$app->request->post()))
 		{
 			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado datos del usuario ". $model->nombre;
-			if ($model->save() && $registroSistema->save())
-			{
-				Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizó correctamente');
-				return $this->redirect(['view', 'id'=>$model->id,
-				'idUsuario' => $idUsuario,
-				'model'=>$model,
-			]);
+			$id_current_user = Yii::$app->user->identity->id;
+			$privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
+			if($privilegio[0]['modificar_usuario'] == 1){
+				if ($model->save() && $registroSistema->save())
+				{
+					Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizó correctamente');
+					return $this->redirect(['view', 'id'=>$model->id,
+					'idUsuario' => $idUsuario,
+					'model'=>$model,
+				]);
+				}
+				else
+				{
+					Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
+					return $this->redirect(['view', 'id'=>$model->id]);
+				}
 			}
-			else
-			{
-				Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
+			else{
+				Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
 				return $this->redirect(['view', 'id'=>$model->id]);
 			}
 		}
 		else
 		{
-			return $this->render('view', ['model'=>$model]);
+			return $this->render('view', [
+				'model'=>$model,
+				'privilegio'=>$privilegio,
+			]);
 		}
 	}
 
@@ -105,48 +123,55 @@ class RegistrarUsuarioController extends Controller
 
 	public function actionCreate()
 	{
+			$id_current_user = Yii::$app->user->identity->id;
+			$privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
-		$model = new SignupForm();
-		$usuario = new User();
-		$privilegio= new Privilegio();
-		$registroSistema= new RegistroSistema();
+			if($privilegio[0]['crear_usuario'] == 1){
+				$model = new SignupForm();
+				$usuario = new User();
+				$privilegio= new Privilegio();
+				$registroSistema= new RegistroSistema();
 
-		if ($model->load(Yii::$app->request->post()))
-		{
+				if ($model->load(Yii::$app->request->post()))
+				{
 
-			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado al usuario ". $model->nombre;
+					$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado al usuario ". $model->nombre;
 
-			if ($model->signup())
-			{
+					if ($model->signup())
+					{
 
-				$sql = User::findOne(['email' => $model->email]);
+						$sql = User::findOne(['email' => $model->email]);
 
-				$id = $sql->id;
-				$privilegio->id_usuario = $id;
-				$privilegio->crear_habitacion=1;
-				$privilegio->modificar_habitacion=1;
-				$privilegio->eliminar_habitacion=1;
-				$privilegio->crear_tipo_habitacion=1;
-				$privilegio->modificar_tipo_habitacion=1;
-				$privilegio->eliminar_tipo_habitacion=1;
-				$privilegio->movimientos_caja=1;
-				$privilegio->apertura_caja=1;
-				$privilegio->cierre_caja=1;
-				$privilegio->crear_reservacion=1;
-				$privilegio->modificar_reservacion=1;
-				$privilegio->eliminar_reservacion=1;
+						$id = $sql->id;
+						$privilegio->id_usuario = $id;
+						$privilegio->crear_habitacion=1;
+						$privilegio->modificar_habitacion=1;
+						$privilegio->eliminar_habitacion=1;
+						$privilegio->crear_tipo_habitacion=1;
+						$privilegio->modificar_tipo_habitacion=1;
+						$privilegio->eliminar_tipo_habitacion=1;
+						$privilegio->movimientos_caja=1;
+						$privilegio->apertura_caja=1;
+						$privilegio->cierre_caja=1;
+						$privilegio->crear_reservacion=1;
+						$privilegio->modificar_reservacion=1;
+						$privilegio->eliminar_reservacion=1;
 
-				if($privilegio->save() && $registroSistema->save()){
-					return $this->redirect(['index']);
+						if($privilegio->save() && $registroSistema->save()){
+							return $this->redirect(['index']);
+						}
+
+					}
+
 				}
-
+			}
+			else{
+				return $this->redirect(['index']);
 			}
 
-		}
-
-		return $this->renderAjax('create', [
-		'model' => $model,
-		]);
+				return $this->renderAjax('create', [
+				'model' => $model,
+				]);
 
 
 
@@ -195,15 +220,24 @@ class RegistrarUsuarioController extends Controller
 	 	{
 
 	 		$model = $this->findModel($id);
-	 		$registroSistema= new RegistroSistema();
+			$id_current_user = Yii::$app->user->identity->id;
+      $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
-	 		$model->eliminado = 1;
-	 		$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado al usuario ". $model->nombre;
+      if($privilegio[0]['eliminar_usuario'] == 1){
+		 		$registroSistema= new RegistroSistema();
 
-	 		if($model->save() && $registroSistema->save()){
-	 			return $this->redirect(['index']);
-	 		}
+		 		$model->eliminado = 1;
+		 		$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado al usuario ". $model->nombre;
 
+		 		if($model->save() && $registroSistema->save()){
+					Yii::$app->session->setFlash('kv-detail-success', 'El usuario se ha eliminado correctamente');
+   				return $this->redirect(['index']);
+   			}
+      }
+      else{
+        Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+        return $this->redirect(['view', 'id'=>$model->id]);
+      }
 	 	}
 
 

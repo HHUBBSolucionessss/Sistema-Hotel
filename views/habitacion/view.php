@@ -23,13 +23,32 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <div class="row">
-        <div class="col-md-6">
+  <div class="col-md-6">
+
         <?php
         $user= new User();
+        /*if($privilegio[0]['crear_habitacion'] == 0){
+
+
+        $js = "function(){
+          $(_grid).options({
+              mode:view,
+          });
+        }";
+      } else{
+        $js = "function(){
+          $(_grid).options({
+              mode:edit,
+          });
+        }";
+      }*/
             echo DetailView::widget([
                 'model'=>$model,
                 'condensed'=>true,
                 'hover'=>true,
+                'options'=>[
+                    'id'=>'_grid',
+                ],
                 'mode' =>DetailView::MODE_VIEW,
                 'deleteOptions'=>[
                   'params'=>['id' => $model->id],

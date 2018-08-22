@@ -55,6 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'crear_usuario',
             'modificar_usuario',
             'eliminar_usuario',
+            'definir_privilegios',
         ],
     ]) ?>
 

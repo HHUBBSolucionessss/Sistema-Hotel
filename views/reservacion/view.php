@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <p>
     <?php
         echo Html::a('Modificar reservación', ['update','id'=>$model->id], ['class' => 'btn btn-success', 'id'=>'_Pago']) ?>
+        <?= Html::a('Generar PDF', ['reservacion/info', 'id'=>$model->id], ['class'=>'btn', 'target'=>'_blank']) ?>
 </p>
 
 <div class="reservacion-view">
@@ -55,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         [
                           'attribute'=>'id',
                           'format'=>'raw',
-                          'label'=>'ID',
+                          'label'=>'Folio',
                           'displayOnly'=>true,
                         ],
                         [

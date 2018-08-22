@@ -43,10 +43,13 @@ class TarifaController extends Controller
     {
         $searchModel = new TarifaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'privilegio'=>$privilegio,
         ]);
     }
 
@@ -62,16 +65,25 @@ class TarifaController extends Controller
          if ($model->load(Yii::$app->request->post()))
          {
              $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado la tarifa ". $model->nombre;
-             if ($model->save() && $registroSistema->save())
-             {
-                 Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
-                 return $this->redirect(['view', 'id'=>$model->id]);
-             }
-             else
-             {
-                 Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
-                 return $this->redirect(['view', 'id'=>$model->id]);
+             $id_current_user = Yii::$app->user->identity->id;
+             $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
+             if($privilegio[0]['modificar_tarifa'] == 1){
+               if ($model->save() && $registroSistema->save())
+               {
+                   Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
+                   return $this->redirect(['view', 'id'=>$model->id]);
+               }
+               else
+               {
+                   Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
+                   return $this->redirect(['view', 'id'=>$model->id]);
+
+               }
+             }
+             else{
+               Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+               return $this->redirect(['view', 'id'=>$model->id]);
              }
          }
          else
@@ -88,57 +100,65 @@ class TarifaController extends Controller
      */
     public function actionCreate()
     {
-        $modelTarifa = new Tarifa;
-        $registroSistema= new RegistroSistema();
-        $modelsTarifaDetallada = [new TarifaDetallada];
-        if ($modelTarifa->load(Yii::$app->request->post()))
-        {
-            $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha creado la tarifa ". $modelTarifa->nombre;
-            $modelTarifa->create_user=Yii::$app->user->identity->id;
-            $modelTarifa->create_time=date('Y-m-d H:i:s');
-            $registroSistema->save();
-            $modelTarifaDetallada = Model::createMultiple(TarifaDetallada::classname());
-            Model::loadMultiple($modelTarifaDetallada, Yii::$app->request->post());
-            // ajax validation
-            if (Yii::$app->request->isAjax)
-            {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ArrayHelper::merge(
-                    ActiveForm::validateMultiple($modelTarifaDetallada),
-                    ActiveForm::validate($modelTarifa)
-                );
-            }
-            // validate all models
-            $valid = $modelTarifa->validate();
-            //$modelTarifaDetallada->id_tarifa=0;
-            $validacion=Model::validateMultiple($modelTarifaDetallada);
-            //$valid =  $validacion && $valid;
-            if ($valid)
-            {
-                $transaction = \Yii::$app->db->beginTransaction();
-                try
-                {
-                    if ($flag = $modelTarifa->save(false))
-                    {
-                        foreach ($modelTarifaDetallada as $modelTarifaDetallada)
-                        {
-                            $modelTarifaDetallada->id_tarifa = $modelTarifa->id;
-                            if (! ($flag = $modelTarifaDetallada->save(false)))
-                            {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-                    }
-                    if ($flag)
-                    {
-                        $transaction->commit();
-                        return $this->redirect(['view', 'id' => $modelTarifa->id]);
-                    }
-                } catch (Exception $e) {
-                    $transaction->rollBack();
-                }
-            }
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
+        if($privilegio[0]['crear_tarifa'] == 1){
+          $modelTarifa = new Tarifa;
+          $registroSistema= new RegistroSistema();
+          $modelsTarifaDetallada = [new TarifaDetallada];
+          if ($modelTarifa->load(Yii::$app->request->post()))
+          {
+              $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha creado la tarifa ". $modelTarifa->nombre;
+              $modelTarifa->create_user=Yii::$app->user->identity->id;
+              $modelTarifa->create_time=date('Y-m-d H:i:s');
+              $registroSistema->save();
+              $modelTarifaDetallada = Model::createMultiple(TarifaDetallada::classname());
+              Model::loadMultiple($modelTarifaDetallada, Yii::$app->request->post());
+              // ajax validation
+              if (Yii::$app->request->isAjax)
+              {
+                  Yii::$app->response->format = Response::FORMAT_JSON;
+                  return ArrayHelper::merge(
+                      ActiveForm::validateMultiple($modelTarifaDetallada),
+                      ActiveForm::validate($modelTarifa)
+                  );
+              }
+              // validate all models
+              $valid = $modelTarifa->validate();
+              //$modelTarifaDetallada->id_tarifa=0;
+              $validacion=Model::validateMultiple($modelTarifaDetallada);
+              //$valid =  $validacion && $valid;
+              if ($valid)
+              {
+                  $transaction = \Yii::$app->db->beginTransaction();
+                  try
+                  {
+                      if ($flag = $modelTarifa->save(false))
+                      {
+                          foreach ($modelTarifaDetallada as $modelTarifaDetallada)
+                          {
+                              $modelTarifaDetallada->id_tarifa = $modelTarifa->id;
+                              if (! ($flag = $modelTarifaDetallada->save(false)))
+                              {
+                                  $transaction->rollBack();
+                                  break;
+                              }
+                          }
+                      }
+                      if ($flag)
+                      {
+                          $transaction->commit();
+                          return $this->redirect(['view', 'id' => $modelTarifa->id]);
+                      }
+                  } catch (Exception $e) {
+                      $transaction->rollBack();
+                  }
+              }
+          }
+        }
+        else{
+          return $this->redirect(['index']);
         }
 
         return $this->render('_form', [
@@ -234,14 +254,24 @@ class TarifaController extends Controller
     	{
 
     		$model = $this->findModel($id);
-    		$registroSistema= new RegistroSistema();
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
-       $model->eliminado = 1;
-  			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado la tarifa ". $model->nombre;
+        if($privilegio[0]['eliminar_tarifa'] == 1){
+      		$registroSistema= new RegistroSistema();
 
-  			if($model->save() && $registroSistema->save()){
-  				return $this->redirect(['index']);
-  			}
+         $model->eliminado = 1;
+    			$registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado la tarifa ". $model->nombre;
+
+    			if($model->save() && $registroSistema->save()){
+            Yii::$app->session->setFlash('kv-detail-success', 'La tarifa se ha eliminado correctamente');
+     				return $this->redirect(['index']);
+     			}
+        }
+        else{
+          Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+          return $this->redirect(['view', 'id'=>$model->id]);
+        }
 
     	}
 

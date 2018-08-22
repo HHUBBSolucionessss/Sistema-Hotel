@@ -19,7 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Pjax::begin(); ?>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
     <p>
-        <?= Html::button('Crear tipo de habitación', ['value'=>Url::to('../tipo-habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?php
+        if($privilegio[0]['crear_tipo_habitacion'] == 1)
+        echo Html::button('Crear tipo de habitación', ['value'=>Url::to('../tipo-habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php

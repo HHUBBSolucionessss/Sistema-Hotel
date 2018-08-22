@@ -38,10 +38,13 @@ class HuespedController extends Controller
     {
         $searchModel = new HuespedSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'privilegio'=>$privilegio,
         ]);
     }
 
@@ -59,16 +62,25 @@ class HuespedController extends Controller
             $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado datos del huésped ". $model->nombre;
             $model->update_user=Yii::$app->user->identity->id;
             $model->update_time=date('Y-m-d H:i:s');
-            if ($model->save() && $registroSistema->save())
-            {
-                Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
-                return $this->redirect(['view', 'id'=>$model->id]);
-            }
-            else
-            {
-                Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
-                return $this->redirect(['view', 'id'=>$model->id]);
 
+            $id_current_user = Yii::$app->user->identity->id;
+            $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
+            if($privilegio[0]['modificar_huesped'] == 1){
+              if ($model->save() && $registroSistema->save())
+              {
+                  Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
+                  return $this->redirect(['view', 'id'=>$model->id]);
+              }
+              else
+              {
+                  Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
+                  return $this->redirect(['view', 'id'=>$model->id]);
+              }
+            }
+            else{
+              Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+              return $this->redirect(['view', 'id'=>$model->id]);
             }
         }
         else
@@ -85,19 +97,27 @@ class HuespedController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Huesped();
-        $registroSistema = new RegistroSistema();
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if($privilegio[0]['crear_huesped'] == 1){
+          $model = new Huesped();
+          $registroSistema = new RegistroSistema();
 
-          $model->create_user=Yii::$app->user->identity->id;
-          $model->create_time=date('Y-m-d H:i:s');
-          $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado al huésped ". $model->nombre;
+          if ($model->load(Yii::$app->request->post())) {
 
-          if($model->save() && $registroSistema->save())
-          {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->create_user=Yii::$app->user->identity->id;
+            $model->create_time=date('Y-m-d H:i:s');
+            $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado al huésped ". $model->nombre;
+
+            if($model->save() && $registroSistema->save())
+            {
+              return $this->redirect(['view', 'id' => $model->id]);
+            }
           }
+        }
+        else{
+          return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -176,13 +196,23 @@ class HuespedController extends Controller
     {
 
       $model = $this->findModel($id);
-      $registroSistema= new RegistroSistema();
+      $id_current_user = Yii::$app->user->identity->id;
+      $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
-      $model->eliminado = 1;
-      $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado al huésped ". $model->nombre;
+      if($privilegio[0]['eliminar_huesped'] == 1){
+        $registroSistema= new RegistroSistema();
 
-      if($model->save() && $registroSistema->save()){
-        return $this->redirect(['index']);
+        $model->eliminado = 1;
+        $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado al huésped ". $model->nombre;
+
+        if($model->save() && $registroSistema->save()){
+          Yii::$app->session->setFlash('kv-detail-success', 'El huésped se ha eliminado correctamente');
+          return $this->redirect(['index']);
+        }
+      }
+      else{
+        Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+        return $this->redirect(['view', 'id'=>$model->id]);
       }
 
     }

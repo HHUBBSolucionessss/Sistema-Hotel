@@ -14,6 +14,7 @@ use app\models\TarifaDetallada;
 use app\models\PagoReservacion;
 use app\models\ReservacionSearch;
 use yii\web\Controller;
+use kartik\mpdf\Pdf;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
@@ -156,8 +157,33 @@ class ReservacionController extends Controller
 	}
 
 
+	public function actionInfo($id){
 
+		$model = $this->findModel($id);
+		$searchModel = new ReservacionSearch();
+		$dataProvider = $searchModel->buscarPagos(Yii::$app->request->queryParams);
 
+		$content = $this->renderPartial('info',[
+				'dataProvider' => $dataProvider,
+				'model' => $model,
+		]);
+
+		$pdf = new Pdf([
+				'mode' => Pdf::MODE_CORE,
+				'format' => Pdf::FORMAT_A4,
+				'orientation' => Pdf::ORIENT_PORTRAIT,
+				'destination' => Pdf::DEST_BROWSER,
+				'content' => $content,
+				'cssFile' => '@vendor/kartik-v/yii2-mpdf/assets/kv-mpdf-bootstrap.min.css',
+				'cssInline' => '.kv-heading-1{font-size:18px}',
+				'options' => ['title' => 'Reporte Cierre'],
+				'methods' => [
+						'SetHeader'=>['Reporte de reservación. - '. date('d-m-Y')],
+						'SetFooter'=>['Página {PAGENO}'],
+				]
+		]);
+		return $pdf->render();
+	}
 
 
 

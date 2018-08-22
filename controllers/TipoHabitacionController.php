@@ -38,10 +38,13 @@ class TipoHabitacionController extends Controller
     {
         $searchModel = new TipoHabitacionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'privilegio'=>$privilegio,
         ]);
     }
 
@@ -55,22 +58,32 @@ class TipoHabitacionController extends Controller
     {
         $model = $this->findModel($id);
         $registroSistema= new RegistroSistema();
+
         if ($model->load(Yii::$app->request->post()))
         {
             $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado el tipo de habitación ".$model->descripcion;
             $model->update_user=Yii::$app->user->identity->id;
             $model->update_time=date('Y-m-d H:i:s');
 
-            if ($model->save() && $registroSistema->save())
-            {
-                Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
-                return $this->redirect(['view', 'id'=>$model->id]);
-            }
-            else
-            {
-                Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
-                return $this->redirect(['view', 'id'=>$model->id]);
+            $id_current_user = Yii::$app->user->identity->id;
+            $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
+            if($privilegio[0]['modificar_tipo_habitacion'] == 1){
+              if ($model->save() && $registroSistema->save())
+              {
+                  Yii::$app->session->setFlash('kv-detail-success', 'La información se actualizo correctamente');
+                  return $this->redirect(['view', 'id'=>$model->id]);
+              }
+              else
+              {
+                  Yii::$app->session->setFlash('kv-detail-warning', 'Ha ocurrido un error al guardar la información');
+                  return $this->redirect(['view', 'id'=>$model->id]);
+
+              }
+            }
+            else{
+              Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+              return $this->redirect(['view', 'id'=>$model->id]);
             }
         }
         else
@@ -87,15 +100,23 @@ class TipoHabitacionController extends Controller
      */
     public function actionCreate()
     {
-        $model = new TipoHabitacion();
-        $registroSistema = new RegistroSistema();
-        if($model->load(Yii::$app->request->post())){
-            $registroSistema->descripcion=Yii::$app->user->identity->nombre ." ha registrado el tipo de habitación ". $model->descripcion;
-            $model->create_user=Yii::$app->user->identity->id;
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
-            if ($model->save()&&$registroSistema->save()){
-              return $this->redirect(['view', 'id' => $model->id]);
-            }
+        if($privilegio[0]['crear_tipo_habitacion'] == 1){
+          $model = new TipoHabitacion();
+          $registroSistema = new RegistroSistema();
+          if($model->load(Yii::$app->request->post())){
+              $registroSistema->descripcion=Yii::$app->user->identity->nombre ." ha registrado el tipo de habitación ". $model->descripcion;
+              $model->create_user=Yii::$app->user->identity->id;
+
+              if ($model->save()&&$registroSistema->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+              }
+        }
+      }
+      else{
+        return $this->redirect(['index']);
       }
 
       return $this->renderAjax('create', [
@@ -115,15 +136,23 @@ class TipoHabitacionController extends Controller
      */
      public function actionDelete($id)
     {
-
       $model = $this->findModel($id);
       $registroSistema= new RegistroSistema();
+      $id_current_user = Yii::$app->user->identity->id;
+      $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
-      $model->eliminado = 1;
-      $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado el tipo de habitación ". $model->descripcion;
- 
-      if($model->save() && $registroSistema->save()){
-        return $this->redirect(['index']);
+      if($privilegio[0]['eliminar_tipo_habitacion'] == 1){
+        $model->eliminado = 1;
+        $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha eliminado el tipo de habitación ". $model->descripcion;
+
+        if($model->save() && $registroSistema->save()){
+          Yii::$app->session->setFlash('kv-detail-success', 'El tipo habitación se ha eliminado correctamente');
+          return $this->redirect(['index']);
+        }
+      }
+      else{
+        Yii::$app->session->setFlash('kv-detail-warning', 'No tienes los permisos para realizar esta acción');
+        return $this->redirect(['view', 'id'=>$model->id]);
       }
 
     }

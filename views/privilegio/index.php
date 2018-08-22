@@ -19,7 +19,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <p>
         <?= Html::a(Yii::t('app', 'Create Privilegio'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
@@ -33,6 +32,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'id_usuario',
+            [
+              'attribute'=>'eliminar_habitacion',
+              'label'=>'Habitación',
+              //'value'=>$sql->fecha_entrada,
+            ],
+            //$sql[0]['fecha_entrada'],
             //'eliminar_habitacion',
             //'crear_tipo_habitacion',
             //'modificar_tipo_habitacion',

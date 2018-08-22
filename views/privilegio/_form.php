@@ -82,6 +82,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'eliminar_usuario')->checkbox(array('label'=>'Eliminar usuario')); ?>
 
+    <?= $form->field($model, 'definir_privilegios')->checkbox(array('label'=>'Asignar privilegios')); ?>
+
   </p>
 
 </div>

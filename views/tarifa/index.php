@@ -22,7 +22,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Crear tarifa', ['create'], ['class' => 'btn btn-success']) ?>
+      <?php
+      if($privilegio[0]['crear_tarifa'] == 1)
+        echo Html::a('Crear tarifa', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
     <?php
             $gridColumns = [

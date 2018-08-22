@@ -20,7 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::button('Crear usuario', ['value'=>Url::to('../registrar-usuario/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+      <?php
+      if($privilegio[0]['crear_usuario'] == 1)
+      echo Html::button('Crear usuario', ['value'=>Url::to('../registrar-usuario/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
     </p>
 
     <?php

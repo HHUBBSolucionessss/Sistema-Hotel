@@ -6,8 +6,10 @@ use app\models\Reservacion;
 use app\models\Caja;
 use app\models\EstadoCaja;
 use app\models\CajaSearch;
+use app\models\Privilegio;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use app\models\RegistroSistema;
 use yii\filters\VerbFilter;
 use kartik\mpdf\Pdf;
 
@@ -38,6 +40,10 @@ class CajaController extends Controller
     public function actionIndex()
     {
         $searchModel = new CajaSearch();
+        $id_current_user = Yii::$app->user->identity->id;
+
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+        $totalCaja = Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $estado_caja = new EstadoCaja();
         $estado_caja = Yii::$app->db->createCommand('SELECT * FROM estado_caja WHERE id = 1')->queryAll();
@@ -46,6 +52,8 @@ class CajaController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
             'estado_caja' => $estado_caja,
+            'totalCaja'=>$totalCaja,
+            'privilegio'=>$privilegio,
         ]);
     }
 
@@ -68,27 +76,45 @@ class CajaController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Caja();
-        if ($model->load(Yii::$app->request->post()))
-        {
-          $model->create_user=Yii::$app->user->identity->id;
-          $model->create_time=date('Y-m-d H:i:s');
-          if($model->tipo_movimiento == 1)
-            $model->efectivo=-($model->efectivo);
-          else
-            $model->efectivo= $model->efectivo;
-          if($model->save())
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
+        if($privilegio[0]['movimientos_caja'] == 1){
+
+          $model = new Caja();
+          $registroSistema= new RegistroSistema();
+          if ($model->load(Yii::$app->request->post()))
           {
-                $searchModel = new CajaSearch();
-                $estado_caja = Yii::$app->db->createCommand('SELECT * FROM estado_caja WHERE id = 1')->queryAll();
-                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                return $this->render('index', [
-                    'searchModel' => $searchModel,
-                    'dataProvider' => $dataProvider,
-                    'estado_caja' => $estado_caja,
-                ]);
+            $totalCaja = Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
+            $model->create_user=Yii::$app->user->identity->id;
+            $model->create_time=date('Y-m-d H:i:s');
+
+            if($model->tipo_movimiento == 1){
+              $model->efectivo=-($model->efectivo);
+              $registroSistema->descripcion = Yii::$app->user->identity->nombre ." retiró $".-($model->efectivo). ' de la caja';
+            }
+            else{
+              $model->efectivo= $model->efectivo;
+              $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ingresó $".$model->efectivo. ' a la caja';
+            }
+
+              if($model->save() && $registroSistema->save())
+              {
+                    $searchModel = new CajaSearch();
+                    $estado_caja = Yii::$app->db->createCommand('SELECT * FROM estado_caja WHERE id = 1')->queryAll();
+                    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                    return $this->redirect(['index', [
+                        'searchModel' => $searchModel,
+                        'dataProvider' => $dataProvider,
+                        'estado_caja' => $estado_caja,
+                        'totalCaja'=>$totalCaja,
+                    ]]);
+              }
+            }
           }
-        }
+          else{
+            return $this->redirect(['index']);
+          }
         return $this->renderAjax('create', [
             'model' => $model,
         ]);
@@ -101,29 +127,42 @@ class CajaController extends Controller
      */
     public function actionApertura()
     {
-        $model = new Caja();
-        $totalCaja=Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
-        if ($model->load(Yii::$app->request->post()))
-        {
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
+        if($privilegio[0]['apertura_caja'] == 1){
+          $model = new Caja();
+          $registroSistema= new RegistroSistema();
+
+          if ($model->load(Yii::$app->request->post()))
+          {
+            $totalCaja=Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
             $model->descripcion="Apertura de caja";
             $model->tipo_movimiento = 0;
             $model->create_user=Yii::$app->user->identity->id;
             $model->create_time=date('Y-m-d H:i:s');
             $sql = EstadoCaja::findOne(['id' => 1]);
             $sql->estado_caja = 1;
-            if($model->save() && $sql->save())
-            {
+            $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha realizado una apertura de caja con $".$model->efectivo. ' de efectivo';
 
+            if($model->save() && $sql->save() && $registroSistema->save())
+            {
                 $searchModel = new CajaSearch();
                 $estado_caja = new EstadoCaja();
                 $estado_caja = Yii::$app->db->createCommand('SELECT * FROM estado_caja WHERE id = 1')->queryAll();
                 $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-                return $this->render('index', [
+                return $this->redirect(['index', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
                     'estado_caja' => $estado_caja,
-                ]);
+                    'totalCaja'=>$totalCaja,
+
+                ]]);
             }
+          }
+        }
+        else {
+          return $this->redirect(['index']);
         }
         return $this->renderAjax('apertura', [
             'model' => $model,
@@ -139,22 +178,34 @@ class CajaController extends Controller
      */
     public function actionCierre()
     {
-        $model = new Caja();
-        $estado_caja = new EstadoCaja();
-        $totalCaja = Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
-        if ($model->load(Yii::$app->request->post()))
-        {
-            $sql = EstadoCaja::findOne(['id' => 1]);
-            $sql->estado_caja = 0;
-            $model->descripcion="Cierre de caja";
-            $model->tipo_movimiento=1;
-            $model->efectivo=-($model->efectivo);
-            $model->create_user=Yii::$app->user->identity->id;
-            $model->create_time=date('Y-m-d H:i:s');
-            if($model->save() && $sql->save())
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
+        if($privilegio[0]['cierre_caja'] == 1){
+          $model = new Caja();
+          $estado_caja = new EstadoCaja();
+          $registroSistema= new RegistroSistema();
+
+          if ($model->load(Yii::$app->request->post()))
             {
-                return $this->render('info');
+              $totalCaja = Yii::$app->db->createCommand('SELECT Sum(efectivo), Sum(tarjeta), Sum(deposito) FROM caja AS Caja')->queryAll();
+              $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha realizado un cierre de caja de $".$model->efectivo. ' de efectivo';
+              $sql = EstadoCaja::findOne(['id' => 1]);
+              $sql->estado_caja = 0;
+              $model->descripcion="Cierre de caja";
+              $model->tipo_movimiento=1;
+              $model->efectivo=-($model->efectivo);
+              $model->create_user=Yii::$app->user->identity->id;
+              $model->create_time=date('Y-m-d H:i:s');
+
+              if($model->save() && $sql->save() && $registroSistema->save())
+              {
+                  return $this->render('info');
+              }
             }
+          }
+        else {
+          return $this->redirect(['index']);
         }
 
         return $this->renderAjax('cierre', [
@@ -194,20 +245,6 @@ class CajaController extends Controller
       ]);
       return $pdf->render();
 
-    }
-
-
-    /**
-     * Deletes an existing Caja model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionDelete($id)
-    {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
     }
 
     /**

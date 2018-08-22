@@ -33,7 +33,7 @@ $this->title = 'Sistema Hotel';
         <?= Html::a('Orígenes', ['/origen/index'], ['class'=>'btn']) ?>
         <?= Html::a('Registro Sistema', ['site/registro'], ['class'=>'btn']) ?>
         <?= Html::a('Usuarios', ['/registrar-usuario/index'], ['class'=>'btn']) ?>
-        <?= Html::a('Reportes', ['/reportes/index'], ['class'=>'btn']) ?>
+        
     </div>
     <div class="body-content">
 

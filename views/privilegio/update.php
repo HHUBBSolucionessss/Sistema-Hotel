@@ -5,12 +5,13 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Privilegio */
 
-$this->title = Yii::t('app', 'Update Privilegio: ' . $model->id, [
-    'nameAttribute' => '' . $model->id,
+$this->title = Yii::t('app', 'Asignar Privilegios: ' . $model->id_usuario, [
+    'nameAttribute' => '' . $model->id_usuario,
 ]);
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Privilegios'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+$this->title = 'Asignar Privilegios '. $model->id_usuario;
+$this->params['breadcrumbs'][] = ['label' => 'Usuarios', 'url' => ['/registrar-usuario/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Vista del usuario '.$model->id_usuario, 'url' => ['/registrar-usuario/view?id='.$model->id_usuario]];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="privilegio-update">
 

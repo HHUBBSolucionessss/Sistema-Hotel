@@ -19,7 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::button('Crear habitación', ['value'=>Url::to('../habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton']) ?>
+        <?php
+        if($privilegio[0]['crear_habitacion'] == 1)
+        echo Html::button('Crear habitación', ['value'=>Url::to('../habitacion/create'), 'class' => 'btn btn-success', 'id' => 'modalButton'])?>
         <?= Html::a('Tipo de habitaciones', ['../web/tipo-habitacion/index'], ['class'=>'btn']) ?>
     </p>
 

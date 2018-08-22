@@ -21,14 +21,22 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?php if(!$estado_caja[0]['estado_caja']) echo Html::button('Apertura Caja', ['value'=>Url::to('../caja/apertura'), 'class' => 'btn btn-success', 'id' => '_modalButtonApertura'])?>
+        <?php
+        if(!$estado_caja[0]['estado_caja'] && $privilegio[0]['apertura_caja'] == 1)
+        echo Html::button('Apertura Caja', ['value'=>Url::to('../caja/apertura'), 'class' => 'btn btn-success', 'id' => '_modalButtonApertura'])?>
+          <p>Total en caja</p>
+          <br>
+            <p>Efectivo: $ <?=$totalCaja[0]['Sum(efectivo)']?></p>
+            <p>Tarjeta: $ <?=$totalCaja[0]['Sum(tarjeta)']?></p>
+            <p>Depósito: $ <?=$totalCaja[0]['Sum(deposito)']?></p>
+          <br>
     </p>
     <p>
-        <?php if($estado_caja[0]['estado_caja'])
+        <?php if($estado_caja[0]['estado_caja'] && $privilegio[0]['movimientos_caja'] == 1)
         echo Html::button('Movimientos de caja', ['value'=>Url::to('../caja/create'), 'class' => 'btn btn-info', 'id' => 'modalButton']) ?>
     </p>
     <p>
-        <?php if($estado_caja[0]['estado_caja'])
+        <?php if($estado_caja[0]['estado_caja'] && $privilegio[0]['cierre_caja'] == 1)
         echo Html::button('Cierre de caja', ['value'=>Url::to('../caja/cierre'), 'class' => 'btn btn-danger', 'id' => '_modalButtonCierre']) ?>
     </p>
 
