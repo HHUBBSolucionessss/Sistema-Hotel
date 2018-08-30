@@ -372,16 +372,16 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="row">
         <div class="col-md-6">
-          <?= $form->field($model, 'nombre')->textInput(['maxlength' => true]) ?>
-          <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
-          <?= $form->field($model, 'calle')->textInput(['maxlength' => true]) ?>
-          <?= $form->field($model, 'ciudad')->textInput(['maxlength' => true]) ?>
+          <?= $form->field($model, 'nombre')->textInput(['id'=>'_nombre','readonly'=>true]) ?>
+          <?= $form->field($model, 'email')->textInput(['id'=>'_email','readonly'=>true]) ?>
+          <?= $form->field($model, 'calle')->textInput(['id'=>'_calle','readonly'=>true]) ?>
+          <?= $form->field($model, 'ciudad')->textInput(['id'=>'_ciudad','readonly'=>true]) ?>
         </div>
         <div class="col-md-6">
-          <?= $form->field($model, 'estado')->textInput(['maxlength' => true]) ?>
-          <?= $form->field($model, 'pais')->textInput(['maxlength' => true]) ?>
-          <?= $form->field($model, 'cp')->textInput(['maxlength' => true]) ?>
-          <?= $form->field($model, 'telefono')->textInput(['maxlength' => true]) ?>
+          <?= $form->field($model, 'estado')->textInput(['id'=>'_estado','readonly'=>true]) ?>
+          <?= $form->field($model, 'pais')->textInput(['id'=>'_pais','readonly'=>true]) ?>
+          <?= $form->field($model, 'cp')->textInput(['id'=>'_cp','readonly'=>true]) ?>
+          <?= $form->field($model, 'telefono')->textInput(['id'=>'_telefono','readonly'=>true]) ?>
         </div>
     </div>
   </div>

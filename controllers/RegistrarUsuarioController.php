@@ -172,9 +172,6 @@ class RegistrarUsuarioController extends Controller
 				return $this->renderAjax('create', [
 				'model' => $model,
 				]);
-
-
-
 	}
 
 
