@@ -64,15 +64,14 @@ class HabitacionController extends Controller
     {
         $model = $this->findModel($id);
         $registroSistema= new RegistroSistema();
+        $id_current_user = Yii::$app->user->identity->id;
+        $privilegio = Yii::$app->db->createCommand('SELECT modificar_habitacion FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
         if ($model->load(Yii::$app->request->post()))
         {
             $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha actualizado la habitación ".$model->descripcion;
             $model->update_user=Yii::$app->user->identity->id;
             $model->update_time=date('Y-m-d H:i:s');
-            
-            $id_current_user = Yii::$app->user->identity->id;
-            $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
 
             if($privilegio[0]['modificar_habitacion'] == 1){
               if ($model->save() && $registroSistema->save())
