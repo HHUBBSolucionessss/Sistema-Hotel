@@ -125,12 +125,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format'=>'raw'
                 ],
                 [
-                    'attribute' => 'create_time',
-                    'vAlign'=>'middle',
-                    'headerOptions'=>['class'=>'kv-sticky-column'],
-                    'contentOptions'=>['class'=>'kv-sticky-column'],
-                ],
-                [
                     'attribute'=>'create_user',
                     'vAlign'=>'middle',
                     'value'=>function ($model, $key, $index) {
@@ -138,6 +132,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         return $usuario->obtenerNombre($model->create_user);
                     },
                     'format'=>'raw'
+                ],
+                [
+                    'attribute' => 'create_time',
+                    'vAlign'=>'middle',
+                    'headerOptions'=>['class'=>'kv-sticky-column'],
+                    'contentOptions'=>['class'=>'kv-sticky-column'],
                 ],
             ];
 

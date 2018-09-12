@@ -41,6 +41,7 @@ class Huesped extends \yii\db\ActiveRecord
     {
         return [
             [['create_user'], 'integer'],
+            [['nombre', 'email', 'calle', 'ciudad', 'colonia', 'estado', 'telefono'], 'required'],
             [['nombre', 'email', 'calle', 'ciudad', 'colonia', 'estado', 'pais', 'cp', 'telefono'], 'string', 'max' => 45],
         ];
     }
@@ -61,7 +62,7 @@ class Huesped extends \yii\db\ActiveRecord
             'pais' => 'País',
             'cp' => 'Código Postal',
             'telefono' => 'Teléfono',
-            'create_time' => 'Fecha Creación',
+            'create_time' => 'Creado',
             'create_user' => 'Registró',
             'update_time' => 'Actualizado',
             'update_user' => 'Actualizó',

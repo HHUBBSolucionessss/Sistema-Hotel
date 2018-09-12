@@ -46,7 +46,7 @@ class Tarifa extends \yii\db\ActiveRecord
 	    public function rules()
 	    {
 		return [
-                    [['id_tipo_habitacion', 'id_origen'], 'required'],
+                    [['id_tipo_habitacion', 'id_origen', 'nombre', 'origen', 'tipo_habitacion', 'fecha_ini','fecha_fin'], 'required'],
 		            [['id_tipo_habitacion', 'id_origen', 'estado', 'create_user', 'update_user'], 'integer'],
 		            [['fecha_ini', 'fecha_fin', 'create_time', 'update_time'], 'safe'],
 		            [['nombre'], 'string', 'max' => 45],
@@ -68,8 +68,8 @@ class Tarifa extends \yii\db\ActiveRecord
 		            'fecha_ini' => 'Fecha Inicio',
 		            'fecha_fin' => 'Fecha Fin',
 		            'estado' => 'Estado',
-		            'create_user' => 'Create User',
-		            'create_time' => 'Create Time',
+		            'create_user' => 'Registró',
+		            'create_time' => 'Creado',
 		            'update_user' => 'Update User',
 		            'update_time' => 'Update Time',
 		        ];

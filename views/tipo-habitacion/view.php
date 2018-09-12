@@ -9,7 +9,7 @@ use app\models\User;
 /* @var $this yii\web\View */
 /* @var $model app\models\TipoHabitacion */
 
-$this->title = $model->id;
+$this->title ='Tipo de Habitación '. $model->descripcion;
 $this->params['breadcrumbs'][] = ['label' => 'Tipo Habitaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   ],
                 ],
                 'panel'=>[
-                    'heading'=>'Habitacion </br>' . $model->descripcion,
+                    'heading'=>'Vista Tipo de Habitación',
                     'type'=>DetailView::TYPE_INFO,
                 ],
                 'attributes'=>

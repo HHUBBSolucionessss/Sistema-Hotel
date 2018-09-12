@@ -13,7 +13,14 @@ use app\models\TarifaDetalladaSearch;
 /* @var $this yii\web\View */
 /* @var $model app\models\Tarifa */
 
+$this->title = 'Tarifa '.$model->nombre;
+$this->params['breadcrumbs'][] = ['label' => 'Tarifa', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
+
 ?>
+
+<h1><?= Html::encode($this->title) ?></h1>
+
 <div class="tarifa-view">
     <div class="col-md-6">
             <?php
@@ -32,7 +39,7 @@ use app\models\TarifaDetalladaSearch;
                   ],
                 ],
                 'panel'=>[
-                    'heading'=>'Tarifa </br>' . $model->nombre,
+                    'heading'=>'Vista Tarifa',
                     'type'=>DetailView::TYPE_INFO,
                 ],
                 'attributes'=>
@@ -59,34 +66,16 @@ use app\models\TarifaDetalladaSearch;
                     ],
                     [
                         'attribute'=>'create_user',
-                        'label'=>'Registró',
                         'format'=>'raw',
                         'value'=>$user->obtenerNombre($model->create_user),
                         'displayOnly'=>true,
                     ],
                     [
                         'attribute'=>'create_time',
-                        'label'=>'Fecha Creación',
                         'format'=>'date',
                         'value'=>$model->create_time,
                         'displayOnly'=>true,
                     ],
-
-                    [
-                        'attribute'=>'update_user',
-                        'label'=>'Actualizó',
-                        'format'=>'raw',
-                        'value'=>$model->update_user,
-                        'displayOnly'=>true,
-                    ],
-                    [
-                        'attribute'=>'update_time',
-                        'label'=>'Fecha Actualización',
-                        'format'=>'date',
-                        'value'=>$model->update_time,
-                        'displayOnly'=>true,
-                    ],
-
                 ]
             ]);
 

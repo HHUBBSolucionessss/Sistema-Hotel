@@ -37,6 +37,7 @@ class Habitacion extends \yii\db\ActiveRecord
     {
         return [
           [['tipo_habitacion','status', 'capacidad', 'create_user', 'update_user'],'integer'],
+            [['tipo_habitacion','descripcion', 'capacidad'],'required'],
             [['create_time', 'update_time'], 'safe'],
             [['descripcion'], 'string', 'max' => 255],
         ];
@@ -50,11 +51,11 @@ class Habitacion extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'descripcion' => 'Descripción',
-            'tipo_habitacion' => 'Tipo De Habitación',
+            'tipo_habitacion' => 'Tipo de Habitación',
             'status' => 'Estado', //Libre Ocupada
             'capacidad' => 'Capacidad',
             'create_user' => 'Registró',
-            'create_time' => 'Fecha Creación',
+            'create_time' => 'Creado',
             'update_user' => 'Update User',
             'update_time' => 'Update Time',
         ];

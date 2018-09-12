@@ -30,6 +30,7 @@ class TipoHabitacion extends \yii\db\ActiveRecord
         return [
             [['id'], 'integer'],
             [['descripcion'], 'string', 'max' => 45],
+            [['descripcion'], 'required'],
         ];
     }
 
@@ -40,7 +41,9 @@ class TipoHabitacion extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'descripcion' => 'Descripcion',
+            'descripcion' => 'Descripción',
+            'create_user' => 'Registró',
+            'create_time' => 'Creado',
         ];
     }
 

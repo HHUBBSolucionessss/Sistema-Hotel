@@ -110,7 +110,7 @@ class Reservacion extends \yii\db\ActiveRecord
 		'subtotal' => 'Subtotal',
 		'descuento' => 'Descuento',
 		'total' => 'Total',
-		'create_time' => 'Fecha Creación',
+		'create_time' => 'Creado',
 		'create_user' => 'Registró',
 		'update_time' => 'Update Time',
 		'update_user' => 'Update User',

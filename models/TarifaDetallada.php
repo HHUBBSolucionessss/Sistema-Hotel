@@ -31,7 +31,7 @@ class TarifaDetallada extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_tarifa'], 'required'],
+            [['id_tarifa', 'adultos', 'precio'], 'required'],
             [['id_tarifa', 'ninos', 'adultos'], 'integer'],
             [['precio'], 'number'],
             [['id_tarifa'], 'exist', 'skipOnError' => true, 'targetClass' => Tarifa::className(), 'targetAttribute' => ['id_tarifa' => 'id']],

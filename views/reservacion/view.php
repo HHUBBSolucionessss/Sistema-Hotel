@@ -14,15 +14,14 @@ use app\models\Origen;
 /* @var $this yii\web\View */
 /* @var $model app\models\Reservacion */
 
-$this->title = $model->id;
+$this->title = 'Reservación con Folio '.$model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Reservaciones', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
-
-
+<h1><?= Html::encode($this->title) ?></h1>
 
 <p>
     <?php
@@ -49,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'hover'=>true,
                     'mode'=>DetailView::MODE_VIEW,
                     'panel'=>[
-                        'heading'=>'RESERVACION  </br>FOLIO'. $model->id,
+                        'heading'=>'Vista Reservación',
                         'type'=>DetailView::TYPE_INFO,
                     ],
                     'attributes'=>
@@ -170,20 +169,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attribute'=>'create_time',
                             'format'=>'date',
                             'value'=>$model->create_time,
-                            'displayOnly'=>true,
-                        ],
-                        [
-                            'attribute'=>'update_time',
-                            'format'=>'date',
-                            'label'=>'Actualizado el',
-                            'value'=>$model->update_time,
-                            'displayOnly'=>true,
-                        ],
-                        [
-                            'attribute'=>'update_user',
-                            'label'=>'Actualizó',
-                            'format'=>'raw',
-                            'value'=>$model->update_user,
                             'displayOnly'=>true,
                         ],
                     ]

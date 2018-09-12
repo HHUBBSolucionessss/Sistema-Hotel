@@ -9,7 +9,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Huesped */
 
-$this->title = $model->id;
+$this->title = 'Huésped '. $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Huéspedes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -35,7 +35,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   ],
                 ],
                 'panel'=>[
-                    'heading'=>'Huesped </br>' . $model->nombre,
+                    'heading'=>'Vista Huésped',
                     'type'=>DetailView::TYPE_INFO,
                 ],
                 'attributes'=>

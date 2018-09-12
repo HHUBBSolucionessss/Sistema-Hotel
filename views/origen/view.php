@@ -9,7 +9,7 @@ use yii\helpers\Url;
 /* @var $this yii\web\View */
 /* @var $model app\models\Origen */
 
-$this->title = $model->id;
+$this->title = 'Origen '. $model->nombre;
 $this->params['breadcrumbs'][] = ['label' => 'Orígenes', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                   ],
                 ],
                 'panel'=>[
-                    'heading'=>'Huésped </br>' . $model->nombre,
+                    'heading'=>'Origen </br>' . $model->nombre,
                     'type'=>DetailView::TYPE_INFO,
                 ],
                 'attributes'=>
@@ -58,19 +58,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value'=>$model->create_time,
                         'displayOnly'=>true,
                     ],
-                    [
-                        'attribute'=>'update_time',
-                        'format'=>'date',
-                        'value'=>$model->update_time,
-                        'displayOnly'=>true,
-                    ],
-                    [
-                        'attribute'=>'update_user',
-                        'format'=>'raw',
-                        'value'=>$model->update_user,
-                        'displayOnly'=>true,
-                    ],
-
                 ]
             ]);
 

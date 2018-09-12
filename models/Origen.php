@@ -35,6 +35,7 @@ class Origen extends \yii\db\ActiveRecord
             [['create_time', 'update_time'], 'safe'],
             [['create_user', 'update_user'], 'integer'],
             [['nombre'], 'string', 'max' => 45],
+            [['nombre'], 'required'],
         ];
     }
 
@@ -46,8 +47,8 @@ class Origen extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nombre' => 'Nombre',
-            'create_time' => 'Fecha Creación',
-            'create_user' => 'Creado',
+            'create_time' => 'Creado',
+            'create_user' => 'Registró',
             'update_time' => 'Actualizado',
             'update_user' => 'Actualizó',
         ];
