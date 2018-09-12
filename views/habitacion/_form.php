@@ -15,7 +15,7 @@ use kartik\select2\Select2;
         <?php $form = ActiveForm::begin(); ?>
         <?= $form->field($model, 'descripcion')->textInput(['maxlength' => true]) ?>
         <?= $form->field($model, 'tipo_habitacion')->widget(Select2::classname(), [
-                'data' => ArrayHelper::map(TipoHabitacion::find()->all(), 'id', 'descripcion'),
+                'data' => ArrayHelper::map(TipoHabitacion::find()->where(['eliminado' => 0 ])->all(), 'id', 'descripcion'),
                 'value'=>1,
                 'options' => ['placeholder' => 'Selecciona un tipo de habitación ...', 'select'=>'0'],
                 'pluginOptions' => [
