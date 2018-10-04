@@ -168,15 +168,32 @@ class HuespedController extends Controller
      */
     public function actionNuevo()
     {
+      $id_current_user = Yii::$app->user->identity->id;
+      $privilegio = Yii::$app->db->createCommand('SELECT * FROM privilegio WHERE id_usuario = '.$id_current_user)->queryAll();
+
+      if($privilegio[0]['crear_huesped'] == 1){
         $model = new Huesped();
+        $registroSistema = new RegistroSistema();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+          $model->create_user=Yii::$app->user->identity->id;
+          $model->create_time=date('Y-m-d H:i:s');
+          $registroSistema->descripcion = Yii::$app->user->identity->nombre ." ha registrado al huésped ". $model->nombre;
+
+          if($model->save() && $registroSistema->save())
+          {
             return $this->redirect(['view', 'id' => $model->id]);
+          }
         }
+      }
+      else{
+        return $this->redirect(['index']);
+      }
 
-        return $this->render('nuevo', [
-            'model' => $model,
-        ]);
+      return $this->render('create', [
+          'model' => $model,
+      ]);
     }
 
 
