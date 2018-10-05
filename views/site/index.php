@@ -24,19 +24,7 @@ $this->title = 'Sistema Hotel';
 ?>
 
 <div class="site-index">
-    <div class="jumbotron">
-        <?= Html::a('Habitaciones', ['/habitacion/index'], ['class'=>'btn']) ?>
-        <?= Html::a('Caja', ['/caja/index'], ['class'=>'btn']) ?>
-        <?= Html::a('Huéspedes', ['/huesped/index'], ['class'=>'btn']) ?>
-        <?= Html::a('Reservaciones', ['/reservacion/index'], ['class'=>'btn']) ?>
-        <?= Html::a('Tarifas', ['/tarifa/index'], ['class'=>'btn']) ?>
-        <?= Html::a('Orígenes', ['/origen/index'], ['class'=>'btn']) ?>
-        <?= Html::a('Registro Sistema', ['site/registro'], ['class'=>'btn']) ?>
-        <?= Html::a('Usuarios', ['/registrar-usuario/index'], ['class'=>'btn']) ?>
-        
-    </div>
     <div class="body-content">
-
       <div class="col-md-12">
               <?php
 

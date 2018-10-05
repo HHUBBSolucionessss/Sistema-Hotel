@@ -129,16 +129,16 @@ class ReservacionSearch extends Reservacion
 	     */
 	    public function buscarDisponibles($fecha_entrada, $fecha_salida)
 	    {
-		$parametros=[':fecha_entrada'=>$fecha_entrada, ':fecha_salida'=>$fecha_salida];
+			$parametros=[':fecha_entrada'=>$fecha_entrada, ':fecha_salida'=>$fecha_salida];
 
-		/*$count = Yii::$app->db->createCommand('SELECT id, descripcion, tipo_habitacion FROM habitacion WHERE id NOT IN (SELECT id_habitacion FROM reservacion WHERE (fecha_entrada BETWEEN :fecha_entrada AND :fecha_salida)  AND (fecha_salida BETWEEN :fecha_entrada AND :fecha_salida))',$parametros)
-		->queryAll();
-		*/
-		$provider = new SqlDataProvider([
-		            'sql' => 'SELECT id, descripcion, tipo_habitacion FROM habitacion WHERE id NOT IN (SELECT id_habitacion FROM reservacion WHERE (fecha_entrada BETWEEN :fecha_entrada AND :fecha_salida)  OR (fecha_salida BETWEEN :fecha_entrada AND :fecha_salida))',
-		            'params' => [':fecha_entrada'=>$fecha_entrada, ':fecha_salida'=>$fecha_salida],
-		        ]);
-
+			/*$count = Yii::$app->db->createCommand('SELECT id, descripcion, tipo_habitacion FROM habitacion WHERE id NOT IN (SELECT id_habitacion FROM reservacion WHERE (fecha_entrada BETWEEN :fecha_entrada AND :fecha_salida)  AND (fecha_salida BETWEEN :fecha_entrada AND :fecha_salida))',$parametros)
+			->queryAll();
+			*/
+			$provider = new SqlDataProvider([
+		    	        'sql' => 'SELECT id, descripcion, tipo_habitacion FROM habitacion WHERE id NOT IN (SELECT id_habitacion FROM reservacion WHERE (fecha_entrada BETWEEN :fecha_entrada AND :fecha_salida)  OR (fecha_salida BETWEEN :fecha_entrada AND :fecha_salida))',
+		        	    'params' => [':fecha_entrada'=>$fecha_entrada, ':fecha_salida'=>$fecha_salida],
+					]);
+			$provider->pagination->pageSize = 10;
 		return $provider;
 	}
 

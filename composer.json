@@ -15,23 +15,22 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "~2.0.5",
+        "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "kartik-v/yii2-widgets": "*",
-        "kartik-v/yii2-grid": "^3.1@dev",
+        "kartik-v/yii2-grid": "*",
         "kartik-v/yii2-detail-view": "*",
-        "kartik-v/yii2-editable": "^1.7@dev",
-        "kartik-v/yii2-money": "*",
-        "kartik-v/yii2-date-range": "^1.6",
+        "kartik-v/yii2-editable": "*",
+        "kartik-v/yii2-date-range": "*",
         "wbraganca/yii2-dynamicform": "*",
         "demogorgorn/yii2-ajax-submit-button": "*",
-        "2amigos/yii2-date-picker-widget": "~1.0",
+        "2amigos/yii2-date-picker-widget": "*",
         "kartik-v/yii2-field-range": "*",
         "yiisoft/yii2-jui": "*",
-        "kartik-v/yii2-dynagrid": "@dev",
-        "kartik-v/yii2-mpdf": "dev-master",
-        "moonlandsoft/yii2-phpexcel": "*"
+        "kartik-v/yii2-dynagrid": "*",
+        "kartik-v/yii2-mpdf": "*",
+        "dmstr/yii2-adminlte-asset": "2.*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -43,7 +42,16 @@
         "codeception/specify": "~0.4.3"
     },
     "config": {
-        "process-timeout": 1800
+        "process-timeout": 1800,
+      "fxp-asset": {
+            "repositories": {
+                "bower-asset/eve": {
+                    "type": "bower-vcs",
+                    "url": "https://github.com/adobe-webplatform/eve.git"
+                }
+            }
+        }
+
     },
     "scripts": {
         "post-install-cmd": [
