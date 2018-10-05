@@ -138,7 +138,7 @@ class ReservacionSearch extends Reservacion
 		    	        'sql' => 'SELECT id, descripcion, tipo_habitacion FROM habitacion WHERE id NOT IN (SELECT id_habitacion FROM reservacion WHERE (fecha_entrada BETWEEN :fecha_entrada AND :fecha_salida)  OR (fecha_salida BETWEEN :fecha_entrada AND :fecha_salida))',
 		        	    'params' => [':fecha_entrada'=>$fecha_entrada, ':fecha_salida'=>$fecha_salida],
 					]);
-			$provider->pagination->pageSize = 10;
+			$provider->pagination->pageSize = false;
 		return $provider;
 	}
 
